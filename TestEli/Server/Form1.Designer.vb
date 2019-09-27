@@ -22,17 +22,29 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.ChatTextBox = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
+        '
+        'ChatTextBox
+        '
+        Me.ChatTextBox.Location = New System.Drawing.Point(12, 12)
+        Me.ChatTextBox.Multiline = True
+        Me.ChatTextBox.Name = "ChatTextBox"
+        Me.ChatTextBox.Size = New System.Drawing.Size(463, 426)
+        Me.ChatTextBox.TabIndex = 0
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(487, 450)
+        Me.Controls.Add(Me.ChatTextBox)
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
+    Friend WithEvents ChatTextBox As TextBox
 End Class
