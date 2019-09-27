@@ -6,8 +6,8 @@ Public Class TCPController
     Public Event MessageRecieved(sender As TCPController, data As String)
 
     'server config
-    Public serverIP As IPAddress = IPAddress.Parse("10.0.9.105")
-    Public serverPort As Integer = 64555
+    Public serverIP As IPAddress = IPAddress.Parse("127.0.0.1")
+    Public serverPort As Integer = 64553
     Public server As TcpListener
 
     Private ComunicatieThread As Thread

@@ -2,7 +2,7 @@
 Public Class Form1
     Private Client As TCPControl
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Client = New TCPControl("10.0.9.105", 64555)
+        Client = New TCPControl("127.0.0.1", 64553)
         If Client.Client.Connected Then ConnectButton.Text = "Connected"
     End Sub
 
