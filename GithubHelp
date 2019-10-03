@@ -8,4 +8,19 @@ studio project en ga naar team explorer. Bij team explorer klik je vanboven op d
 met je repository. Eenmaal daar aangekomen klik je op clone en ctrl+v je de link die je gekopieerd hebt en klik je op clone. Nu heb je 
 github gelinkt met je project.
 
-Master branch: Is hoofdbranch, staat alleen maar goede code op. Merge niet met master voor je zeker weet dat code goed is
+Master branch: Is hoofdbranch, hier werk je niet op, staat alleen maar goede code op. 
+Merge niet met master voor je zeker weet dat code goed is.
+
+Branches: Om te werken aan dit project moet je nieuwe branches eerst maken. Om een nieuwe branch te maken klik je op de knop waar staat
+"Branch: master". Daar kan je naar een branch zoeken of een nieuwe maken. Geef de nieuwe branch dus een naam en klik dan op create branch.
+Nu kan je op deze branch werken zodat je niet op de master moet werken.
+
+Commit: Opgeslagen veranderingen in een project
+
+Push: De veranderingen(=commits) voorstellen en laat ze controleren door anderen
+
+Pull: De veranderingen(=commits) van anderen binnen halen om te controleren of om op verder te werken.
+
+Merge: Branches die gecontroleerd zijn of ze juist zijn samenvoegen met de master branch.
+
+Fetch: Alle mogelijke veranderingen zoeken om daarna eventueel ze te pullen.
