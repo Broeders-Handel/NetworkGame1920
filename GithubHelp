@@ -1,0 +1,11 @@
+Github repository maken: Eerst maak je een account op github en maak je een repository waar je je project in gaat opslagen.
+Als je dit hebt gedaan ga je naar je repository door er links van je scherm op te klikken.
+
+Github linken met visual studio: Ga in visual studio naar "add to source control" rechts onderaan, en kies daar voor git. Als je nu naar
+team explorer gaat zie je dat je project is gelinkt met git. Nu moet je het alleen nog linken met github en de juiste repository. Dit doe
+je door naar je github account te gaan en op je repository te klikken. Nu ga je de link van deze repository kopiëren. Ga dan naar je visual
+studio project en ga naar team explorer. Bij team explorer klik je vanboven op de groene stekker. Daar ga je eigenlijk de connection maken 
+met je repository. Eenmaal daar aangekomen klik je op clone en ctrl+v je de link die je gekopieerd hebt en klik je op clone. Nu heb je 
+github gelinkt met je project.
+
+Master branch: Is hoofdbranch, staat alleen maar goede code op. Merge niet met master voor je zeker weet dat code goed is
