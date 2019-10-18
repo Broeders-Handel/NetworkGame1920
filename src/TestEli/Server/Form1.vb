@@ -95,4 +95,24 @@ Public Class Form1
         End Try
         Return True
     End Function
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, TextBox1.Text)
+    End Sub
+    Function SendToClients(ByVal data As String)
+        If serverStatus = True Then
+            If Clients.Count > 0 Then
+                Try
+                    For Each client As TcpClient In Clients
+                        Dim TX As New StreamWriter(client.GetStream)
+                        TX1.writeline(data)
+                        TX1.Flush()
+                    Next
+                Catch ex As Exception
+                    SendToClients(data)
+                End Try
+            End If
+        End If
+        Return True
+    End Function
 End Class

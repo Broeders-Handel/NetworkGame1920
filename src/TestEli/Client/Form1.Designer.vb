@@ -65,7 +65,7 @@ Partial Class Form1
         '
         'ChatRichTextBox
         '
-        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 46)
+        Me.ChatRichTextBox.Location = New System.Drawing.Point(-6, 62)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
         Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 237)
         Me.ChatRichTextBox.TabIndex = 4

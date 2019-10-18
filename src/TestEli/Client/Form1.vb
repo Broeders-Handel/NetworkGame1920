@@ -16,8 +16,6 @@ Public Class Form1
         Catch ex As Exception
             ChatRichTextBox.Text += "Failed to connect , E: " + ex.Message + Environment.NewLine
 
-
-
         End Try
     End Sub
     Function Connected()
