@@ -1,31 +1,65 @@
 ﻿Imports System.ComponentModel
+Imports System.Net.Sockets
+Imports System.IO
 Public Class Form1
-    Private Client As TCPControl
+    Dim client As TcpClient
+    Dim RX As StreamReader
+    Dim TX As StreamWriter
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Client = New TCPControl("127.0.0.1", 64553)
-        If Client.Client.Connected Then ConnectButton.Text = "Connected"
-    End Sub
+        Try
+            client = New TcpClient("127.0.0.1", 64555)
+            If client.GetStream.CanRead = True Then
+                RX = New StreamReader(client.GetStream)
+                TX = New StreamWriter(client.GetStream)
+                Threading.ThreadPool.QueueUserWorkItem(AddressOf Connected)
+            End If
+        Catch ex As Exception
+            ChatRichTextBox.Text += "Failed to connect , E: " + ex.Message + Environment.NewLine
 
-    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        SendMessage()
-        MessageTextBox.Clear()
-        MessageTextBox.Focus()
+
+
+        End Try
     End Sub
-    Private Sub SendMessage()
-        If Client.Client.Connected = True Then
-            Client.Send(MessageTextBox.Text)
+    Function Connected()
+        If RX.BaseStream.CanRead = True Then
+            Try
+                While RX.BaseStream.CanRead = True
+                    Dim RawData As String = RX.ReadLine
+                    If RawData.ToUpper = "/MSG" Then
+                        Threading.ThreadPool.QueueUserWorkItem(AddressOf MSG1, "Hello World")
+                    Else
+                        ChatRichTextBox.Text += "Server))" + RawData
+
+                    End If
+                End While
+            Catch ex As Exception
+                client.Close()
+            End Try
+        End If
+        Return True
+    End Function
+    Function MSG1(ByVal Data As String)
+        MsgBox(Data)
+        Return True
+    End Function
+
+    Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If MessageTextBox.Text.Length > 0 Then
+                sendToServer(MessageTextBox.Text)
+                MessageTextBox.Clear()
+            End If
         End If
     End Sub
+    Function SendToServer(ByVal data As String)
+        Try
+            TX.WriteLine(data)
+            TX.Flush()
+        Catch ex As Exception
 
-    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        If e.KeyCode = Keys.Enter Then SendMessage()
-    End Sub
-
-    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        If Client.Client.Connected = True Then
-            Client.DataStream.Close()
-            Client.Client.Close()
-        End If
-    End Sub
+        End Try
+        Return True
+    End Function
 End Class
 
