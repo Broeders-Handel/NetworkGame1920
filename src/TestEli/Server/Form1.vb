@@ -8,37 +8,9 @@ Public Class Form1
     Dim serverTrying As Boolean = False
     Dim Server As TcpListener
     Dim Clients As New List(Of TcpClient)
-    'Private Server As TCPController
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
-        ' Server = New TCPController
-        'ChatTextBox.Text = "::  Server Starting  ::" & Environment.NewLine
-
-        '   AddHandler Server.MessageRecieved, AddressOf OnlineRecieved
-
     End Sub
-
-    'Private Delegate Sub UpdateTextDelegate(TB As TextBox, txt As String)
-
-    'Update textbox
-    ' Private Sub UpdateText(TB As TextBox, txt As String)
-    'If TB.InvokeRequired Then
-    '    TB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {TB, txt})
-    ' Else
-    '      If txt IsNot Nothing Then TB.AppendText(txt & Environment.NewLine)
-    '   End If
-    'End Sub
-
-
-    'Private Sub OnlineRecieved(sender As TCPController, data As String)
-    '   UpdateText(ChatTextBox, data)
-    'End Sub
-
-    ' Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-    '    Server.IsListening = False
-    'End Sub
-
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         startserver()
     End Sub
