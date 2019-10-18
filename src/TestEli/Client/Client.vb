@@ -26,7 +26,7 @@ Public Class Client
                     If RawData.ToUpper = "/MSG" Then
                         Threading.ThreadPool.QueueUserWorkItem(AddressOf MSG1, "Hello World")
                     Else
-                        ChatRichTextBox.Text += "Server))" + RawData
+                        Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToServer, RawData)
 
                     End If
                 End While
