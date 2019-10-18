@@ -65,13 +65,13 @@ Partial Class Client
         '
         'ChatRichTextBox
         '
-        Me.ChatRichTextBox.Location = New System.Drawing.Point(-6, 62)
+        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 62)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
         Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 237)
         Me.ChatRichTextBox.TabIndex = 4
         Me.ChatRichTextBox.Text = ""
         '
-        'Form1
+        'Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -81,7 +81,7 @@ Partial Class Client
         Me.Controls.Add(Me.MessageTextBox)
         Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.ConnectButton)
-        Me.Name = "Form1"
+        Me.Name = "Client"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
         Me.PerformLayout()

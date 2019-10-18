@@ -19,6 +19,7 @@ Public Class Server
             Try
                 Server = New TcpListener(IPAddress.Any, 64553)
                 Server.Start()
+                RichTextBox1.Text = "<<Server started>>"
                 serverStatus = True
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
             Catch ex As Exception
