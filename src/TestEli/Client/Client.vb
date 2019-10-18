@@ -7,7 +7,7 @@ Public Class Client
     Dim TX As StreamWriter
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Try
-            client = New TcpClient("127.0.0.1", 64555)
+            client = New TcpClient("127.0.0.1", 64553)
             If client.GetStream.CanRead = True Then
                 RX = New StreamReader(client.GetStream)
                 TX = New StreamWriter(client.GetStream)

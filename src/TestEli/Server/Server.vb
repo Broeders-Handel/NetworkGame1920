@@ -1,5 +1,4 @@
 ﻿Imports System.Net.Sockets
-Imports System.ComponentModel
 Imports System.Net
 Imports System.IO
 
@@ -18,7 +17,7 @@ Public Class Server
         If serverStatus = False Then
             serverTrying = True
             Try
-                Server = New TcpListener(IPAddress.Any, 64555)
+                Server = New TcpListener(IPAddress.Any, 64553)
                 Server.Start()
                 serverStatus = True
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
