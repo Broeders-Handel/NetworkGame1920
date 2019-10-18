@@ -22,23 +22,46 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ChatTextBox = New System.Windows.Forms.TextBox()
+        Me.StartButton = New System.Windows.Forms.Button()
+        Me.StopButton = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'ChatTextBox
+        'StartButton
         '
-        Me.ChatTextBox.Location = New System.Drawing.Point(12, 12)
-        Me.ChatTextBox.Multiline = True
-        Me.ChatTextBox.Name = "ChatTextBox"
-        Me.ChatTextBox.Size = New System.Drawing.Size(463, 426)
-        Me.ChatTextBox.TabIndex = 0
+        Me.StartButton.Location = New System.Drawing.Point(13, 13)
+        Me.StartButton.Name = "StartButton"
+        Me.StartButton.Size = New System.Drawing.Size(75, 23)
+        Me.StartButton.TabIndex = 0
+        Me.StartButton.Text = "Start"
+        Me.StartButton.UseVisualStyleBackColor = True
+        '
+        'StopButton
+        '
+        Me.StopButton.Location = New System.Drawing.Point(94, 13)
+        Me.StopButton.Name = "StopButton"
+        Me.StopButton.Size = New System.Drawing.Size(75, 23)
+        Me.StopButton.TabIndex = 1
+        Me.StopButton.Text = "Stop"
+        Me.StopButton.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(48, 80)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.TabIndex = 2
+        Me.Label1.Text = "Label1"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(487, 450)
-        Me.Controls.Add(Me.ChatTextBox)
+        Me.ClientSize = New System.Drawing.Size(257, 199)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.StopButton)
+        Me.Controls.Add(Me.StartButton)
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
@@ -46,5 +69,7 @@ Partial Class Form1
 
     End Sub
 
-    Friend WithEvents ChatTextBox As TextBox
+    Friend WithEvents StartButton As Button
+    Friend WithEvents StopButton As Button
+    Friend WithEvents Label1 As Label
 End Class
