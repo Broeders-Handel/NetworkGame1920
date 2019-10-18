@@ -12,6 +12,7 @@ Public Class Client
                 RX = New StreamReader(client.GetStream)
                 TX = New StreamWriter(client.GetStream)
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Connected)
+                ConnectButton.Text = "Connected"
             End If
         Catch ex As Exception
             ChatRichTextBox.Text += "Failed to connect , E: " + ex.Message + Environment.NewLine
@@ -24,7 +25,7 @@ Public Class Client
                 While RX.BaseStream.CanRead = True
                     Dim RawData As String = RX.ReadLine
                     If RawData.ToUpper = "/MSG" Then
-                        Threading.ThreadPool.QueueUserWorkItem(AddressOf MSG1, "Hello World")
+                        Threading.ThreadPool.QueueUserWorkItem(AddressOf MSG1, RawData)
                     Else
                         Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToServer, RawData)
                     End If

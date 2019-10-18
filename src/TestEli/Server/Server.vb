@@ -88,6 +88,7 @@ Public Class Server
 
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, TextBox1.Text)
+        TextBox1.Clear()
     End Sub
     Function SendToClients(ByVal data As String)
         If serverStatus = True Then
