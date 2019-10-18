@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Net.Sockets
 Imports System.IO
-Public Class Form1
+Public Class Client
     Dim client As TcpClient
     Dim RX As StreamReader
     Dim TX As StreamWriter
@@ -45,7 +45,7 @@ Public Class Form1
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                sendToServer(MessageTextBox.Text)
+                SendToServer(MessageTextBox.Text)
                 MessageTextBox.Clear()
             End If
         End If

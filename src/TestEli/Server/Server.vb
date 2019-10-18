@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports System.Net
 Imports System.IO
 
-Public Class Form1
+Public Class Server
     Dim serverStatus As Boolean = False
     Dim serverTrying As Boolean = False
     Dim Server As TcpListener
@@ -66,7 +66,7 @@ Public Class Form1
                 If RX.BaseStream.CanRead = True Then
                     While RX.BaseStream.CanRead = True
                         Dim RawData As String = RX.ReadLine
-                        RichTextBox1.text += Client.Client.RemoteEndPoint.ToString + ">>" + RawData + Environment.NewLine
+                        RichTextBox1.Text += Client.Client.RemoteEndPoint.ToString + ">>" + RawData + Environment.NewLine
                     End While
                 End If
                 If RX.BaseStream.CanRead = False Then
@@ -96,7 +96,7 @@ Public Class Form1
                 Try
                     For Each client As TcpClient In Clients
                         Dim TX1 As New StreamWriter(client.GetStream)
-                        TX1.writeline(data)
+                        TX1.WriteLine(data)
                         TX1.Flush()
                     Next
                 Catch ex As Exception
