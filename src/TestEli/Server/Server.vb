@@ -86,7 +86,7 @@ Public Class Server
         Return True
     End Function
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, TextBox1.Text)
     End Sub
     Function SendToClients(ByVal data As String)

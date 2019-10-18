@@ -26,7 +26,7 @@ Partial Class Server
         Me.StopButton = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.SendButton = New System.Windows.Forms.Button()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
@@ -64,14 +64,14 @@ Partial Class Server
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 3
         '
-        'Button1
+        'SendButton
         '
-        Me.Button1.Location = New System.Drawing.Point(132, 139)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.SendButton.Location = New System.Drawing.Point(132, 139)
+        Me.SendButton.Name = "SendButton"
+        Me.SendButton.Size = New System.Drawing.Size(75, 23)
+        Me.SendButton.TabIndex = 4
+        Me.SendButton.Text = "Send"
+        Me.SendButton.UseVisualStyleBackColor = True
         '
         'RichTextBox1
         '
@@ -81,18 +81,18 @@ Partial Class Server
         Me.RichTextBox1.TabIndex = 5
         Me.RichTextBox1.Text = ""
         '
-        'Form1
+        'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(257, 199)
         Me.Controls.Add(Me.RichTextBox1)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.StopButton)
         Me.Controls.Add(Me.StartButton)
-        Me.Name = "Form1"
+        Me.Name = "Server"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -103,6 +103,6 @@ Partial Class Server
     Friend WithEvents StopButton As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents SendButton As Button
     Friend WithEvents RichTextBox1 As RichTextBox
 End Class
