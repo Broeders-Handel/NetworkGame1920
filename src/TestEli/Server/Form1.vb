@@ -49,6 +49,7 @@ Public Class Form1
                 Server = New TcpListener(IPAddress.Any, 64555)
                 Server.Start()
                 serverStatus = True
+                Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
             Catch ex As Exception
                 serverStatus = False
             End Try
@@ -93,6 +94,7 @@ Public Class Form1
                 If RX.BaseStream.CanRead = True Then
                     While RX.BaseStream.CanRead = True
                         Dim RawData As String = RX.ReadLine
+                        RichTextBox1.text += Client.Client.RemoteEndPoint.ToString + ">>" + RawData + Environment.NewLine
                     End While
                 End If
                 If RX.BaseStream.CanRead = False Then
@@ -121,7 +123,7 @@ Public Class Form1
             If Clients.Count > 0 Then
                 Try
                     For Each client As TcpClient In Clients
-                        Dim TX As New StreamWriter(client.GetStream)
+                        Dim TX1 As New StreamWriter(client.GetStream)
                         TX1.writeline(data)
                         TX1.Flush()
                     Next
