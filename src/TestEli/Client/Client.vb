@@ -13,7 +13,7 @@ Public Class Client
                 TX = New StreamWriter(client.GetStream)
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Connected)
                 ConnectButton.Text = "Connected"
-                ChatRichTextBox.Text = "<< Conected to server >>"
+                ChatRichTextBox.Text = "<< Connected to server >>" & Environment.NewLine
             End If
         Catch ex As Exception
             ChatRichTextBox.Text += "Failed to connect , E: " + ex.Message + Environment.NewLine
