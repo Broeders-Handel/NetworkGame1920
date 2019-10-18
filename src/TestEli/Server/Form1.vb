@@ -78,20 +78,37 @@ Public Class Form1
         Return True
     End Function
     Function Handler_Client(ByVal state As Object)
+        Dim TempClient As TcpClient
+
         Try
             Using Client As TcpClient = Server.AcceptTcpClient
+
                 If serverTrying = False Then
                     Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
                 End If
                 Clients.Add(Client)
+                TempClient = Client
                 Dim TX As New StreamWriter(Client.GetStream)
                 Dim RX As New StreamReader(Client.GetStream)
                 If RX.BaseStream.CanRead = True Then
-
+                    While RX.BaseStream.CanRead = True
+                        Dim RawData As String = RX.ReadLine
+                    End While
+                End If
+                If RX.BaseStream.CanRead = False Then
+                    Client.Close()
+                    Clients.Remove(Client)
                 End If
             End Using
+            If TempClient.GetStream.CanRead = False Then
+                TempClient.Close()
+                Clients.Remove(TempClient)
+            End If
         Catch ex As Exception
-
+            If TempClient.GetStream.CanRead = False Then
+                TempClient.Close()
+                Clients.Remove(TempClient)
+            End If
         End Try
         Return True
     End Function
