@@ -27,7 +27,6 @@ Public Class Client
                         Threading.ThreadPool.QueueUserWorkItem(AddressOf MSG1, "Hello World")
                     Else
                         Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToServer, RawData)
-
                     End If
                 End While
             Catch ex As Exception
