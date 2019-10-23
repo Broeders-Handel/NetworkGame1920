@@ -22,12 +22,14 @@ Partial Class Server
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StopButton = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.SendButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'StartButton
@@ -105,4 +107,5 @@ Partial Class Server
     Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents SendButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
+    Friend WithEvents Timer1 As Timer
 End Class

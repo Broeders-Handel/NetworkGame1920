@@ -22,11 +22,13 @@ Partial Class Client
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.ConnectButton = New System.Windows.Forms.Button()
         Me.SendButton = New System.Windows.Forms.Button()
         Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.DisconnectButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'ConnectButton
@@ -93,4 +95,5 @@ Partial Class Client
     Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents DisconnectButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
+    Friend WithEvents Timer1 As Timer
 End Class
