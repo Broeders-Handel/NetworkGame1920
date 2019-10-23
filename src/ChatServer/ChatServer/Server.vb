@@ -19,7 +19,7 @@ Public Class Server
             Try
                 Server = New TcpListener(IPAddress.Any, 64553)
                 Server.Start()
-                RichTextBox1.Text = "<<Server started>>" & Environment.NewLine
+                ChatRichTextBox.Text = "<<Server started>>" & Environment.NewLine
                 serverStatus = True
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
             Catch ex As Exception
@@ -66,7 +66,7 @@ Public Class Server
                 If RX.BaseStream.CanRead = True Then
                     While RX.BaseStream.CanRead = True
                         Dim RawData As String = RX.ReadLine
-                        RichTextBox1.Text += Client.Client.RemoteEndPoint.ToString + ">>" + RawData + Environment.NewLine
+                        ChatRichTextBox.Text += Client.Client.RemoteEndPoint.ToString + ">>" + RawData + Environment.NewLine
                     End While
                 End If
                 If RX.BaseStream.CanRead = False Then
@@ -88,10 +88,20 @@ Public Class Server
     End Function
 
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, TextBox1.Text)
-        TextBox1.Clear()
+        Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, MessageTextBox.Text)
+        MessageTextBox.Clear()
+    End Sub
+    Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If MessageTextBox.Text.Length > 0 Then
+                SendToClients(MessageTextBox.Text)
+                MessageTextBox.Clear()
+            End If
+        End If
     End Sub
     Function SendToClients(ByVal data As String)
+
         If serverStatus = True Then
             If Clients.Count > 0 Then
                 Try

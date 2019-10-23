@@ -25,9 +25,9 @@ Partial Class Server
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StopButton = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.SendButton = New System.Windows.Forms.Button()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'StartButton
@@ -57,12 +57,12 @@ Partial Class Server
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Label1"
         '
-        'TextBox1
+        'MessageTextBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(12, 139)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 3
+        Me.MessageTextBox.Location = New System.Drawing.Point(12, 139)
+        Me.MessageTextBox.Name = "MessageTextBox"
+        Me.MessageTextBox.Size = New System.Drawing.Size(100, 20)
+        Me.MessageTextBox.TabIndex = 3
         '
         'SendButton
         '
@@ -73,22 +73,22 @@ Partial Class Server
         Me.SendButton.Text = "Send"
         Me.SendButton.UseVisualStyleBackColor = True
         '
-        'RichTextBox1
+        'ChatRichTextBox
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(12, 42)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(195, 96)
-        Me.RichTextBox1.TabIndex = 5
-        Me.RichTextBox1.Text = ""
+        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 42)
+        Me.ChatRichTextBox.Name = "ChatRichTextBox"
+        Me.ChatRichTextBox.Size = New System.Drawing.Size(195, 96)
+        Me.ChatRichTextBox.TabIndex = 5
+        Me.ChatRichTextBox.Text = ""
         '
         'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(257, 199)
-        Me.Controls.Add(Me.RichTextBox1)
+        Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.SendButton)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.MessageTextBox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.StopButton)
         Me.Controls.Add(Me.StartButton)
@@ -102,7 +102,7 @@ Partial Class Server
     Friend WithEvents StartButton As Button
     Friend WithEvents StopButton As Button
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents SendButton As Button
-    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents ChatRichTextBox As RichTextBox
 End Class

@@ -5,6 +5,7 @@ Public Class Client
     Dim client As TcpClient
     Dim RX As StreamReader
     Dim TX As StreamWriter
+
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Try
             client = New TcpClient("127.0.0.1", 64553)
