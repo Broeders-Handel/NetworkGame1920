@@ -13,14 +13,14 @@ Public Class Server
             TCPServer.Receive(rcvbytes)
             ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
             ChatRichTextBox.Text &= Environment.NewLine
-            SendToClient(chatrichtextbox.text)
-            chatrichtextbox.text = System.Text.Encoding.ASCII.getsring(rcvbytes)
+            SendToClient(ChatRichTextBox.Text)
+            ChatRichTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
         Catch ex As Exception
         End Try
 
     End Sub
     Public Sub SendToClient(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(chatrichtextbox.Text)
+        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(ChatRichTextBox.Text)
         TCPServer.Send(sendbytes)
         MessageTextBox.Clear()
     End Sub
@@ -38,28 +38,12 @@ Public Class Server
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        TCPListenerz = New TcpListener(IPAddress.Any, 64553)
-        TCPListenerz.Start()
-        TCPServer = TCPListenerz.AcceptSocket()
+        TCPListener = New TcpListener(IPAddress.Any, 64553)
+        TCPListener.Start()
+        TCPServer = TCPListener.AcceptSocket()
         TCPServer.Blocking = False
         Timer1.Enabled = True
     End Sub
-    Function SendToClients(ByVal data As String)
-        If serverStatus = True Then
-            If clients.Count > 0 Then
-                Try
-                    For Each client As TcpClient In clients
-                        Dim TX1 As New StreamWriter(client.GetStream)
-                        TX1.WriteLine(data)
-                        TX1.Flush()
-                    Next
-                Catch ex As Exception
-                    SendToClients(data)
-                End Try
-            End If
-        End If
-        Return True
-    End Function
     '   Dim serverStatus As Boolean = False
     '  Dim serverTrying As Boolean = False
     ' Dim Server As TcpListener
