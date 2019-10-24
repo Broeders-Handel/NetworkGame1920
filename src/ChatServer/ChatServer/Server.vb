@@ -6,20 +6,21 @@ Public Class Server
     Dim TCPServer As Socket
     Dim TCPListener As TcpListener
 
+
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
             Dim rcvbytes(TCPServer.ReceiveBufferSize) As Byte
             TCPServer.Receive(rcvbytes)
             ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
             ChatRichTextBox.Text &= Environment.NewLine
-            SendToClient(ChatRichTextBox.Text)
+            SendToClient(chatrichtextbox.text)
+            chatrichtextbox.text = System.Text.Encoding.ASCII.getsring(rcvbytes)
         Catch ex As Exception
         End Try
 
     End Sub
-
-    Private Sub SendToClient(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(ChatRichTextBox.Text)
+    Public Sub SendToClient(Message As String)
+        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(chatrichtextbox.Text)
         TCPServer.Send(sendbytes)
         MessageTextBox.Clear()
     End Sub
@@ -33,17 +34,32 @@ Public Class Server
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-
+        SendToClient(MessageTextBox.Text)
     End Sub
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        TCPListener = New TcpListener(IPAddress.Any, 64553)
-        TCPListener.Start()
-        ChatRichTextBox.Text = "<< Server started >>" & Environment.NewLine
-        TCPServer = TCPListener.AcceptSocket()
+        TCPListenerz = New TcpListener(IPAddress.Any, 64553)
+        TCPListenerz.Start()
+        TCPServer = TCPListenerz.AcceptSocket()
         TCPServer.Blocking = False
         Timer1.Enabled = True
     End Sub
+    Function SendToClients(ByVal data As String)
+        If serverStatus = True Then
+            If clients.Count > 0 Then
+                Try
+                    For Each client As TcpClient In clients
+                        Dim TX1 As New StreamWriter(client.GetStream)
+                        TX1.WriteLine(data)
+                        TX1.Flush()
+                    Next
+                Catch ex As Exception
+                    SendToClients(data)
+                End Try
+            End If
+        End If
+        Return True
+    End Function
     '   Dim serverStatus As Boolean = False
     '  Dim serverTrying As Boolean = False
     ' Dim Server As TcpListener
