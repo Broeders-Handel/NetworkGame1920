@@ -83,6 +83,9 @@ Partial Class Server
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
         '
+        'Timer1
+        '
+        '
         'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)

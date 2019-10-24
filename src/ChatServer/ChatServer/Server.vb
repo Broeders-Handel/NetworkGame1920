@@ -5,7 +5,7 @@ Imports System.IO
 Public Class Server
     Dim TCPServer As Socket
     Dim TCPListener As TcpListener
-
+    Dim ServerStatus As Boolean = False
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
@@ -17,7 +17,6 @@ Public Class Server
             SendToClient(MessageTextBox.Text)
         Catch ex As Exception
         End Try
-
     End Sub
     Public Sub SendToClient(Message As String)
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(MessageTextBox.Text)
@@ -36,12 +35,21 @@ Public Class Server
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         SendToClient(MessageTextBox.Text)
     End Sub
-
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        TCPListener = New TcpListener(IPAddress.Any, 64553)
-        TCPListener.Start()
-        TCPServer = TCPListener.AcceptSocket()
-        TCPServer.Blocking = False
-        Timer1.Enabled = True
+        If ServerStatus = False Then
+            Try
+                TCPListener = New TcpListener(IPAddress.Any, 64553)
+                TCPListener.Start()
+                TCPServer = TCPListener.AcceptSocket()
+                TCPServer.Blocking = False
+                Timer1.Enabled = True
+                ServerStatus = True
+            Catch ex As Exception
+                ServerStatus = False
+            End Try
+        End If
+        If ServerStatus = True Then
+            ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
+        End If
     End Sub
 End Class
