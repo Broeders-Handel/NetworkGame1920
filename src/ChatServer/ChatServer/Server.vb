@@ -5,8 +5,6 @@ Imports System.IO
 Public Class Server
     Dim TCPServer As Socket
     Dim TCPListener As TcpListener
-
-
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
             Dim rcvbytes(TCPServer.ReceiveBufferSize) As Byte
