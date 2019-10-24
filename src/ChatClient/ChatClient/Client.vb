@@ -22,9 +22,10 @@ Public Class Client
             End If
         End If
     End Sub
-    Public Sub SendToServer(Message As String)
+    Private Sub SendToServer(Message As String)
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
         TCPClient.Client.Send(sendbytes)
+        MessageTextBox.Clear()
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         SendToServer(MessageTextBox.Text)
