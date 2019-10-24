@@ -13,14 +13,14 @@ Public Class Server
             TCPServer.Receive(rcvbytes)
             ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
             ChatRichTextBox.Text &= Environment.NewLine
-            SendToClient(ChatRichTextBox.Text)
-            ChatRichTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
+            MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
+            SendToClient(MessageTextBox.Text)
         Catch ex As Exception
         End Try
 
     End Sub
     Public Sub SendToClient(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(ChatRichTextBox.Text)
+        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(MessageTextBox.Text)
         TCPServer.Send(sendbytes)
         MessageTextBox.Clear()
     End Sub
