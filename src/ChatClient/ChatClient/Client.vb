@@ -5,11 +5,10 @@ Public Class Client
     Dim TCPClient As TcpClient
     Dim TCPClientStream As NetworkStream
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-
         If TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
             TCPClientStream.Read(rcvbytes, 0, CInt(TCPClient.ReceiveBufferSize))
-            ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
+            ChatRichTextBox.Text &= TCPClient.Client.RemoteEndPoint.ToString & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes)
             ChatRichTextBox.Text &= Environment.NewLine
         End If
     End Sub

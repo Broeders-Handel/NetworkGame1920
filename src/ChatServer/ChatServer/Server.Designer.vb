@@ -79,6 +79,7 @@ Partial Class Server
         '
         Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 42)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
+        Me.ChatRichTextBox.ReadOnly = True
         Me.ChatRichTextBox.Size = New System.Drawing.Size(195, 96)
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
@@ -98,7 +99,7 @@ Partial Class Server
         Me.Controls.Add(Me.StopButton)
         Me.Controls.Add(Me.StartButton)
         Me.Name = "Server"
-        Me.Text = "Form1"
+        Me.Text = "Server"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

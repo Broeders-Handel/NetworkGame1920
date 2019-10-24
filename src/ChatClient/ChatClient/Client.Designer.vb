@@ -69,9 +69,13 @@ Partial Class Client
         '
         Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 62)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
+        Me.ChatRichTextBox.ReadOnly = True
         Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 237)
         Me.ChatRichTextBox.TabIndex = 4
         Me.ChatRichTextBox.Text = ""
+        '
+        'Timer1
+        '
         '
         'Client
         '
@@ -84,7 +88,7 @@ Partial Class Client
         Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.ConnectButton)
         Me.Name = "Client"
-        Me.Text = "Form1"
+        Me.Text = "Client"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
