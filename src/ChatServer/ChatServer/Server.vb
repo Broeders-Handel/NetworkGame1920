@@ -5,6 +5,8 @@ Imports System.IO
 Public Class Server
     Dim TCPServer As Socket
     Dim TCPListenerz As TcpListener
+    Dim serverStatus As Boolean = False
+    Dim clients As New List(Of TcpClient)
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
 
         Try
@@ -28,6 +30,22 @@ Public Class Server
         TCPServer.Blocking = False
         Timer1.Enabled = True
     End Sub
+    Function SendToClients(ByVal data As String)
+        If serverStatus = True Then
+            If clients.Count > 0 Then
+                Try
+                    For Each client As TcpClient In clients
+                        Dim TX1 As New StreamWriter(client.GetStream)
+                        TX1.WriteLine(data)
+                        TX1.Flush()
+                    Next
+                Catch ex As Exception
+                    SendToClients(data)
+                End Try
+            End If
+        End If
+        Return True
+    End Function
     '   Dim serverStatus As Boolean = False
     '  Dim serverTrying As Boolean = False
     ' Dim Server As TcpListener
