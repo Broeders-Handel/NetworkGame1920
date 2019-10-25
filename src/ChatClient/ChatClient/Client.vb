@@ -22,16 +22,21 @@ Public Class Client
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        cc.sendToServer(MessageTextBox.Text)
-        MessageTextBox.Clear()
+        Try
+            cc.sendToServer(MessageTextBox.Text)
+            MessageTextBox.Clear()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Dim naam As String = InputBox("Geef een gebruikersnaam op.")
+        cc.Username = InputBox("Geef een gebruikersnaam op.")
         cc.Connect()
         Timer1.Enabled = True
         ConnectButton.Text = "Connected"
-        ChatRichTextBox.Text = "<< Connected to server >>" & Environment.NewLine
+        ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & Environment.NewLine
     End Sub
 End Class
 

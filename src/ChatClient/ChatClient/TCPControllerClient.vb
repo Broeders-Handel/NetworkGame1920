@@ -6,6 +6,16 @@ Public Class TCPControllerClient
     Private _TCPClientStream As NetworkStream
     Dim RX As StreamReader
     Dim TX As StreamWriter
+    Private _username As String
+
+    Public Property Username As String
+        Get
+            Return _username
+        End Get
+        Set(ByVal value As String)
+            _username = value
+        End Set
+    End Property
 
     Public Property TCPClient() As TcpClient
         Get
@@ -20,7 +30,6 @@ Public Class TCPControllerClient
             Return _TCPClientStream
         End Get
         Set(ByVal value As NetworkStream)
-            _TCPClientStream = value
         End Set
     End Property
     Public Sub Connect()
@@ -32,15 +41,20 @@ Public Class TCPControllerClient
         End Try
     End Sub
     Public Sub sendToServer(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-        TCPClient.Client.Send(sendbytes)
+
+        If Message Like "//*" Then
+            Throw New Exception("De // Command is niet toegelaten")
+        Else
+                Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
+                TCPClient.Client.Send(sendbytes)
+        End If
     End Sub
     Public Function ReceiveText() As String
         Dim Output As String = ""
         If _TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
             _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
-            Output &= _TCPClient.Client.RemoteEndPoint.ToString & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Environment.NewLine
+            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Environment.NewLine
         End If
         Return Output
     End Function
