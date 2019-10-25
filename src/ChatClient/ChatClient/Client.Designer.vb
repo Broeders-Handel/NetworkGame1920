@@ -67,10 +67,10 @@ Partial Class Client
         '
         'ChatRichTextBox
         '
-        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 62)
+        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 46)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
         Me.ChatRichTextBox.ReadOnly = True
-        Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 237)
+        Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 253)
         Me.ChatRichTextBox.TabIndex = 4
         Me.ChatRichTextBox.Text = ""
         '

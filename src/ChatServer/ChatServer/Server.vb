@@ -36,19 +36,19 @@ Public Class Server
         SendToClient(MessageTextBox.Text)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        If ServerStatus = False Then
+        If serverStatus = False Then
             Try
                 TCPListener = New TcpListener(IPAddress.Any, 64553)
                 TCPListener.Start()
                 TCPServer = TCPListener.AcceptSocket()
                 TCPServer.Blocking = False
                 Timer1.Enabled = True
-                ServerStatus = True
+                serverStatus = True
             Catch ex As Exception
-                ServerStatus = False
+                serverStatus = False
             End Try
         End If
-        If ServerStatus = True Then
+        If serverStatus = True Then
             ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
         End If
     End Sub
