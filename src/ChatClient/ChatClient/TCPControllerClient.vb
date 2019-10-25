@@ -35,7 +35,8 @@ Public Class TCPControllerClient
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
         TCPClient.Client.Send(sendbytes)
     End Sub
-    Public Function ReceiveText(Output As String) As String
+    Public Function ReceiveText() As String
+        Dim Output As String = ""
         If _TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
             _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
