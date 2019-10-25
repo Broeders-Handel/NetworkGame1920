@@ -5,7 +5,7 @@ Imports System.IO
 Public Class Server
     Dim TCPServer As Socket
     Dim TCPListener As TcpListener
-
+    Dim serverStatus As Boolean = False
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
