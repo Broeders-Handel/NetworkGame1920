@@ -31,8 +31,18 @@ Public Class TCPControllerClient
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
-
+    Public Sub sendToServer(Message As String)
+        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
+        TCPClient.Client.Send(sendbytes)
+    End Sub
+    Public Function ReceiveText(Output As String) As String
+        If _TCPClientStream.DataAvailable = True Then
+            Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
+            _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
+            Output &= _TCPClient.Client.RemoteEndPoint.ToString & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Environment.NewLine
+        End If
+        Return Output
+    End Function
     Private Enum ClientStatus
         Connected
         Disconnected
