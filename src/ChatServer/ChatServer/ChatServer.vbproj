@@ -94,6 +94,8 @@
     <Compile Include="Server.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Users.vb" />
+    <Compile Include="UsersController.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
