@@ -6,15 +6,20 @@ Public Class Server
     Dim TCPServer As Socket
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
-
+    Dim UsersController As New UsersController
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
             Dim rcvbytes(TCPServer.ReceiveBufferSize) As Byte
             TCPServer.Receive(rcvbytes)
-            ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
-            ChatRichTextBox.Text &= Environment.NewLine
-            MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
-            SendToClient(MessageTextBox.Text)
+            If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
+                Dim username As String = System.Text.Encoding.ASCII.GetString(rcvbytes)
+                UsersController.addUser(username.Substring(2))
+            Else
+                ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
+                ChatRichTextBox.Text &= Environment.NewLine
+                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
+                SendToClient(MessageTextBox.Text)
+            End If
         Catch ex As Exception
         End Try
     End Sub
