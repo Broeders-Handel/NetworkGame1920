@@ -5,28 +5,32 @@ Imports System.Threading.Thread
 
 Public Class Server
     Dim ThreadConnectClient As System.Threading.Thread
-    Dim TCPServer As Socket
+    Dim TCPClient As Socket
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
+    Dim StopServer As Boolean = False
     Dim UsersController As New UsersController
 
 
     Private Sub ConnectClient()
-        Try
-            TCPListener = New TcpListener(IPAddress.Any, 64553)
-            TCPListener.Start()
-            TCPServer = TCPListener.AcceptSocket()
-            TCPServer.Blocking = False
-            Timer1.Enabled = True
-            serverStatus = True
-        Catch ex As Exception
-            serverStatus = False
-        End Try
+        Do Until StopServer = True
+            Try
+                TCPListener = New TcpListener(IPAddress.Any, 64553)
+                TCPListener.Start()
+                TcpClient = TCPListener.AcceptSocket()
+                TCPClient.Blocking = False
+                Timer1.Enabled = True
+                serverStatus = True
+                UsersController.AddClient(TCPClient)
+            Catch ex As Exception
+                serverStatus = False
+            End Try
+        Loop
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
-            Dim rcvbytes(TCPServer.ReceiveBufferSize) As Byte
-            TCPServer.Receive(rcvbytes)
+            Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
+            TCPClient.Receive(rcvbytes)
             If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
                 Dim username As String = System.Text.Encoding.ASCII.GetString(rcvbytes)
                 UsersController.addUser(username.Substring(2))
@@ -41,8 +45,10 @@ Public Class Server
     End Sub
     Public Sub SendToClient(Message As String)
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(MessageTextBox.Text)
-        TCPServer.Send(sendbytes)
-        MessageTextBox.Clear()
+        For i As Integer = 0 To UsersController.ClientsList.Count - 1
+            UsersController.ClientsList(i).Send(sendbytes)
+            MessageTextBox.Clear()
+        Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -62,5 +68,9 @@ Public Class Server
         If serverStatus = True Then
             ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
         End If
+    End Sub
+
+    Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        StopServer = True
     End Sub
 End Class
