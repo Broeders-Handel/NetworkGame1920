@@ -5,6 +5,7 @@ Class UsersController
 
     Public Property ClientsList As List(Of Socket)
         Get
+            'kopie
             Return _ClientsList
         End Get
         Set(value As List(Of Socket))
@@ -26,6 +27,7 @@ Class UsersController
         _usersList.Add(Users)
     End Sub
     Public Sub AddClient(Client)
+        'KOPIE NEMEN
         ClientsList.Add(Client)
     End Sub
 End Class
