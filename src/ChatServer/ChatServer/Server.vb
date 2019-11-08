@@ -10,6 +10,8 @@ Public Class Server
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
     Dim UsersController As New UsersController
+    Dim usernameString As String = ""
+    Dim username As New Username
 
 
     Private Sub ConnectClient()
@@ -17,12 +19,17 @@ Public Class Server
             Try
                 TCPListener = New TcpListener(IPAddress.Any, 64553)
                 TCPListener.Start()
-                TcpClient = TCPListener.AcceptSocket()
+                TCPClient = TCPListener.AcceptSocket()
                 TCPClient.Blocking = False
                 Timer1.Enabled = True
                 serverStatus = True
+                If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
+                    usernameString = System.Text.Encoding.ASCII.GetString(Listening)
+                    usernameString = usernameString.Substring(2)
+                End If
+                username.Username = usernameString
                 'isBusy=false
-                UsersController.AddClient(TCPClient)
+                UsersController.addUser(TCPClient, username)
             Catch ex As Exception
                 serverStatus = False
                 'isBusy=false
@@ -31,15 +38,12 @@ Public Class Server
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
-            Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
-            TCPClient.Receive(rcvbytes)
-            If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-                Dim username As String = System.Text.Encoding.ASCII.GetString(rcvbytes)
-                UsersController.addUser(username.Substring(2))
+            TCPClient.Receive(Listening)
+            If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
             Else
-                ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
+                ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(Listening)
                 ChatRichTextBox.Text &= Environment.NewLine
-                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
+                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(Listening)
                 SendToClient(MessageTextBox.Text)
             End If
         Catch ex As Exception
@@ -69,8 +73,7 @@ Public Class Server
         'isBusye=true
         ThreadConnectClient.Start()
         'while isBusy
-        'sleep  ms
-
+        Sleep(100)
         If serverStatus = True Then
             ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
         End If
@@ -79,4 +82,8 @@ Public Class Server
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
     End Sub
+    Private Function Listening()
+        Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
+        Return rcvbytes
+    End Function
 End Class

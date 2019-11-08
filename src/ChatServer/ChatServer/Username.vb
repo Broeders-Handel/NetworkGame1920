@@ -1,4 +1,4 @@
-﻿Public Class Users
+﻿Public Class Username
 
     Private _username As String
 
