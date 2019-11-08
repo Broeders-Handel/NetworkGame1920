@@ -4,8 +4,6 @@ Imports System.IO
 Public Class TCPControllerClient
     Private _TCPClient As TcpClient
     Private _TCPClientStream As NetworkStream
-    Dim RX As StreamReader
-    Dim TX As StreamWriter
     Private _username As String
 
     Public Property Username As String
@@ -40,6 +38,9 @@ Public Class TCPControllerClient
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+    Public Function NewLine() As String
+        Return Environment.NewLine
+    End Function
     Public Sub sendToServer(Message As String)
 
         If Message Like "//*" Then
@@ -54,7 +55,7 @@ Public Class TCPControllerClient
         If _TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
             _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
-            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Environment.NewLine
+            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Me.NewLine()
         End If
         Return Output
     End Function
