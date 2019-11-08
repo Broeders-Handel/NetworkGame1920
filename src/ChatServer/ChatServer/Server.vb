@@ -10,8 +10,7 @@ Public Class Server
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
     Dim UsersController As New UsersController
-
-
+    Dim isBusy As Boolean = False
     Private Sub ConnectClient()
         Do Until StopServer = True
             Try
@@ -21,11 +20,11 @@ Public Class Server
                 TCPClient.Blocking = False
                 Timer1.Enabled = True
                 serverStatus = True
-                'isBusy=false
+                isBusy = False
                 UsersController.AddClient(TCPClient)
             Catch ex As Exception
                 serverStatus = False
-                'isBusy=false
+                isBusy = False
             End Try
         Loop
     End Sub
@@ -66,11 +65,12 @@ Public Class Server
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         ThreadConnectClient = New System.Threading.Thread(AddressOf ConnectClient)
-        'isBusye=true
+        isBusy = True
         ThreadConnectClient.Start()
-        'while isBusy
-        'sleep  ms
-
+        Do While isBusy = True
+            Sleep(100)
+            isBusy = False
+        Loop
         If serverStatus = True Then
             ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
         End If
