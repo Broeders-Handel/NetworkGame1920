@@ -55,7 +55,7 @@ Public Class TCPControllerClient
         If _TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
             _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
-            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & Me.NewLine()
+            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & NewLine()
         End If
         Return Output
     End Function
