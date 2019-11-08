@@ -17,7 +17,7 @@ Public Class Server
             Try
                 TCPListener = New TcpListener(IPAddress.Any, 64553)
                 TCPListener.Start()
-                TcpClient = TCPListener.AcceptSocket()
+                TCPClient = TCPListener.AcceptSocket()
                 TCPClient.Blocking = False
                 Timer1.Enabled = True
                 serverStatus = True

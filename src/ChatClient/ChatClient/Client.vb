@@ -8,8 +8,8 @@ Public Class Client
         If cc.TCPClientStream.DataAvailable = True Then
             Dim rcvbytes(cc.TCPClient.ReceiveBufferSize) As Byte
             cc.TCPClientStream.Read(rcvbytes, 0, CInt(cc.TCPClient.ReceiveBufferSize))
-            ChatRichTextBox.Text &= cc.TCPClient.Client.RemoteEndPoint.ToString & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes)
-            ChatRichTextBox.Text &= Environment.NewLine
+            ChatRichTextBox.Text &= cc.TCPClient.Client.RemoteEndPoint.ToString & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & cc.NewLine
+
         End If
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -36,7 +36,7 @@ Public Class Client
         cc.Connect()
         Timer1.Enabled = True
         ConnectButton.Text = "Connected"
-        ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & Environment.NewLine
+        ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
     End Sub
 End Class
 
