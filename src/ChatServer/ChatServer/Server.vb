@@ -13,8 +13,6 @@ Public Class Server
     Dim usernameString As String = ""
     Dim username As New Username
     Dim isBusy As Boolean = False
-
-
     Private Sub ConnectClient()
         Do Until StopServer = True
             Try
@@ -43,17 +41,16 @@ Public Class Server
             TCPClient.Receive(Listening)
             If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
             Else
-                ChatRichTextBox.Text &= ReceiveText()
                 ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(Listening)
                 ChatRichTextBox.Text &= Environment.NewLine
-                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(listening)
+                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(Listening)
                 SendToClient(MessageTextBox.Text)
             End If
         Catch ex As Exception
         End Try
     End Sub
     Public Sub SendToClient(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(MessageTextBox.Text)
+        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
         For i As Integer = 0 To UsersController.ClientsList.Count - 1
             UsersController.ClientsList(i).Send(sendbytes)
             MessageTextBox.Clear()
