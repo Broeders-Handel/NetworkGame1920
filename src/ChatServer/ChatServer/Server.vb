@@ -5,14 +5,14 @@ Imports System.Threading.Thread
 Public Class Server
     Dim ThreadConnectClient As Threading.Thread
     Dim TCPClient As Socket
-    Dim ns As NetworkStream
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
     Dim UsersController As New UsersController
     Dim usernameString As String = ""
-    Dim username As New Username
+    Dim username As String
     Dim isBusy As Boolean = False
+    Dim user As New Users
     Private Sub ConnectClient()
         Do Until StopServer = True
             Try
@@ -26,18 +26,19 @@ Public Class Server
                     usernameString = System.Text.Encoding.ASCII.GetString(Listening)
                     usernameString = usernameString.Substring(2)
                 End If
-                username.Username = usernameString
+                username = usernameString
                 isBusy = False
-                UsersController.addUser(TCPClient, username)
+                user.Client = TCPClient
+                user.Username = usernameString
+                UsersController.addUser(username, user)
             Catch ex As Exception
                 serverStatus = False
                 isBusy = False
             End Try
         Loop
     End Sub
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
         Try
-
             TCPClient.Receive(Listening)
             If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
             Else
@@ -51,8 +52,8 @@ Public Class Server
     End Sub
     Public Sub SendToClient(Message As String)
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-        For i As Integer = 0 To UsersController.ClientsList.Count - 1
-            UsersController.ClientsList(i).Send(sendbytes)
+        For i As Integer = 0 To UsersController.Users.Values.Count - 1
+            user.write(sendbytes)
             MessageTextBox.Clear()
         Next
     End Sub
@@ -69,7 +70,7 @@ Public Class Server
         SendToClient(MessageTextBox.Text)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        ThreadConnectClient = New System.Threading.Thread(AddressOf ConnectClient)
+        ThreadConnectClient = New Threading.Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
         Do While isBusy = True
