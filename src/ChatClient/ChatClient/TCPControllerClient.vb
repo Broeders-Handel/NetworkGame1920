@@ -28,6 +28,7 @@ Public Class TCPControllerClient
             Return _TCPClientStream
         End Get
         Set(ByVal value As NetworkStream)
+            _TCPClientStream = value
         End Set
     End Property
     Public Sub Connect()

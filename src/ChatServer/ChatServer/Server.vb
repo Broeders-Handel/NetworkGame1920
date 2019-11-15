@@ -6,6 +6,7 @@ Imports System.Threading.Thread
 Public Class Server
     Dim ThreadConnectClient As System.Threading.Thread
     Dim TCPClient As Socket
+    Dim ns As NetworkStream
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
@@ -39,12 +40,14 @@ Public Class Server
     End Sub
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Try
+
             TCPClient.Receive(Listening)
             If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
             Else
+                ChatRichTextBox.Text &= ReceiveText()
                 ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(Listening)
                 ChatRichTextBox.Text &= Environment.NewLine
-                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(Listening)
+                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(listening)
                 SendToClient(MessageTextBox.Text)
             End If
         Catch ex As Exception
