@@ -1,10 +1,9 @@
 ﻿Imports System.Net.Sockets
 Imports System.Net
-Imports System.IO
 Imports System.Threading.Thread
 
 Public Class Server
-    Dim ThreadConnectClient As System.Threading.Thread
+    Dim ThreadConnectClient As Threading.Thread
     Dim TCPClient As Socket
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False

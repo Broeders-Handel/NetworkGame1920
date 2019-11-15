@@ -1,5 +1,4 @@
 ﻿Public Class Username
-
     Private _username As String
 
     Public Property Username As String
@@ -13,5 +12,4 @@
     Public Overrides Function ToString() As String
         Return " => " & Username
     End Function
-
 End Class
