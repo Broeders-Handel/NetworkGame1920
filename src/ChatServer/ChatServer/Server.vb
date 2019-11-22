@@ -55,7 +55,6 @@ Public Class Server
                 If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
                 Else
                     Dim message As String = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
-
                     SendToClient(message)
                 End If
             Next
