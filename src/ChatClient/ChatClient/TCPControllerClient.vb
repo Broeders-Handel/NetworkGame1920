@@ -29,14 +29,19 @@ Public Class TCPControllerClient
         End Get
 
     End Property
-    Public Sub Connect()
+    Public Function Connect() As Boolean
         Try
             TCPClient = New TcpClient("127.0.0.1", 64553)
             _TCPClientStream = TCPClient.GetStream()
+            If _TCPClientStream.CanRead = True Then
+                Return True
+            Else
+                Return False
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-    End Sub
+    End Function
     Public Function NewLine() As String
         Return Environment.NewLine
     End Function
@@ -59,8 +64,4 @@ Public Class TCPControllerClient
 
         Return Output
     End Function
-    Private Enum ClientStatus
-        Connected
-        Disconnected
-    End Enum
 End Class

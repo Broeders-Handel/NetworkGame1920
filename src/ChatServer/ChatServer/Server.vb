@@ -1,9 +1,12 @@
 ﻿Imports System.Net.Sockets
 Imports System.Net
 Imports System.Threading.Thread
+Imports System.IO
+Imports System.Threading
 
 Public Class Server
-    Dim ThreadConnectClient As Threading.Thread
+    Dim ThreadConnectClient As Thread
+    Dim Islistening As Thread
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
@@ -11,6 +14,9 @@ Public Class Server
     Dim usernameString As String = ""
     Dim username As String
     Dim isBusy As Boolean = False
+    Dim cc As New TcpControllerServer
+    Public Event MessageRecieved(data As String)
+
     Private Sub ConnectClient()
         TCPListener = New TcpListener(IPAddress.Any, 64553)
         TCPListener.Start()
@@ -37,13 +43,25 @@ Public Class Server
                 UsersController.addUser(username, user)
 
                 'start thread die luistert naar specifieke client
-
             Catch ex As Exception
                 serverStatus = False
                 isBusy = False
             End Try
         Loop
     End Sub
+    Private Sub Listening()
+        Dim ClientData As StreamReader
+        Do While True
+            ClientData = New StreamReader(cc.TCPClientStream)
+            Try
+                RaiseEvent MessageRecieved(ClientData.ReadLine)
+
+            Catch ex As Exception
+            End Try
+            Sleep(100)
+        Loop
+    End Sub
+
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
         Try
             For Each usr As Users In UsersController.Users.Values
@@ -83,8 +101,10 @@ Public Class Server
         SendToClient(MessageTextBox.Text)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        ThreadConnectClient = New Threading.Thread(AddressOf ConnectClient)
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
+        IsListening = New Thread(AddressOf Listening)
         isBusy = True
+        IsListening.Start()
         ThreadConnectClient.Start()
         Do While isBusy = True
             Sleep(10000)

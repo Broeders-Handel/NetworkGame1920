@@ -1,17 +1,11 @@
-﻿Imports System.ComponentModel
-Imports System.Net.Sockets
-Imports System.IO
+﻿Imports System.IO
 Imports System.Threading
 
 Public Class Client
     Dim cc As New TCPControllerClient
     Public Event MessageRecieved(data As String)
-
     Private ComunicatieThread As Thread
 
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        ChatRichTextBox.Text &= cc.ReceiveText()
-    End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
@@ -28,13 +22,16 @@ Public Class Client
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-
     End Sub
 
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         cc.Username = InputBox("Geef een gebruikersnaam op.")
         cc.Connect()
-        Timer1.Enabled = True
+        If cc.Connect = True Then
+            Listening()
+        Else
+            MessageBox.Show("Je bent niet verbonden")
+        End If
         ConnectButton.Text = "Connected"
         ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
@@ -43,22 +40,15 @@ Public Class Client
 
     Private Sub Listening()
         Dim ClientData As StreamReader
-        'Create Listener Loop
         Do While True
-
             ClientData = New StreamReader(cc.TCPClientStream)
-
-            ' Raise event for incoming messages
             Try
                 RaiseEvent MessageRecieved(ClientData.ReadLine)
+
             Catch ex As Exception
             End Try
-            'Reduce Cpu Usage
-            Threading.Thread.Sleep(100)
+            Thread.Sleep(100)
         Loop
     End Sub
-
-
-
 End Class
 

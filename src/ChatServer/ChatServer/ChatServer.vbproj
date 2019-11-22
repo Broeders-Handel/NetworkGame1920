@@ -94,6 +94,7 @@
     <Compile Include="Server.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TcpControllerServer.vb" />
     <Compile Include="Users.vb" />
     <Compile Include="UsersController.vb" />
   </ItemGroup>
