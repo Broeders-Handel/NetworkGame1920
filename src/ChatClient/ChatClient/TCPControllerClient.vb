@@ -23,13 +23,11 @@ Public Class TCPControllerClient
             _TCPClient = value
         End Set
     End Property
-    Public Property TCPClientStream() As NetworkStream
+    Public ReadOnly Property TCPClientStream() As NetworkStream
         Get
-            Return _TCPClientStream
+            Return TCPClient.GetStream()
         End Get
-        Set(ByVal value As NetworkStream)
-            _TCPClientStream = value
-        End Set
+
     End Property
     Public Sub Connect()
         Try

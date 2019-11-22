@@ -1,8 +1,14 @@
 ﻿Imports System.ComponentModel
 Imports System.Net.Sockets
 Imports System.IO
+Imports System.Threading
+
 Public Class Client
     Dim cc As New TCPControllerClient
+    Public Event MessageRecieved(data As String)
+
+    Private ComunicatieThread As Thread
+
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         ChatRichTextBox.Text &= cc.ReceiveText()
     End Sub
@@ -31,6 +37,28 @@ Public Class Client
         Timer1.Enabled = True
         ConnectButton.Text = "Connected"
         ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
+        ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+        ComunicatieThread.Start()
     End Sub
+
+    Private Sub Listening()
+        Dim ClientData As StreamReader
+        'Create Listener Loop
+        Do While True
+
+            ClientData = New StreamReader(cc.TCPClientStream)
+
+            ' Raise event for incoming messages
+            Try
+                RaiseEvent MessageRecieved(ClientData.ReadLine)
+            Catch ex As Exception
+            End Try
+            'Reduce Cpu Usage
+            Threading.Thread.Sleep(100)
+        Loop
+    End Sub
+
+
+
 End Class
 
