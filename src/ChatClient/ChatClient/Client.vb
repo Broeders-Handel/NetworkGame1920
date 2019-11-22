@@ -23,7 +23,6 @@ Public Class Client
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         cc.Username = InputBox("Geef een gebruikersnaam op.")
         cc.Connect()
@@ -36,19 +35,19 @@ Public Class Client
         ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
         ComunicatieThread.Start()
-    End Sub
 
+    End Sub
     Private Sub Listening()
         Dim ClientData As StreamReader
         Do While True
             ClientData = New StreamReader(cc.TCPClientStream)
             Try
                 RaiseEvent MessageRecieved(ClientData.ReadLine)
-
             Catch ex As Exception
             End Try
             Thread.Sleep(100)
         Loop
+
     End Sub
 End Class
 
