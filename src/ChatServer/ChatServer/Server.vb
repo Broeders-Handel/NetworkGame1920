@@ -4,7 +4,6 @@ Imports System.Threading.Thread
 
 Public Class Server
     Dim ThreadConnectClient As Threading.Thread
-    Dim TCPClient As Socket
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
@@ -12,25 +11,33 @@ Public Class Server
     Dim usernameString As String = ""
     Dim username As String
     Dim isBusy As Boolean = False
-    Dim user As New Users
     Private Sub ConnectClient()
+        TCPListener = New TcpListener(IPAddress.Any, 64553)
+        TCPListener.Start()
+        Timer1.Start()
+
         Do Until StopServer = True
             Try
-                TCPListener = New TcpListener(IPAddress.Any, 64553)
-                TCPListener.Start()
+                Dim TCPClient As Socket
                 TCPClient = TCPListener.AcceptSocket()
                 TCPClient.Blocking = False
                 Timer1.Enabled = True
                 serverStatus = True
-                If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
-                    usernameString = System.Text.Encoding.ASCII.GetString(Listening)
+                Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
+                If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
+                    usernameString = System.Text.Encoding.ASCII.GetString(rcvbytes)
                     usernameString = usernameString.Substring(2)
                 End If
                 username = usernameString
                 isBusy = False
+
+                Dim user As New Users
                 user.Client = TCPClient
                 user.Username = usernameString
                 UsersController.addUser(username, user)
+
+                'start thread die luistert naar specifieke client
+
             Catch ex As Exception
                 serverStatus = False
                 isBusy = False
@@ -39,22 +46,29 @@ Public Class Server
     End Sub
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
         Try
-            TCPClient.Receive(Listening)
-            If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
-            Else
-                ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(Listening)
-                ChatRichTextBox.Text &= Environment.NewLine
-                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(Listening)
-                SendToClient(MessageTextBox.Text)
-            End If
+            For Each usr As Users In UsersController.Users.Values
+                Dim userName As String = usr.Username
+
+
+                Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
+                usr.Client.Receive(rcvbytes)
+                If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
+                Else
+                    Dim message As String = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
+
+                    SendToClient(message)
+                End If
+            Next
         Catch ex As Exception
         End Try
     End Sub
+
     Public Sub SendToClient(Message As String)
+        ChatRichTextBox.Text &= Message & Environment.NewLine
+
         Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-        For i As Integer = 0 To UsersController.Users.Values.Count - 1
-            user.write(sendbytes)
-            MessageTextBox.Clear()
+        For Each usr As Users In UsersController.Users.Values
+            usr.write(sendbytes)
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -74,8 +88,8 @@ Public Class Server
         isBusy = True
         ThreadConnectClient.Start()
         Do While isBusy = True
-            Sleep(100)
-            isBusy = False
+            Sleep(10000)
+
         Loop
 
         If serverStatus = True Then
@@ -86,8 +100,4 @@ Public Class Server
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
     End Sub
-    Private Function Listening()
-        Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
-        Return rcvbytes
-    End Function
 End Class
