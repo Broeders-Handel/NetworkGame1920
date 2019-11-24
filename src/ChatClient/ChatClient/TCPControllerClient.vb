@@ -23,24 +23,33 @@ Public Class TCPControllerClient
             _TCPClient = value
         End Set
     End Property
-    Public ReadOnly Property TCPClientStream() As NetworkStream
+    Public Property TCPClientStream() As NetworkStream
         Get
             Return TCPClient.GetStream()
         End Get
+        Set(value As NetworkStream)
+            _TCPClientStream = value
+        End Set
 
     End Property
     Public Function Connect() As Boolean
+        Dim CanConnect As Boolean
         Try
+
             TCPClient = New TcpClient("127.0.0.1", 64553)
             _TCPClientStream = TCPClient.GetStream()
             If _TCPClientStream.CanRead = True Then
-                Return True
+                CanConnect = True
+                Return CanConnect
             Else
-                Return False
+                CanConnect = False
+                Return CanConnect
             End If
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+        Return CanConnect
     End Function
     Public Function NewLine() As String
         Return Environment.NewLine
@@ -50,8 +59,8 @@ Public Class TCPControllerClient
         If Message Like "//*" Then
             Throw New Exception("De // Command is niet toegelaten")
         Else
-                Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-                TCPClient.Client.Send(sendbytes)
+            Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
+            TCPClient.Client.Send(sendbytes)
         End If
     End Sub
     Public Function ReceiveText() As String

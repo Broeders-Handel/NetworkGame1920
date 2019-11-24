@@ -1,7 +1,8 @@
 ﻿Imports System.Net.Sockets
 
 Public Class TcpControllerServer
-    Private _TCPClient As TcpClient
+    Private _TCPClient As New TcpClient
+
     Public Property TCPClient() As TcpClient
         Get
             Return _TCPClient
@@ -12,8 +13,10 @@ Public Class TcpControllerServer
     End Property
     Public ReadOnly Property TCPClientStream() As NetworkStream
         Get
-            Return TCPClient.GetStream()
+
+            Return _TCPClient.GetStream
         End Get
+
 
     End Property
 End Class

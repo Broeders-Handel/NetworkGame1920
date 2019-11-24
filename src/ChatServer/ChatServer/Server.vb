@@ -6,13 +6,16 @@ Imports System.Threading
 
 Public Class Server
     Dim ThreadConnectClient As Thread
-    Dim Islistening As Thread
+    Dim Islistening As Boolean
+    Dim ListenThread As Thread
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
+    Dim Client As New TcpClient
     Dim UsersController As New UsersController
     Dim usernameString As String = ""
     Dim username As String
+    Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
     Public Event MessageRecieved(data As String)
@@ -20,14 +23,14 @@ Public Class Server
     Private Sub ConnectClient()
         TCPListener = New TcpListener(IPAddress.Any, 64553)
         TCPListener.Start()
-        Timer1.Start()
+
 
         Do Until StopServer = True
             Try
                 Dim TCPClient As Socket
                 TCPClient = TCPListener.AcceptSocket()
                 TCPClient.Blocking = False
-                Timer1.Enabled = True
+
                 serverStatus = True
                 Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
                 If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
@@ -42,6 +45,7 @@ Public Class Server
                 user.Username = usernameString
                 UsersController.addUser(username, user)
 
+                ListenThread.Start()
                 'start thread die luistert naar specifieke client
             Catch ex As Exception
                 serverStatus = False
@@ -50,43 +54,48 @@ Public Class Server
         Loop
     End Sub
     Private Sub Listening()
-        Dim ClientData As StreamReader
-        Do While True
-            ClientData = New StreamReader(cc.TCPClientStream)
-            Try
-                RaiseEvent MessageRecieved(ClientData.ReadLine)
 
-            Catch ex As Exception
-            End Try
-            Sleep(100)
-        Loop
+        Dim ClientData As StreamReader
+        Try
+            Do Until Islistening = False
+                If TCPListener.Pending = True Then
+                    Client = TCPListener.AcceptTcpClient
+                    ClientData = New StreamReader(tcpClientStream)
+                    RaiseEvent MessageRecieved(ClientData.ReadLine)
+                End If
+            Loop
+        Catch ex As Exception
+        End Try
+        Sleep(100)
+
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+
+
+    Public Sub SendToClient(Message As String)
+
+        ChatRichTextBox.Text &= Message & Environment.NewLine
         Try
+
+            tcpClientStream = Client.GetStream
+            Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
             For Each usr As Users In UsersController.Users.Values
                 Dim userName As String = usr.Username
+                If tcpClientStream.DataAvailable = True Then
+                    Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
+                    tcpClientStream.Read(rcvbytes, 0, CInt(cc.TCPClient.ReceiveBufferSize))
 
+                    If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
+                    Else
 
-                Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
-                usr.Client.Receive(rcvbytes)
-                If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-                Else
-                    Dim message As String = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
-                    SendToClient(message)
+                        Message = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
+                        usr.write(Message)
+                        SendToClient(Message)
+                    End If
                 End If
             Next
         Catch ex As Exception
         End Try
-    End Sub
-
-    Public Sub SendToClient(Message As String)
-        ChatRichTextBox.Text &= Message & Environment.NewLine
-
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-        For Each usr As Users In UsersController.Users.Values
-            usr.write(sendbytes)
-        Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -102,12 +111,12 @@ Public Class Server
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
-        IsListening = New Thread(AddressOf Listening)
+        ListenThread = New Thread(AddressOf Listening)
         isBusy = True
-        IsListening.Start()
+
         ThreadConnectClient.Start()
         Do While isBusy = True
-            Sleep(10000)
+            Sleep(100)
 
         Loop
 

@@ -5,6 +5,7 @@ Public Class Client
     Dim cc As New TCPControllerClient
     Public Event MessageRecieved(data As String)
     Private ComunicatieThread As Thread
+    Dim islistening As Boolean
 
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -24,22 +25,25 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
+        Dim Connected As Boolean = False
         cc.Username = InputBox("Geef een gebruikersnaam op.")
-        cc.Connect()
-        If cc.Connect = True Then
-            Listening()
+        Connected = cc.Connect()
+        If Connected = True Then
+            islistening = True
+            ConnectButton.Text = "Connected"
+            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
+            ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+            ComunicatieThread.Start()
+            'Listening()
         Else
             MessageBox.Show("Je bent niet verbonden")
         End If
-        ConnectButton.Text = "Connected"
-        ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
-        ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
-        ComunicatieThread.Start()
+
 
     End Sub
     Private Sub Listening()
         Dim ClientData As StreamReader
-        Do While True
+        Do Until islistening = False
             ClientData = New StreamReader(cc.TCPClientStream)
             Try
                 RaiseEvent MessageRecieved(ClientData.ReadLine)
