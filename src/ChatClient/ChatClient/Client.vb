@@ -11,14 +11,14 @@ Public Class Client
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                clienController.sendToServer(MessageTextBox.Text)
+                clienController.Write(MessageTextBox.Text)
                 MessageTextBox.Clear()
             End If
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Try
-            clienController.sendToServer(MessageTextBox.Text)
+            clienController.Write(MessageTextBox.Text)
             MessageTextBox.Clear()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -31,7 +31,7 @@ Public Class Client
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"
-            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & clienController.NewLine
+            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & Environment.NewLine
             ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
             ComunicatieThread.Start()
             'Listening()
@@ -42,11 +42,11 @@ Public Class Client
 
     End Sub
     Private Sub Listening()
-        Dim ClientData As StreamReader
+        Dim streamRdr As StreamReader
         Do While islistening
             Try
-                ClientData = New StreamReader(clienController.TCPClientStream)
-                Dim data As String = ClientData.ReadLine
+                streamRdr = New StreamReader(clienController.TCPClientStream)
+                Dim data As String = streamRdr.ReadLine
                 UpdateText(ChatRichTextBox, data)
             Catch ex As Exception
                 Console.WriteLine(ex.Message)

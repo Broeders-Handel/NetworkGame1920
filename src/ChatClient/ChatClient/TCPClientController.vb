@@ -6,7 +6,6 @@ Public Class TCPClientController
     Const IPADDRESS As String = "127.0.0.1"
 
     Private _TCPClient As TcpClient
-    Private _TCPClientStream As NetworkStream
     Private _username As String
 
     Public Property Username As String
@@ -26,32 +25,24 @@ Public Class TCPClientController
             _TCPClient = value
         End Set
     End Property
-    Public Property TCPClientStream() As NetworkStream
+    Public ReadOnly Property TCPClientStream() As NetworkStream
         Get
             Return TCPClient.GetStream()
         End Get
-        Set(value As NetworkStream)
-            _TCPClientStream = value
-        End Set
 
     End Property
     Public Function Connect() As Boolean
-        Dim CanConnect As Boolean = False
         Try
-
             TCPClient = New TcpClient(IPADDRESS, 64553)
-            _TCPClientStream = TCPClient.GetStream()
-            CanConnect = _TCPClientStream.CanRead
+            Write(Username, True)
+            Return True
         Catch ex As Exception
             Console.WriteLine(ex.Message)
-
+            Return False
         End Try
-        Return CanConnect
     End Function
-    Public Function NewLine() As String
-        Return Environment.NewLine
-    End Function
-    Public Sub sendToServer(Message As String, Optional isUsername As Boolean = False)
+
+    Public Sub Write(Message As String, Optional isUsername As Boolean = False)
         If isUsername Then
             Message = "//UN//" & Message
         Else
@@ -61,7 +52,8 @@ Public Class TCPClientController
         strWrit.Write(Message)
 
     End Sub
-    'Public Function ReceiveText() As String
+    'Public Function Read() As String
+
     '    Dim Output As String = ""
     '    If _TCPClientStream.DataAvailable = True Then
     '        Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte

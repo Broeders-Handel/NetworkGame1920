@@ -1,7 +1,8 @@
-﻿Imports System.Net.Sockets
+﻿Imports System.IO
+Imports System.Net.Sockets
 Public Class Users
     Private _username As String
-    Private _client As socket
+    Private _client As TcpClient
     Public Property Username As String
         Get
             Return _username
@@ -10,17 +11,19 @@ Public Class Users
             _username = value
         End Set
     End Property
-    Public Property Client As Socket
+    Public Property Client As TcpClient
         Get
             Return _client
         End Get
-        Set(value As Socket)
+        Set(value As TcpClient)
             _client = value
         End Set
     End Property
     Public Sub write(message)
-        Client.Send(message)
+        Dim strWrit As StreamWriter = New StreamWriter(Client.GetStream)
+        strWrit.Write(message)
     End Sub
+    'bij het luisteren => gooi event wanneer iets ontvangen
     Public Overrides Function ToString() As String
         Return " => " & Username
     End Function
