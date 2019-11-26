@@ -53,5 +53,9 @@ Public Class Client
         Loop
 
     End Sub
+
+    Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class
 

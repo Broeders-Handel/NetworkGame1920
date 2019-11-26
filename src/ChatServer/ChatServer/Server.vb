@@ -24,6 +24,7 @@ Public Class Server
         TCPListener = New TcpListener(IPAddress.Any, 64553)
         TCPListener.Start()
 
+       
 
         Do Until StopServer = True
             Try
@@ -110,19 +111,19 @@ Public Class Server
         SendToClient(MessageTextBox.Text)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
+        serverStatus = True
+        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         ListenThread = New Thread(AddressOf Listening)
         isBusy = True
 
         ThreadConnectClient.Start()
         Do While isBusy = True
-            Sleep(100)
-
+            Sleep(10)
         Loop
 
-        If serverStatus = True Then
-            ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
-        End If
+
+
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
