@@ -2,7 +2,7 @@
 Imports System.Threading
 
 Public Class Client
-    Dim cc As New TCPControllerClient
+    Dim clienController As New TCPClientController
     Public Event MessageRecieved(data As String)
     Private ComunicatieThread As Thread
     Dim islistening As Boolean
@@ -11,14 +11,14 @@ Public Class Client
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                cc.sendToServer(MessageTextBox.Text)
+                clienController.sendToServer(MessageTextBox.Text)
                 MessageTextBox.Clear()
             End If
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Try
-            cc.sendToServer(MessageTextBox.Text)
+            clienController.sendToServer(MessageTextBox.Text)
             MessageTextBox.Clear()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -26,12 +26,12 @@ Public Class Client
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Dim Connected As Boolean = False
-        cc.Username = InputBox("Geef een gebruikersnaam op.")
-        Connected = cc.Connect()
+        clienController.Username = InputBox("Geef een gebruikersnaam op.")
+        Connected = clienController.Connect()
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"
-            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & cc.NewLine
+            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & clienController.NewLine
             ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
             ComunicatieThread.Start()
             'Listening()
@@ -43,15 +43,33 @@ Public Class Client
     End Sub
     Private Sub Listening()
         Dim ClientData As StreamReader
-        Do Until islistening = False
-            ClientData = New StreamReader(cc.TCPClientStream)
+        Do While islistening
             Try
-                RaiseEvent MessageRecieved(ClientData.ReadLine)
+                ClientData = New StreamReader(clienController.TCPClientStream)
+                Dim data As String = ClientData.ReadLine
+                UpdateText(ChatRichTextBox, data)
             Catch ex As Exception
+                Console.WriteLine(ex.Message)
             End Try
             Thread.Sleep(100)
         Loop
 
     End Sub
+
+
+    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    'Update textbox
+    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+        If RTB.InvokeRequired Then
+            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+        Else
+            If txt IsNot Nothing Then
+                RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+
+
+
 End Class
 

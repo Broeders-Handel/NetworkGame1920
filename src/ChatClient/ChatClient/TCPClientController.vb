@@ -1,7 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.Net.Sockets
 Imports System.IO
-Public Class TCPControllerClient
+Public Class TCPClientController
+
+    Const IPADDRESS As String = "127.0.0.1"
+
     Private _TCPClient As TcpClient
     Private _TCPClientStream As NetworkStream
     Private _username As String
@@ -33,44 +36,40 @@ Public Class TCPControllerClient
 
     End Property
     Public Function Connect() As Boolean
-        Dim CanConnect As Boolean
+        Dim CanConnect As Boolean = False
         Try
 
-            TCPClient = New TcpClient("127.0.0.1", 64553)
+            TCPClient = New TcpClient(IPADDRESS, 64553)
             _TCPClientStream = TCPClient.GetStream()
-            If _TCPClientStream.CanRead = True Then
-                CanConnect = True
-                Return CanConnect
-            Else
-                CanConnect = False
-                Return CanConnect
-            End If
-
+            CanConnect = _TCPClientStream.CanRead
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            Console.WriteLine(ex.Message)
+
         End Try
         Return CanConnect
     End Function
     Public Function NewLine() As String
         Return Environment.NewLine
     End Function
-    Public Sub sendToServer(Message As String)
-
-        If Message Like "//*" Then
-            Throw New Exception("De // Command is niet toegelaten")
+    Public Sub sendToServer(Message As String, Optional isUsername As Boolean = False)
+        If isUsername Then
+            Message = "//UN//" & Message
         Else
-            Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-            TCPClient.Client.Send(sendbytes)
+            Message = "//MS//" & Message
         End If
-    End Sub
-    Public Function ReceiveText() As String
-        Dim Output As String = ""
-        If _TCPClientStream.DataAvailable = True Then
-            Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
-            _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
-            Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & NewLine()
-        End If
+        Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
+        strWrit.Write(Message)
 
-        Return Output
-    End Function
+    End Sub
+    'Public Function ReceiveText() As String
+    '    Dim Output As String = ""
+    '    If _TCPClientStream.DataAvailable = True Then
+    '        Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
+    '        _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
+    '        Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & NewLine()
+    '    End If
+
+    '    Return Output
+    'End Function
 End Class
+
