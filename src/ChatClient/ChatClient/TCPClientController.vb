@@ -29,7 +29,6 @@ Public Class TCPClientController
         Get
             Return TCPClient.GetStream()
         End Get
-
     End Property
     Public Function Connect() As Boolean
         Try
@@ -50,18 +49,6 @@ Public Class TCPClientController
         End If
         Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
         strWrit.Write(Message)
-
     End Sub
-    'Public Function Read() As String
-
-    '    Dim Output As String = ""
-    '    If _TCPClientStream.DataAvailable = True Then
-    '        Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
-    '        _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
-    '        Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & NewLine()
-    '    End If
-
-    '    Return Output
-    'End Function
 End Class
 
