@@ -28,32 +28,30 @@ Public Class Client
         Dim Connected As Boolean = False
         clienController.Username = InputBox("Geef een gebruikersnaam op.")
         Connected = clienController.Connect()
+        
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"
             ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & Environment.NewLine
             ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
             ComunicatieThread.Start()
-            'Listening()
         Else
             MessageBox.Show("Je bent niet verbonden")
         End If
-
-
     End Sub
     Private Sub Listening()
         Dim streamRdr As StreamReader
+        Dim data As String = ""
         Do While islistening
             Try
                 streamRdr = New StreamReader(clienController.TCPClientStream)
-                Dim data As String = streamRdr.ReadLine
                 UpdateText(ChatRichTextBox, data)
+                data = streamRdr.ReadLine
             Catch ex As Exception
                 Console.WriteLine(ex.Message)
             End Try
             Thread.Sleep(100)
         Loop
-
     End Sub
 
 

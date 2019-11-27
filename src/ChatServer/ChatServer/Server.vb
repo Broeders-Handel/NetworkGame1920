@@ -25,15 +25,10 @@ Public Class Server
 
 
     Private Sub ConnectClient()
-
-
-
         Do Until StopServer = True
             Try
-
                 TCPClient = TCPListener.AcceptTcpClient()
                 Dim streamRdr As StreamReader
-
                 Try
                     streamRdr = New StreamReader(TCPClient.GetStream)
                     Dim username As String = streamRdr.ReadLine
@@ -102,33 +97,41 @@ Public Class Server
 
     'End Sub
 
-
-
-    Public Sub SendToClient(Message As String)
-
-        ChatRichTextBox.Text &= Message & Environment.NewLine
-        Try
-
-            tcpClientStream = TcpClient.GetStream
-            Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-            For Each usr As Users In UsersController.Users.Values
-                Dim userName As String = usr.Username
-                If tcpClientStream.DataAvailable = True Then
-                    Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
-                    tcpClientStream.Read(rcvbytes, 0, CInt(cc.TCPClient.ReceiveBufferSize))
-
-                    If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-                    Else
-
-                        Message = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
-                        usr.write(Message)
-                        SendToClient(Message)
-                    End If
-                End If
-            Next
-        Catch ex As Exception
-        End Try
+    Public Sub SendToClient(message As String)
+        Dim user As Users = Users.getinstance
+        tcpClientStream = TCPClient.GetStream
+        If tcpClientStream.CanWrite = True Then
+            user.write(message)
+        Else
+            Throw New Exception("et werkt weer niet door kanker")
+        End If
     End Sub
+
+    '  Public Sub SendToClient(Message As String)
+
+    '      ChatRichTextBox.Text &= Message & Environment.NewLine
+    '  Try
+    '
+    '        tcpClientStream = TcpClient.GetStream
+    'Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
+    'For Each usr As Users In UsersController.Users.Values
+    ' Dim userName As String = usr.Username
+    '           If tcpClientStream.DataAvailable = True Then
+    '  Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
+    '                 tcpClientStream.Read(rcvbytes, 0, CInt(cc.TCPClient.ReceiveBufferSize))
+    '
+    ' If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
+    '  Else
+    '''
+    '                     Message = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
+    '                    usr.write(Message)
+    '                    SendToClient(Message)
+    'end If
+    ' End If
+    '         Next
+    ' Catch ex As Exception
+    ' End Try
+    '  End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True

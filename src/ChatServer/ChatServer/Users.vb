@@ -1,9 +1,16 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
 Public Class Users
+    Private Shared instance As Users
     Private _username As String
-    Private _client As TcpClient
+    Private _client As New TcpClient
     Dim Islistening As Boolean
+    Public Shared Function getinstance() As Users
+        If instance Is Nothing Then
+            instance = New Users
+        End If
+        Return instance
+    End Function
     Public Property Username As String
         Get
             Return _username
@@ -20,9 +27,10 @@ Public Class Users
             _client = value
         End Set
     End Property
-    Public Sub write(message)
+    Friend Sub write(message As String)
+        Dim users As Users = getinstance()
         Dim strWrit As StreamWriter = New StreamWriter(Client.GetStream)
-        strWrit.Write(message)
+        write(message)
     End Sub
     Public Event MessageRecieved(data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
