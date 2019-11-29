@@ -22,11 +22,7 @@ Public Class Server
     Dim TCPClient As TcpClient
 
 
-
-
     Private Sub ConnectClient()
-
-
 
         Do Until StopServer = True
             Try
@@ -86,7 +82,7 @@ Public Class Server
     'moet in de user classe zitten
     '  Private Sub Listening()
     '
-    'Dim C lientData As StreamReader
+    'Dim ClientData As StreamReader
     'Try
     'Do Until Islistening = False
     ''           ' If TCPListener.Pending = True Then
@@ -106,10 +102,9 @@ Public Class Server
 
     Public Sub SendToClient(Message As String)
 
-        ChatRichTextBox.Text &= Message & Environment.NewLine
+        'ChatRichTextBox.Text &= Message & Environment.NewLine
         Try
-
-            tcpClientStream = TcpClient.GetStream
+            tcpClientStream = TCPClient.GetStream
             Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
             For Each usr As Users In UsersController.Users.Values
                 Dim userName As String = usr.Username
@@ -129,6 +124,10 @@ Public Class Server
         Catch ex As Exception
         End Try
     End Sub
+    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
+        SendToClient("(SERVER): " & MessageTextBox.Text)
+        MessageTextBox.Clear()
+    End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
@@ -138,39 +137,26 @@ Public Class Server
             End If
         End If
     End Sub
-    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        SendToClient(MessageTextBox.Text)
-    End Sub
+
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-
         serverStatus = True
-
         TCPListener = New TcpListener(IPAddress.Any, 64553)
         TCPListener.Start()
-
+        'aanduiden dat de server gestart is
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
-        '
-        isBusy = True
 
         ThreadConnectClient.Start()
-        'Do While isBusy = True
-        '    Sleep(10)
-        'Loop
-
 
 
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        ChatRichTextBox.Text &= "<< SERVER CLOSED>>" & Environment.NewLine
     End Sub
 
-
-
-
 #Region "Textbox"
-
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
@@ -182,5 +168,6 @@ Public Class Server
             End If
         End If
     End Sub
+
 #End Region
 End Class
