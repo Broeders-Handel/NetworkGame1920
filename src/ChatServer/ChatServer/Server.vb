@@ -9,7 +9,6 @@ Public Class Server
 
     Dim ThreadConnectClient As Thread
     Dim Islistening As Boolean
-    Dim ListenThread As Thread
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
@@ -34,21 +33,15 @@ Public Class Server
                     Dim username As String = streamRdr.ReadLine
                     UpdateText(ChatRichTextBox, username)
                     'maak het user object aan
-                    Dim u As New Users
-                    u.Username = username
-                    u.Client = TCPClient
-                    UsersController.addUser(username, u)
-                    u.Listening(ChatRichTextBox)
+                    Dim usr As Users = UsersController.addUser(username, TCPClient)
+                    usr.ListenAsync()
+                    AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                     'voeg dit toe aan de lijst met huidige users
 
                     'zeg tegen het user object dat hij moet luisteren
 
                     'zorg dat events worden opgevangen in een 'schrijf naar textox en alle andere users' functie
                     'gebruik hiervoor delegate
-
-
-                    ListenThread = New Thread(AddressOf u.Listening)
-                    ListenThread.Start()
 
 
                 Catch ex As Exception
@@ -80,30 +73,39 @@ Public Class Server
 
     'moet in de user classe zitten
     '  Private Sub Listening()
-    '
-    'Dim C lientData As StreamReader
-    'Try
-    'Do Until Islistening = False
-    ''           ' If TCPListener.Pending = True Then
-    ' Client = TCPListener.AcceptTcpClient
-    '         ClientData = New StreamReader(tcpClientStream)
-    '        UpdateText(ChatRichTextBox, ClientData.ReadLine)
-    'RaiseEvent MessageRecieved(ClientData.ReadLine)
-    ' End If
-    'Loop
-    'Catch ex As Exception
-    'End Try
-    '   Sleep(100)
 
+    '    Dim C lientData As StreamReader
+    'Try
+    '        Do Until Islistening = False
+    '            '           ' If TCPListener.Pending = True Then
+    '            Client = TCPListener.AcceptTcpClient
+    '            ClientData = New StreamReader(tcpClientStream)
+    '            UpdateText(ChatRichTextBox, ClientData.ReadLine)
+    '            RaiseEvent MessageRecieved(ClientData.ReadLine)
+    '            End If
+    '        Loop
+    '    Catch ex As Exception
+    '    End Try
+    '    Sleep(100)
     'End Sub
 
+    Public Sub IncomingMessage(data As String)
+        Dim strWrit As StreamWriter
+        Try
+            strWrit = New StreamWriter(TCPClient.GetStream)
+            Write(data)
+        Catch ex As Exception
+            Throw New Exception("bericht niet verzondern")
+        End Try
+    End Sub
+
     Public Sub SendToClient(message As String)
-        Dim user As Users = Users.getinstance
+        Dim user As Users = UsersController.Users(username)
         tcpClientStream = TCPClient.GetStream
         If tcpClientStream.CanWrite = True Then
             user.write(message)
         Else
-            Throw New Exception("et werkt weer niet door kanker")
+            Throw New Exception("et werkt weer niet hier")
         End If
     End Sub
 
@@ -122,7 +124,7 @@ Public Class Server
     '
     ' If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
     '  Else
-    '''
+    '
     '                     Message = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
     '                    usr.write(Message)
     '                    SendToClient(Message)
@@ -160,18 +162,11 @@ Public Class Server
         'Do While isBusy = True
         '    Sleep(10)
         'Loop
-
-
-
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
     End Sub
-
-
-
-
 #Region "Textbox"
 
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)

@@ -28,7 +28,6 @@ Public Class Client
         Dim Connected As Boolean = False
         clienController.Username = InputBox("Geef een gebruikersnaam op.")
         Connected = clienController.Connect()
-        
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"

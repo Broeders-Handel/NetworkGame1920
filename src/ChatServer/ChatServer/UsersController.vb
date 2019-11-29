@@ -10,9 +10,9 @@ Class UsersController
             _Users = value
         End Set
     End Property
-    Public Sub addUser(username As String, client As Users)
-        Dim KopieClient As Users = client
-        Dim KopieUsername As String = username
-        Users.Add(KopieUsername, KopieClient)
-    End Sub
+    Public Function addUser(username As String, client As TcpClient) As Users
+        Dim user As New Users(username, client)
+        Users.Add(username, user)
+        Return user
+    End Function
 End Class

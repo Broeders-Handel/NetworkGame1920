@@ -1,16 +1,19 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
+Imports System.Threading
+
 Public Class Users
     Private Shared instance As Users
     Private _username As String
     Private _client As New TcpClient
     Dim Islistening As Boolean
-    Public Shared Function getinstance() As Users
-        If instance Is Nothing Then
-            instance = New Users
-        End If
-        Return instance
-    End Function
+
+    Public Sub New(username As String, client As TcpClient)
+
+        Me.Username = username
+        Me.Client = client
+    End Sub
+
     Public Property Username As String
         Get
             Return _username
@@ -19,7 +22,7 @@ Public Class Users
             _username = value
         End Set
     End Property
-    Public Property Client As TcpClient
+    Private Property Client As TcpClient
         Get
             Return _client
         End Get
@@ -28,9 +31,37 @@ Public Class Users
         End Set
     End Property
     Friend Sub write(message As String)
-        Dim users As Users = getinstance()
-        Dim strWrit As StreamWriter = New StreamWriter(Client.GetStream)
-        write(message)
+        Dim strWrit As StreamWriter
+        Try
+            'Dim users As Users = getinstance()
+            strWrit = New StreamWriter(Client.GetStream)
+            write(message)
+        Catch ex As Exception
+            Throw New Exception("bericht niet verzondern")
+        End Try
+
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return " => " & Username
+    End Function
+    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+        If RTB.InvokeRequired Then
+            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+        Else
+            If txt IsNot Nothing Then
+                RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+
+
+    Dim ListenThread As Thread
+    Public Sub ListenAsync()
+
+        ListenThread = New Thread(AddressOf Listening)
+        ListenThread.Start()
     End Sub
     Public Event MessageRecieved(data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
@@ -50,18 +81,5 @@ Public Class Users
         End Try
         'Sleep(100)
 
-    End Sub
-    Public Overrides Function ToString() As String
-        Return " => " & Username
-    End Function
-    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
-    Private Sub UpdateText(RTB As RichTextBox, txt As String)
-        If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
-        Else
-            If txt IsNot Nothing Then
-                RTB.AppendText(txt & Environment.NewLine)
-            End If
-        End If
     End Sub
 End Class
