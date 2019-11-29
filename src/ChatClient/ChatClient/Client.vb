@@ -52,8 +52,6 @@ Public Class Client
             Thread.Sleep(100)
         Loop
     End Sub
-
-
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
@@ -65,8 +63,5 @@ Public Class Client
             End If
         End If
     End Sub
-
-
-
 End Class
 
