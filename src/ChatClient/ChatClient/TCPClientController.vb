@@ -49,8 +49,8 @@ Public Class TCPClientController
             Message = "//MS//" & Message
         End If
         Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
-        strWrit.Write(Message)
-
+        strWrit.WriteLine(Message)
+        strWrit.Flush()
     End Sub
     'Public Function Read() As String
 
