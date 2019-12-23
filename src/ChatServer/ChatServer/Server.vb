@@ -34,7 +34,8 @@ Public Class Server
                     UpdateText(ChatRichTextBox, username)
                     'maak het user object aan
                     Dim usr As Users = UsersController.addUser(username, TCPClient)
-                    usr.ListenAsync()
+                    usr.Listening(ChatRichTextBox)
+                    'usr.ListenAsync()
                     AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                     'voeg dit toe aan de lijst met huidige users
 
@@ -95,7 +96,7 @@ Public Class Server
             strWrit = New StreamWriter(TCPClient.GetStream)
             Write(data)
         Catch ex As Exception
-            Throw New Exception("bericht niet verzondern")
+            Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
 

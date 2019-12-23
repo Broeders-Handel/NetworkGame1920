@@ -6,7 +6,7 @@ Public Class Users
     Private Shared instance As Users
     Private _username As String
     Private _client As New TcpClient
-    Dim Islistening As Boolean
+    Dim Islistening As Boolean = True
 
     Public Sub New(username As String, client As TcpClient)
 
@@ -37,7 +37,7 @@ Public Class Users
             strWrit = New StreamWriter(Client.GetStream)
             write(message)
         Catch ex As Exception
-            Throw New Exception("bericht niet verzondern")
+            Throw New Exception("bericht niet verzonden")
         End Try
 
     End Sub
@@ -68,8 +68,8 @@ Public Class Users
     Public Sub Listening(rtb As RichTextBox)
 
         Dim ClientData As StreamReader
-        Try
-            Do Until Islistening = False
+        '  Try
+        Do Until Islistening = False
                 ' If TCPListener.Pending = True Then
                 ' Client = TCPListener.AcceptTcpClient
                 ClientData = New StreamReader(_client.GetStream)
@@ -77,8 +77,8 @@ Public Class Users
                 RaiseEvent MessageRecieved(ClientData.ReadLine)
                 ' End If
             Loop
-        Catch ex As Exception
-        End Try
+        '  Catch ex As Exception
+        '    End Try
         'Sleep(100)
 
     End Sub
