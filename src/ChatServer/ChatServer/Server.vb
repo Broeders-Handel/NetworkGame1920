@@ -145,7 +145,10 @@ Public Class Server
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
+        '  For Each usr In UsersController.Users
         SendToClient(MessageTextBox.Text)
+        '  Next
+
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
 

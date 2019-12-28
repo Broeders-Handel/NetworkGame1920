@@ -12,7 +12,7 @@ Class UsersController
     End Property
     Public Function addUser(username As String, client As TcpClient) As Users
         Dim user As New Users(username, client)
-        Users.Add(username, user)
+        _Users.Add(username, user)
         Return user
     End Function
 End Class
