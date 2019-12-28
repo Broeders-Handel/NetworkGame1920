@@ -30,12 +30,18 @@ Public Class Users
             _client = value
         End Set
     End Property
+    Public ReadOnly Property TCPClientStream() As NetworkStream
+        Get
+            Return Client.GetStream()
+        End Get
+    End Property
     Friend Sub write(message As String)
         Dim strWrit As StreamWriter
         Try
             'Dim users As Users = getinstance()
-            strWrit = New StreamWriter(Client.GetStream)
-            write(message)
+            strWrit = New StreamWriter(TCPClientStream)
+            strWrit.WriteLine(message)
+            strWrit.Flush()
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
@@ -58,8 +64,7 @@ Public Class Users
 
 
     Dim ListenThread As Thread
-    Public Sub ListenAsync()
-
+    Public Sub ListenAsync(rtb As RichTextBox)
         ListenThread = New Thread(AddressOf Listening)
         ListenThread.Start()
     End Sub

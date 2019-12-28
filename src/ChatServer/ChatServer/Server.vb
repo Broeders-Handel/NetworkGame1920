@@ -32,64 +32,22 @@ Public Class Server
                     streamRdr = New StreamReader(TCPClient.GetStream)
                     Dim username As String = streamRdr.ReadLine
                     UpdateText(ChatRichTextBox, username)
+                    Me.username = username
                     'maak het user object aan
                     Dim usr As Users = UsersController.addUser(username, TCPClient)
                     usr.Listening(ChatRichTextBox)
-                    'usr.ListenAsync()
+
                     AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                    'voeg dit toe aan de lijst met huidige users
-
-                    'zeg tegen het user object dat hij moet luisteren
-
-                    'zorg dat events worden opgevangen in een 'schrijf naar textox en alle andere users' functie
-                    'gebruik hiervoor delegate
-
 
                 Catch ex As Exception
                     MessageBox.Show(ex.Message)
-                    'Console.WriteLine(ex.Message)
                 End Try
-                'serverStatus = True
-                'Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
-                'If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-                '    usernameString = System.Text.Encoding.ASCII.GetString(rcvbytes)
-                '    usernameString = usernameString.Substring(2)
-                'End If
-                'username = usernameString
-                'isBusy = False
-
-                'Dim user As New Users
-                'user.Client = TCPClient
-                'user.Username = usernameString
-                'UsersController.addUser(username, user)
-
-                'ListenThread.Start()
-                'start thread die luistert naar specifieke client
             Catch ex As Exception
                 serverStatus = False
                 isBusy = False
             End Try
         Loop
     End Sub
-
-    'moet in de user classe zitten
-    '  Private Sub Listening()
-
-    '    Dim C lientData As StreamReader
-    'Try
-    '        Do Until Islistening = False
-    '            '           ' If TCPListener.Pending = True Then
-    '            Client = TCPListener.AcceptTcpClient
-    '            ClientData = New StreamReader(tcpClientStream)
-    '            UpdateText(ChatRichTextBox, ClientData.ReadLine)
-    '            RaiseEvent MessageRecieved(ClientData.ReadLine)
-    '            End If
-    '        Loop
-    '    Catch ex As Exception
-    '    End Try
-    '    Sleep(100)
-    'End Sub
-
     Public Sub IncomingMessage(data As String)
         Dim strWrit As StreamWriter
         Try
@@ -110,31 +68,6 @@ Public Class Server
         End If
     End Sub
 
-    '  Public Sub SendToClient(Message As String)
-
-    '      ChatRichTextBox.Text &= Message & Environment.NewLine
-    '  Try
-    '
-    '        tcpClientStream = TcpClient.GetStream
-    'Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-    'For Each usr As Users In UsersController.Users.Values
-    ' Dim userName As String = usr.Username
-    '           If tcpClientStream.DataAvailable = True Then
-    '  Dim rcvbytes(usr.Client.ReceiveBufferSize) As Byte
-    '                 tcpClientStream.Read(rcvbytes, 0, CInt(cc.TCPClient.ReceiveBufferSize))
-    '
-    ' If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-    '  Else
-    '
-    '                     Message = userName & ": " & System.Text.Encoding.ASCII.GetString(rcvbytes)
-    '                    usr.write(Message)
-    '                    SendToClient(Message)
-    'end If
-    ' End If
-    '         Next
-    ' Catch ex As Exception
-    ' End Try
-    '  End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
