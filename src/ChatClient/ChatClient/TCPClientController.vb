@@ -31,6 +31,9 @@ Public Class TCPClientController
         End Get
 
     End Property
+    Public Sub DisconnectUser()
+        TCPClient = New TcpClient()
+    End Sub
     Public Function Connect() As Boolean
         Try
             TCPClient = New TcpClient(IPADDRESS, 64553)

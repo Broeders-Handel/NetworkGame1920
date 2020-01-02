@@ -2,9 +2,10 @@
 Imports System.Threading
 
 Public Class Client
+    Dim Connected As Boolean
     Dim clienController As New TCPClientController
     Public Event MessageRecieved(data As String)
-    Private ComunicatieThread As Thread
+    Private ComunicatieThread As Thread = New Thread(New ThreadStart(AddressOf Listening))
     Dim islistening As Boolean
 
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -18,21 +19,24 @@ Public Class Client
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Try
-            clienController.Write(MessageTextBox.Text)
-            MessageTextBox.Clear()
+            If Connected = True Then
+                clienController.Write(MessageTextBox.Text)
+                MessageTextBox.Clear()
+            Else
+                MessageBox.Show("Je bent niet verbonden met de server")
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Dim Connected As Boolean = False
+        Connected = False
         clienController.Username = InputBox("Geef een gebruikersnaam op.")
         Connected = clienController.Connect()
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"
-            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>" & Environment.NewLine
-            ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
             ComunicatieThread.Start()
         Else
             MessageBox.Show("Je bent niet verbonden")
@@ -62,6 +66,14 @@ Public Class Client
                 RTB.AppendText(txt & Environment.NewLine)
             End If
         End If
+    End Sub
+
+    Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
+        Connected = False
+        islistening = False
+        ConnectButton.Text = "Connect"
+        ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
+        clienController.DisconnectUser()
     End Sub
 End Class
 
