@@ -9,7 +9,6 @@ Public Class Users
     Dim Islistening As Boolean = True
 
     Public Sub New(username As String, client As TcpClient)
-
         Me.Username = username
         Me.Client = client
     End Sub
@@ -61,8 +60,6 @@ Public Class Users
             End If
         End If
     End Sub
-
-
     Dim ListenThread As Thread
     Public Sub ListenAsync(rtb As RichTextBox)
         ListenThread = New Thread(AddressOf Listening)
@@ -71,20 +68,11 @@ Public Class Users
     Public Event MessageRecieved(data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
     Public Sub Listening(rtb As RichTextBox)
-
         Dim ClientData As StreamReader
-        '  Try
         Do Until Islistening = False
-                ' If TCPListener.Pending = True Then
-                ' Client = TCPListener.AcceptTcpClient
-                ClientData = New StreamReader(_client.GetStream)
-                UpdateText(rtb, ClientData.ReadLine)
-                RaiseEvent MessageRecieved(ClientData.ReadLine)
-                ' End If
-            Loop
-        '  Catch ex As Exception
-        '    End Try
-        'Sleep(100)
-
+            ClientData = New StreamReader(_client.GetStream)
+            UpdateText(rtb, ClientData.ReadLine)
+            RaiseEvent MessageRecieved(ClientData.ReadLine)
+        Loop
     End Sub
 End Class

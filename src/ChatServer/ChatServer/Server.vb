@@ -5,8 +5,6 @@ Imports System.IO
 Imports System.Threading
 
 Public Class Server
-
-
     Dim ThreadConnectClient As Thread
     Dim Islistening As Boolean
     Dim TCPListener As TcpListener
@@ -19,14 +17,14 @@ Public Class Server
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
     Dim TCPClient As TcpClient
-
-
-
-
     Private Sub ConnectClient()
+
         Do Until StopServer = True
             Try
+
                 TCPClient = TCPListener.AcceptTcpClient()
+                ThreadConnectClient = New Thread(AddressOf ConnectClient)
+                ThreadConnectClient.Start()
                 Dim streamRdr As StreamReader
                 Try
                     streamRdr = New StreamReader(TCPClient.GetStream)
@@ -62,7 +60,10 @@ Public Class Server
         Dim user As Users = UsersController.Users(username)
         tcpClientStream = TCPClient.GetStream
         If tcpClientStream.CanWrite = True Then
-            user.write(message)
+            For Each usr In UsersController.Users
+                user.write(message)
+            Next
+
         Else
             Throw New Exception("et werkt weer niet hier")
         End If
@@ -78,10 +79,7 @@ Public Class Server
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        '  For Each usr In UsersController.Users
         SendToClient(MessageTextBox.Text)
-        '  Next
-
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
 
@@ -91,14 +89,12 @@ Public Class Server
         TCPListener.Start()
 
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
-        ThreadConnectClient = New Thread(AddressOf ConnectClient)
-        '
-        isBusy = True
 
+
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
+        isBusy = True
         ThreadConnectClient.Start()
-        'Do While isBusy = True
-        '    Sleep(10)
-        'Loop
+
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
