@@ -16,7 +16,5 @@ Public Class TcpControllerServer
 
             Return _TCPClient.GetStream
         End Get
-
-
     End Property
 End Class

@@ -6,6 +6,7 @@ Imports System.Threading
 
 Public Class Server
     Dim ThreadConnectClient As Thread
+    Dim ThreadSendToClient As Thread
     Dim Islistening As Boolean
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
@@ -18,10 +19,8 @@ Public Class Server
     Dim cc As New TcpControllerServer
     Dim TCPClient As TcpClient
     Private Sub ConnectClient()
-
         Do Until StopServer = True
             Try
-
                 TCPClient = TCPListener.AcceptTcpClient()
                 ThreadConnectClient = New Thread(AddressOf ConnectClient)
                 ThreadConnectClient.Start()
@@ -31,12 +30,9 @@ Public Class Server
                     Dim username As String = streamRdr.ReadLine
                     UpdateText(ChatRichTextBox, username)
                     Me.username = username
-                    'maak het user object aan
                     Dim usr As Users = UsersController.addUser(username, TCPClient)
                     usr.Listening(ChatRichTextBox)
-
                     AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-
                 Catch ex As Exception
                     MessageBox.Show(ex.Message)
                 End Try
@@ -57,13 +53,11 @@ Public Class Server
     End Sub
 
     Public Sub SendToClient(message As String)
-        Dim user As Users = UsersController.Users(username)
         tcpClientStream = TCPClient.GetStream
         If tcpClientStream.CanWrite = True Then
-            For Each usr In UsersController.Users
-                user.write(message)
+            For Each usr In UsersController.Users.Values
+                usr.write(message)
             Next
-
         Else
             Throw New Exception("et werkt weer niet hier")
         End If
@@ -107,6 +101,11 @@ Public Class Server
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+            If txt Like "//MS//*" Then
+                ThreadSendToClient = New Thread(AddressOf SendToClient)
+                Dim parameter = New Object() {txt}
+                ThreadSendToClient.Start(parameter)
+            End If
         Else
             If txt IsNot Nothing Then
                 RTB.AppendText(txt & Environment.NewLine)
