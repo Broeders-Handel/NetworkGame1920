@@ -1,8 +1,8 @@
 ﻿Imports System.Net.Sockets
-Class UsersController
-    Private _Users As New Dictionary(Of String, Users)
+Public Class UsersController
+    Private Shared _Users As New Dictionary(Of String, Users)
 
-    Public Property Users As Dictionary(Of String, Users)
+    Public Shared Property Users As Dictionary(Of String, Users)
         Get
             Return _Users
         End Get

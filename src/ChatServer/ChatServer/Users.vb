@@ -71,7 +71,11 @@ Public Class Users
         Dim ClientData As StreamReader
         Do Until Islistening = False
             ClientData = New StreamReader(_client.GetStream)
-            UpdateText(rtb, ClientData.ReadLine)
+            Dim Message As String = ClientData.ReadLine
+            If Message Like "//MS//*" Then
+                Message = Username & " => " & Message.Substring(6)
+            End If
+            UpdateText(rtb, Message)
             RaiseEvent MessageRecieved(ClientData.ReadLine)
         Loop
     End Sub
