@@ -2,9 +2,6 @@
 Imports System.Net.Sockets
 Imports System.IO
 Public Class TCPClientController
-
-    Const IPADDRESS As String = "127.0.0.1"
-
     Private _TCPClient As TcpClient
     Private _username As String
 
@@ -34,9 +31,9 @@ Public Class TCPClientController
     Public Sub DisconnectUser()
         TCPClient = New TcpClient()
     End Sub
-    Public Function Connect() As Boolean
+    Public Function Connect(ipaddress As String) As Boolean
         Try
-            TCPClient = New TcpClient(IPADDRESS, 64553)
+            TCPClient = New TcpClient(ipaddress, 64553)
             Write(Username, True)
             Return True
         Catch ex As Exception
