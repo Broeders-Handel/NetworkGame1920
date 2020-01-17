@@ -56,7 +56,7 @@ Public Class Server
         tcpClientStream = TCPClient.GetStream
         If tcpClientStream.CanWrite = True Then
             For Each usr In UsersController.Users.Values
-                usr.write(usr.Username & " => " & message)
+                usr.write(message)
             Next
         Else
             Throw New Exception("et werkt weer niet hier")
@@ -105,11 +105,6 @@ Public Class Server
                 ThreadSendToClient = New Thread(AddressOf SendToClient)
                 Dim parameter = New Object() {txt}
                 ThreadSendToClient.Start(parameter)
-            ElseIf txt Like "//UN//*" Then
-                Dim usersController As New UsersController
-                If UsersController.Users.ContainsKey(username) Then
-
-                End If
             End If
         Else
             If txt IsNot Nothing Then
