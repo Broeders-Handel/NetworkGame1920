@@ -2,7 +2,6 @@
 Imports System.Threading
 
 Public Class Client
-
     Dim Connected As Boolean
     Dim clienController As New TCPClientController
     Public Event MessageRecieved(data As String)
@@ -31,10 +30,9 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Dim IpAdress As String = IPAdressTextBox.Text
         Connected = False
         clienController.Username = InputBox("Geef een gebruikersnaam op.")
-        Connected = clienController.Connect(IpAdress)
+        Connected = clienController.Connect()
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"
