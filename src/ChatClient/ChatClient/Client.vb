@@ -71,11 +71,15 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
-        Connected = False
-        islistening = False
-        ConnectButton.Text = "Connect"
-        ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
-        clienController.DisconnectUser()
+        If Connected = True Then
+            Connected = False
+            islistening = False
+            ConnectButton.Text = "Connect"
+            ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
+            clienController.DisconnectUser()
+        Else
+            MessageBox.Show("Je bent niet geconnecteerd met een server.")
+        End If
     End Sub
 End Class
 
