@@ -5,6 +5,7 @@ Imports System.IO
 Imports System.Threading
 
 Public Class Server
+
     Dim ThreadConnectClient As Thread
     Dim ThreadSendToClient As Thread
     Dim Islistening As Boolean
@@ -17,63 +18,80 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
-    Dim TCPClient As TcpClient
+
+    Private Sub ClientConnected(client As TcpClient)
+
+        Dim streamRdr As StreamReader
+            Try
+            streamRdr = New StreamReader(client.GetStream)
+            Dim username As String = streamRdr.ReadLine
+            UpdateText(ChatRichTextBox, username)
+
+            'voeg client toe aan dictionairy
+            Dim usr As Users = UsersController.addUser(username, client)
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer("Client connected: " & username)
+            'luister naar inkomende berichten
+            usr.Listening(ChatRichTextBox)
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+
+        Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        'Catch ex As Exception
+        '    serverStatus = False
+        '    isBusy = False
+        'End Try
+
+    End Sub
+
     Private Sub ConnectClient()
         Do Until StopServer = True
-            Try
-                TCPClient = TCPListener.AcceptTcpClient()
-                ThreadConnectClient = New Thread(AddressOf ConnectClient)
-                ThreadConnectClient.Start()
-                Dim streamRdr As StreamReader
-                Try
-                    streamRdr = New StreamReader(TCPClient.GetStream)
-                    Dim username As String = streamRdr.ReadLine
-                    UpdateText(ChatRichTextBox, username)
-                    Me.username = username
-                    Dim usr As Users = UsersController.addUser(username, TCPClient)
-                    usr.Listening(ChatRichTextBox)
-                    AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                Catch ex As Exception
-                    MessageBox.Show(ex.Message)
-                End Try
-            Catch ex As Exception
-                serverStatus = False
-                isBusy = False
-            End Try
+
+            Dim TCPClient As TcpClient
+            TCPClient = TCPListener.AcceptTcpClient()
+            Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
+            Dim parameter = New Object() {TCPClient}
+            ThreadClientConnected.Start(parameter)
+
         Loop
     End Sub
-    Public Sub IncomingMessage(data As String)
+    Public Sub IncomingMessage(username As String, data As String)
         Dim strWrit As StreamWriter
         Try
-            strWrit = New StreamWriter(TCPClient.GetStream)
-            Write(data)
+            'pas eigen textbox aan
+            Dim message As String = username & ": " & data
+            UpdateText(ChatRichTextBox, message)
+            'stuur naar alle andere clients
+            SendToClients(message)
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
 
-    Public Sub SendToClient(message As String)
-        tcpClientStream = TCPClient.GetStream
-        If tcpClientStream.CanWrite = True Then
-            For Each usr In UsersController.Users.Values
-                usr.write(message)
-            Next
-        Else
-            Throw New Exception("et werkt weer niet hier")
-        End If
+    Public Sub SendToClients(message As String)
+
+        For Each usr In UsersController.Users.Values
+            usr.write(message)
+        Next
+
     End Sub
 
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                SendToClient(MessageTextBox.Text)
+                sendMessageAsServer(MessageTextBox.Text)
                 MessageTextBox.Clear()
             End If
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        SendToClient(MessageTextBox.Text)
+        sendMessageAsServer(MessageTextBox.Text)
+    End Sub
+
+    Private Sub sendMessageAsServer(message As String)
+        SendToClients("server => " & message)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim IPadress As String = IpAdressTextBox.Text
@@ -100,11 +118,7 @@ Public Class Server
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
-            If txt Like "//MS//*" Then
-                ThreadSendToClient = New Thread(AddressOf SendToClient)
-                Dim parameter = New Object() {txt}
-                ThreadSendToClient.Start(parameter)
-            End If
+
         Else
             If txt IsNot Nothing Then
                 RTB.AppendText(txt & Environment.NewLine)

@@ -65,14 +65,14 @@ Public Class Users
         ListenThread = New Thread(AddressOf Listening)
         ListenThread.Start()
     End Sub
-    Public Event MessageRecieved(data As String)
+    Public Event MessageRecieved(username As String, data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
     Public Sub Listening(rtb As RichTextBox)
         Dim ClientData As StreamReader
         Do Until Islistening = False
             ClientData = New StreamReader(_client.GetStream)
-            UpdateText(rtb, ClientData.ReadLine)
-            RaiseEvent MessageRecieved(ClientData.ReadLine)
+
+            RaiseEvent MessageRecieved(Username, ClientData.ReadLine)
         Loop
     End Sub
 End Class
