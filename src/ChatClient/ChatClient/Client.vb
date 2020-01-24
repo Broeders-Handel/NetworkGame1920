@@ -41,6 +41,7 @@ Public Class Client
             islistening = True
             ConnectButton.Text = "Connected"
             ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
+            ConnectButton.Enabled = False
             ComunicatieThread.Start()
         Else
             MessageBox.Show("Je bent niet verbonden")
@@ -78,6 +79,8 @@ Public Class Client
             islistening = False
             ConnectButton.Text = "Connect"
             ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
+            ConnectButton.Enabled = True
+            DisconnectButton.Enabled = False
             clienController.DisconnectUser()
         Else
             MessageBox.Show("Je bent niet geconnecteerd met een server.")
