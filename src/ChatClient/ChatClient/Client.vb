@@ -31,8 +31,12 @@ Public Class Client
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Connected = False
-        clienController.Username = InputBox("Geef een gebruikersnaam op.")
-        Connected = clienController.Connect()
+        If IpAdressTextBox.Text Like "*.*.*.*" Then
+            clienController.Username = InputBox("Geef een gebruikersnaam op.")
+            Connected = clienController.Connect(IpAdressTextBox.Text)
+        Else
+            MessageBox.Show("Dit Is geen correct IP adres")
+        End If
         If Connected = True Then
             islistening = True
             ConnectButton.Text = "Connected"

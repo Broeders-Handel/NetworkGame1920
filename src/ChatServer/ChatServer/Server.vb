@@ -76,10 +76,9 @@ Public Class Server
         SendToClient(MessageTextBox.Text)
     End Sub
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-
+        Dim IPadress As String = IpAdressTextBox.Text
         serverStatus = True
-
-        TCPListener = New TcpListener(IPAddress.Any, 64553)
+        TCPListener = New TcpListener(IPAddress.Parse(IPadress), 64553)
         TCPListener.Start()
 
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
