@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Server
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,16 +20,16 @@ Partial Class Server
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StopButton = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.SendButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'StartButton
@@ -84,14 +84,30 @@ Partial Class Server
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
         '
-        'Timer1
+        'IpAdressTextBox
         '
+        Me.IpAdressTextBox.Location = New System.Drawing.Point(12, 165)
+        Me.IpAdressTextBox.Name = "IpAdressTextBox"
+        Me.IpAdressTextBox.Size = New System.Drawing.Size(100, 20)
+        Me.IpAdressTextBox.TabIndex = 6
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(118, 166)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(28, 15)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = ": IP"
         '
         'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(257, 199)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.IpAdressTextBox)
         Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.MessageTextBox)
@@ -111,5 +127,6 @@ Partial Class Server
     Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents SendButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
-    Friend WithEvents Timer1 As Timer
+    Friend WithEvents IpAdressTextBox As TextBox
+    Friend WithEvents Label2 As Label
 End Class
