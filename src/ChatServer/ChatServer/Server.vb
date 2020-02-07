@@ -19,10 +19,10 @@ Public Class Server
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
 
-    Private Sub ClientConnected(client As TcpClient)
-
+    Private Sub ClientConnected(clientObject As Object)
+        Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
-            Try
+        Try
             streamRdr = New StreamReader(client.GetStream)
             Dim username As String = streamRdr.ReadLine
             UpdateText(ChatRichTextBox, username)
@@ -32,12 +32,12 @@ Public Class Server
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer("Client connected: " & username)
             'luister naar inkomende berichten
-            usr.Listening(ChatRichTextBox)
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
 
         Catch ex As Exception
-                MessageBox.Show(ex.Message)
-            End Try
+            MessageBox.Show(ex.Message)
+        End Try
         'Catch ex As Exception
         '    serverStatus = False
         '    isBusy = False
@@ -96,7 +96,7 @@ Public Class Server
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim IPadress As String = IpAdressTextBox.Text
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse(IPadress), 64553)
+        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
         TCPListener.Start()
 
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine

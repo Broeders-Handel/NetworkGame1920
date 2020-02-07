@@ -5,7 +5,7 @@ Imports System.Threading
 Public Class Users
     Private Shared instance As Users
     Private _username As String
-    Private _client As New TcpClient
+    Private _client As TcpClient
     Dim Islistening As Boolean = True
 
     Public Sub New(username As String, client As TcpClient)
@@ -61,18 +61,18 @@ Public Class Users
         End If
     End Sub
     Dim ListenThread As Thread
-    Public Sub ListenAsync(rtb As RichTextBox)
-        ListenThread = New Thread(AddressOf Listening)
+    Public Sub Listen()
+        ListenThread = New Thread(AddressOf ListenThreadProc)
         ListenThread.Start()
     End Sub
     Public Event MessageRecieved(username As String, data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
-    Public Sub Listening(rtb As RichTextBox)
+    Public Sub ListenThreadProc()
         Dim ClientData As StreamReader
         Do Until Islistening = False
             ClientData = New StreamReader(_client.GetStream)
-
-            RaiseEvent MessageRecieved(Username, ClientData.ReadLine)
+            Dim invoer As String = ClientData.ReadLine
+            RaiseEvent MessageRecieved(Username, invoer)
         Loop
     End Sub
 End Class
