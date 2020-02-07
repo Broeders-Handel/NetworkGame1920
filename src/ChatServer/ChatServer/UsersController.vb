@@ -12,11 +12,11 @@ Class UsersController
     End Property
     Public Function addUser(username As String, client As TcpClient) As Users
         Dim user As New Users(username, client)
-        ' If _Users.ContainsValue(user.Username) Then
-        '    MessageBox.Show("Deze username is al in gebruik.", "Error")
-        ' Else
-        _Users.Add(username, user)
-            'End If
-            Return user
+        If _Users.ContainsValue(user.Username) Then
+            MessageBox.Show("Deze username is al in gebruik.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            _Users.Add(username, user)
+        End If
+        Return user
     End Function
 End Class
