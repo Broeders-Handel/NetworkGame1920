@@ -3,7 +3,7 @@ Imports System.Net.Sockets
 Imports System.IO
 Public Class TCPClientController
 
-    Const IPADDRESS As String = "127.0.0.1"
+
 
     Private _TCPClient As TcpClient
     Private _username As String
@@ -29,10 +29,14 @@ Public Class TCPClientController
         Get
             Return TCPClient.GetStream()
         End Get
+
     End Property
-    Public Function Connect() As Boolean
+    Public Sub DisconnectUser()
+        TCPClient = New TcpClient()
+    End Sub
+    Public Function Connect(IpAdress As String) As Boolean
         Try
-            TCPClient = New TcpClient(IPADDRESS, 64553)
+            TCPClient = New TcpClient(IpAdress, 64553)
             Write(Username, True)
             Return True
         Catch ex As Exception
@@ -48,7 +52,19 @@ Public Class TCPClientController
             Message = "//MS//" & Message
         End If
         Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
-        strWrit.Write(Message)
+        strWrit.WriteLine(Message)
+        strWrit.Flush()
     End Sub
+    'Public Function Read() As String
+
+    '    Dim Output As String = ""
+    '    If _TCPClientStream.DataAvailable = True Then
+    '        Dim rcvbytes(_TCPClient.ReceiveBufferSize) As Byte
+    '        _TCPClientStream.Read(rcvbytes, 0, CInt(_TCPClient.ReceiveBufferSize))
+    '        Output &= _username & " => " & System.Text.Encoding.ASCII.GetString(rcvbytes) & NewLine()
+    '    End If
+
+    '    Return Output
+    'End Function
 End Class
 
