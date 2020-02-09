@@ -28,7 +28,7 @@ Public Class Server
             UpdateText(ChatRichTextBox, username)
 
             'voeg client toe aan dictionairy
-            Dim usr As Users = UsersController.addUser(username, client)
+            Dim usr As Users = UsersController.addUser(username.Substring(6), client)
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer("Client connected: " & username)
             'luister naar inkomende berichten
@@ -70,7 +70,6 @@ Public Class Server
     End Sub
 
     Public Sub SendToClients(message As String)
-
         For Each usr In UsersController.Users.Values
             usr.write(message)
         Next
@@ -93,24 +92,33 @@ Public Class Server
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
     End Sub
+#Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("10.0.9.116"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
         TCPListener.Start()
-
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
-
-
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
-
+        StartLocalButton.Enabled = False
     End Sub
-
+    Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
+        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
+        TCPListener.Start()
+        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
+        isBusy = True
+        ThreadConnectClient.Start()
+        StartButton.Enabled = False
+    End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        StartLocalButton.Enabled = True
+        StartButton.Enabled = True
     End Sub
+#End Region
 #Region "Textbox"
 
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)

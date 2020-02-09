@@ -30,6 +30,7 @@ Partial Class Server
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.StartLocalButton = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'StartButton
@@ -101,11 +102,21 @@ Partial Class Server
         Me.Label2.TabIndex = 7
         Me.Label2.Text = ": IP"
         '
+        'StartLocalButton
+        '
+        Me.StartLocalButton.Location = New System.Drawing.Point(175, 13)
+        Me.StartLocalButton.Name = "StartLocalButton"
+        Me.StartLocalButton.Size = New System.Drawing.Size(70, 23)
+        Me.StartLocalButton.TabIndex = 8
+        Me.StartLocalButton.Text = "Local"
+        Me.StartLocalButton.UseVisualStyleBackColor = True
+        '
         'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(257, 199)
+        Me.Controls.Add(Me.StartLocalButton)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.IpAdressTextBox)
         Me.Controls.Add(Me.ChatRichTextBox)
@@ -129,4 +140,5 @@ Partial Class Server
     Friend WithEvents ChatRichTextBox As RichTextBox
     Friend WithEvents IpAdressTextBox As TextBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents StartLocalButton As Button
 End Class
