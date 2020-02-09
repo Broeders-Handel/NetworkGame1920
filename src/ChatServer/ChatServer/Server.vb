@@ -35,15 +35,9 @@ Public Class Server
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
             usr.Listen()
-
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-        'Catch ex As Exception
-        '    serverStatus = False
-        '    isBusy = False
-        'End Try
-
     End Sub
 
     Private Sub ConnectClient()
@@ -76,7 +70,6 @@ Public Class Server
         Next
 
     End Sub
-
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
