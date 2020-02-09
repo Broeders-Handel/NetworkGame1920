@@ -43,6 +43,7 @@ Public Class Client
             ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
             ConnectButton.Enabled = False
             ComunicatieThread.Start()
+            IpAdressTextBox.ReadOnly = True
         Else
             MessageBox.Show("Je bent niet verbonden")
         End If
