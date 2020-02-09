@@ -25,12 +25,13 @@ Public Class Server
         Try
             streamRdr = New StreamReader(client.GetStream)
             Dim username As String = streamRdr.ReadLine
+            username = username.Substring(6)
             UpdateText(ChatRichTextBox, username)
 
             'voeg client toe aan dictionairy
-            Dim usr As Users = UsersController.addUser(username.Substring(6), client)
+            Dim usr As Users = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client
-            sendMessageAsServer("Client connected: " & username)
+            sendMessageAsServer(username & " JOINED")
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
             usr.Listen()
@@ -60,7 +61,7 @@ Public Class Server
         Dim strWrit As StreamWriter
         Try
             'pas eigen textbox aan
-            Dim message As String = username & ": " & data
+            Dim message As String = username & ": " & data.Substring(6)
             UpdateText(ChatRichTextBox, message)
             'stuur naar alle andere clients
             SendToClients(message)
