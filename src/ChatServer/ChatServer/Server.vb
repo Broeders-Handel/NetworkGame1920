@@ -1,95 +1,131 @@
 ﻿Imports System.Net.Sockets
 Imports System.Net
 Imports System.Threading.Thread
+Imports System.IO
+Imports System.Threading
 
 Public Class Server
-    Dim ThreadConnectClient As Threading.Thread
-    Dim TCPClient As Socket
+
+    Dim ThreadConnectClient As Thread
+    Dim ThreadSendToClient As Thread
+    Dim Islistening As Boolean
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
     Dim StopServer As Boolean = False
     Dim UsersController As New UsersController
     Dim usernameString As String = ""
     Dim username As String
+    Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
-    Dim user As New Users
-    Private Sub ConnectClient()
-        Do Until StopServer = True
-            Try
+    Dim cc As New TcpControllerServer
 
-                TCPListener = New TcpListener(IPAddress.Any, 64553)
-                TCPListener.Start()
-                TCPClient = TCPListener.AcceptSocket()
-                TCPClient.Blocking = False
-                Timer1.Enabled = True
-                serverStatus = True
-                If System.Text.Encoding.ASCII.GetString(Listening) Like "//*" Then
-                    usernameString = System.Text.Encoding.ASCII.GetString(Listening)
-                    usernameString = usernameString.Substring(2)
-                End If
-                username = usernameString
-                isBusy = False
-                user.Client = TCPClient
-                user.Username = usernameString
-                UsersController.addUser(username, user)
-            Catch ex As Exception
-                serverStatus = False
-                isBusy = False
-            End Try
-        Loop
-    End Sub
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+    Private Sub ClientConnected(clientObject As Object)
+        Dim client As TcpClient = CType(clientObject(0), TcpClient)
+        Dim streamRdr As StreamReader
         Try
-            Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
-            TCPClient.Receive(rcvbytes)
-            If System.Text.Encoding.ASCII.GetString(rcvbytes) Like "//*" Then
-            Else
-                ChatRichTextBox.Text &= System.Text.Encoding.ASCII.GetString(rcvbytes)
-                ChatRichTextBox.Text &= Environment.NewLine
-                MessageTextBox.Text = System.Text.Encoding.ASCII.GetString(rcvbytes)
-                SendToClient(MessageTextBox.Text)
-            End If
+            streamRdr = New StreamReader(client.GetStream)
+            Dim username As String = streamRdr.ReadLine
+            username = username.Substring(6)
+            UpdateText(ChatRichTextBox, username)
+
+            'voeg client toe aan dictionairy
+            Dim usr As Users = UsersController.addUser(username, client)
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
         Catch ex As Exception
+            MessageBox.Show(ex.Message)
         End Try
     End Sub
-    Public Sub SendToClient(Message As String)
-        Dim sendbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(Message)
-        For i As Integer = 0 To UsersController.Users.Values.Count - 1
-            user.write(sendbytes)
-            MessageTextBox.Clear()
+
+    Private Sub ConnectClient()
+        Do Until StopServer = True
+
+            Dim TCPClient As TcpClient
+            TCPClient = TCPListener.AcceptTcpClient()
+            Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
+            Dim parameter = New Object() {TCPClient}
+            ThreadClientConnected.Start(parameter)
+
+        Loop
+    End Sub
+    Public Sub IncomingMessage(username As String, data As String)
+        Dim strWrit As StreamWriter
+        Try
+            'pas eigen textbox aan
+            Dim message As String = username & ": " & data.Substring(6)
+            UpdateText(ChatRichTextBox, message)
+            'stuur naar alle andere clients
+            SendToClients(message)
+        Catch ex As Exception
+            Throw New Exception("bericht niet verzonden")
+        End Try
+    End Sub
+
+    Public Sub SendToClients(message As String)
+        For Each usr In UsersController.Users.Values
+            usr.write(message)
         Next
+
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                SendToClient(MessageTextBox.Text)
+                sendMessageAsServer(MessageTextBox.Text)
                 MessageTextBox.Clear()
             End If
         End If
     End Sub
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        SendToClient(MessageTextBox.Text)
+        sendMessageAsServer(MessageTextBox.Text)
     End Sub
+
+    Private Sub sendMessageAsServer(message As String)
+        SendToClients("server => " & message)
+    End Sub
+#Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        ThreadConnectClient = New Threading.Thread(AddressOf ConnectClient)
+        Dim Ipadress As IPAddress
+        serverStatus = True
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
+        TCPListener.Start()
+        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
-        Do While isBusy = True
-            Sleep(100)
-            isBusy = False
-        Loop
-
-        If serverStatus = True Then
-            ChatRichTextBox.Text &= "<< NEW USER CONNECTED >>" & Environment.NewLine
-        End If
+        StartLocalButton.Enabled = False
     End Sub
-
+    Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
+        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
+        TCPListener.Start()
+        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
+        isBusy = True
+        ThreadConnectClient.Start()
+        StartButton.Enabled = False
+    End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        StartLocalButton.Enabled = True
+        StartButton.Enabled = True
     End Sub
-    Private Function Listening()
-        Dim rcvbytes(TCPClient.ReceiveBufferSize) As Byte
-        Return rcvbytes
-    End Function
+#End Region
+#Region "Textbox"
+
+    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    'Update textbox
+    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+        If RTB.InvokeRequired Then
+            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+
+        Else
+            If txt IsNot Nothing Then
+                RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+#End Region
 End Class
