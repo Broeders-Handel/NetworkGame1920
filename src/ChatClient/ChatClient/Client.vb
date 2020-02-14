@@ -87,5 +87,7 @@ Public Class Client
             MessageBox.Show("Je bent niet geconnecteerd met een server.")
         End If
     End Sub
+
+
 End Class
 

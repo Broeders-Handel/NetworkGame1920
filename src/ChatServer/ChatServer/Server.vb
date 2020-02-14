@@ -90,7 +90,7 @@ Public Class Server
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("10.0.9.150"), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)

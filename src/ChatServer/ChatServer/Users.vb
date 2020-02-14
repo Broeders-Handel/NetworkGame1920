@@ -42,7 +42,7 @@ Public Class Users
             strWrit.WriteLine(message)
             strWrit.Flush()
         Catch ex As Exception
-            Throw New Exception("bericht niet verzonden")
+
         End Try
 
     End Sub
@@ -68,11 +68,15 @@ Public Class Users
     Public Event MessageRecieved(username As String, data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
     Public Sub ListenThreadProc()
-        Dim ClientData As StreamReader
-        Do Until Islistening = False
-            ClientData = New StreamReader(_client.GetStream)
-            Dim invoer As String = ClientData.ReadLine
-            RaiseEvent MessageRecieved(Username, invoer)
-        Loop
+        Try
+            Dim ClientData As StreamReader
+            Do Until Islistening = False
+                ClientData = New StreamReader(_client.GetStream)
+                Dim invoer As String = ClientData.ReadLine
+                RaiseEvent MessageRecieved(Username, invoer)
+            Loop
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class
