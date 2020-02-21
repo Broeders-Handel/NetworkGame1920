@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 Imports System.Threading
 
 Public Class Client
@@ -31,9 +32,10 @@ Public Class Client
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Connected = False
-        If IpAdressTextBox.Text Like "*.*.*.*" Then
+        Dim ipaddress As String = InputBox("Geef een IP-adres op.")
+        If ipaddress Like "*.*.*.*" Then
             clienController.Username = InputBox("Geef een gebruikersnaam op.")
-            Connected = clienController.Connect(IpAdressTextBox.Text)
+            Connected = clienController.Connect(ipaddress)
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
         End If
@@ -43,7 +45,7 @@ Public Class Client
             ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
             ConnectButton.Enabled = False
             ComunicatieThread.Start()
-            IpAdressTextBox.ReadOnly = True
+
         Else
             MessageBox.Show("Je bent niet verbonden")
         End If
@@ -83,6 +85,7 @@ Public Class Client
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             clienController.DisconnectUser()
+            ComunicatieThread.Abort()
         Else
             MessageBox.Show("Je bent niet geconnecteerd met een server.")
         End If
