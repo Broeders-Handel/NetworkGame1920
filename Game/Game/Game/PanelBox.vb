@@ -13,4 +13,8 @@ Public Class PanelBox
             _Used = value
         End Set
     End Property
+
+    Sub New()
+        Me.BorderStyle = Windows.Forms.BorderStyle.FixedSingle
+    End Sub
 End Class
