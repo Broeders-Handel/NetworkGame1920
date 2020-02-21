@@ -85,7 +85,7 @@ Public Class Client
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             clienController.DisconnectUser()
-            ComunicatieThread.Abort()
+            ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
         Else
             MessageBox.Show("Je bent niet geconnecteerd met een server.")
         End If
