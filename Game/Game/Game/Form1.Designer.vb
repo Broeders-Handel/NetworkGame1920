@@ -25,13 +25,6 @@ Partial Class Form1
         Me.ButtonPanelBox = New Game.PanelBox()
         Me.SuspendLayout()
         '
-        'Speelgrid
-        '
-        Me.Speelgrid.Location = New System.Drawing.Point(12, 66)
-        Me.Speelgrid.Name = "Speelgrid"
-        Me.Speelgrid.Size = New System.Drawing.Size(402, 403)
-        Me.Speelgrid.TabIndex = 0
-        '
         'ButtonPanelBox
         '
         Me.ButtonPanelBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -41,19 +34,29 @@ Partial Class Form1
         Me.ButtonPanelBox.TabIndex = 1
         Me.ButtonPanelBox.Used = False
         '
+        'SpeelGird1
+        '
+        Me.SpeelGird1.Location = New System.Drawing.Point(13, 67)
+        Me.SpeelGird1.Name = "SpeelGird1"
+        Me.SpeelGird1.Size = New System.Drawing.Size(400, 400)
+        Me.SpeelGird1.TabIndex = 2
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 479)
+        Me.Controls.Add(Me.SpeelGird1)
         Me.Controls.Add(Me.ButtonPanelBox)
-        Me.Controls.Add(Me.Speelgrid)
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents Speelgrid As UserControl1
+    Friend WithEvents Speelgrid As SpeelGird
     Friend WithEvents ButtonPanelBox As PanelBox
+    Friend WithEvents UserControl1 As SpeelGird
+    Friend WithEvents UserControl11 As SpeelGird
+    Friend WithEvents SpeelGird1 As SpeelGird
 End Class

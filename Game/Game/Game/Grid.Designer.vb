@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class UserControl1
+Partial Class SpeelGird
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -24,11 +24,11 @@ Partial Class UserControl1
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'UserControl1
+        'SpeelGird
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Name = "UserControl1"
+        Me.Name = "SpeelGird"
         Me.Size = New System.Drawing.Size(400, 400)
         Me.ResumeLayout(False)
 

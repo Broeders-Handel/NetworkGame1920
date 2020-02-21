@@ -1,4 +1,4 @@
-﻿Public Class UserControl1
+﻿Public Class SpeelGird
     Public Grid(8, 8) As PanelBox
     Public Columns As Integer = 8
     Public Rows As Integer = 8
