@@ -19,30 +19,25 @@ Public Class Server
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
 
-    Private Sub ClientConnected(client As TcpClient)
-
+    Private Sub ClientConnected(clientObject As Object)
+        Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
-            Try
+        Try
             streamRdr = New StreamReader(client.GetStream)
             Dim username As String = streamRdr.ReadLine
+            username = username.Substring(6)
             UpdateText(ChatRichTextBox, username)
 
             'voeg client toe aan dictionairy
             Dim usr As Users = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client
-            sendMessageAsServer("Client connected: " & username)
+            sendMessageAsServer(username & " JOINED")
             'luister naar inkomende berichten
-            usr.Listening(ChatRichTextBox)
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-
+            usr.Listen()
         Catch ex As Exception
-                MessageBox.Show(ex.Message)
-            End Try
-        'Catch ex As Exception
-        '    serverStatus = False
-        '    isBusy = False
-        'End Try
-
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
     Private Sub ConnectClient()
@@ -60,7 +55,7 @@ Public Class Server
         Dim strWrit As StreamWriter
         Try
             'pas eigen textbox aan
-            Dim message As String = username & ": " & data
+            Dim message As String = username & ": " & data.Substring(6)
             UpdateText(ChatRichTextBox, message)
             'stuur naar alle andere clients
             SendToClients(message)
@@ -70,13 +65,11 @@ Public Class Server
     End Sub
 
     Public Sub SendToClients(message As String)
-
         For Each usr In UsersController.Users.Values
             usr.write(message)
         Next
 
     End Sub
-
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
@@ -93,24 +86,33 @@ Public Class Server
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
     End Sub
+#Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        Dim IPadress As String = IpAdressTextBox.Text
+        Dim Ipadress As IPAddress
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse(IPadress), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("10.0.9.150"), 64553)
         TCPListener.Start()
-
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
-
-
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
-
+        StartLocalButton.Enabled = False
     End Sub
-
+    Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
+        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
+        TCPListener.Start()
+        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ThreadConnectClient = New Thread(AddressOf ConnectClient)
+        isBusy = True
+        ThreadConnectClient.Start()
+        StartButton.Enabled = False
+    End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        StartLocalButton.Enabled = True
+        StartButton.Enabled = True
     End Sub
+#End Region
 #Region "Textbox"
 
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
