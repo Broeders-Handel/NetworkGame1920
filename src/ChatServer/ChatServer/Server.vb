@@ -27,18 +27,25 @@ Public Class Server
             Dim username As String = streamRdr.ReadLine
             username = username.Substring(6)
             UpdateText(ChatRichTextBox, username)
-
+            Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            If UsersController.Users.ContainsKey() Then
-                Dim usr As Users = UsersController.addUser(username, client)
-            'meld alle gebruikers van nieuwe client
-            sendMessageAsServer(username & " JOINED")
-            'luister naar inkomende berichten
-            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-            usr.Listen()
+            ' If UsersController.Users.use() Then
+            MessageBox.Show("Deze username is al in gebruik")
+                client = Nothing
+            ' Else
+            Dim usr As Users = UsersController.addUser(username, client)
+                'meld alle gebruikers van nieuwe client
+                sendMessageAsServer(username & " JOINED")
+                'luister naar inkomende berichten
+                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+                usr.Listen()
+            ' End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+
         End Try
+
+
     End Sub
 
     Private Sub ConnectClient()
