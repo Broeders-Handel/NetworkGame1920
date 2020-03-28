@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 Imports System.Threading
 
 Public Class Client
@@ -30,28 +31,22 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Dim Username As String
         Connected = False
-        If IpAdressTextBox.Text Like "*.*.*.*" Then
-            Username = InputBox("Geef een gebruikersnaam op.")
-            If Username = "" Then
-                MessageBox.Show("Je moet een geldige username ingeven")
-            Else
-                clienController.Username = Username
-                Connected = clienController.Connect(IpAdressTextBox.Text)
-                If Connected = True Then
-                    islistening = True
-                    ConnectButton.Text = "Connected"
-                    ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
-                    ConnectButton.Enabled = False
-                    ComunicatieThread.Start()
-                    IpAdressTextBox.ReadOnly = True
-                Else
-                    MessageBox.Show("Je bent niet verbonden")
-                End If
-            End If
+        Dim ipaddress As String = InputBox("Geef een IP-adres op.")
+        If ipaddress Like "*.*.*.*" Then
+            clienController.Username = InputBox("Geef een gebruikersnaam op.")
+            Connected = clienController.Connect(ipaddress)
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
+        End If
+        If Connected = True Then
+            islistening = True
+            ConnectButton.Text = "Connected"
+            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
+            ConnectButton.Enabled = False
+            ComunicatieThread.Start()
+        Else
+            MessageBox.Show("Je bent niet verbonden")
         End If
     End Sub
     Private Sub Listening()
@@ -89,6 +84,7 @@ Public Class Client
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             clienController.DisconnectUser()
+            ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
         Else
             MessageBox.Show("Je bent niet geconnecteerd met een server.")
         End If

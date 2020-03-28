@@ -88,9 +88,9 @@ Public Class Server
     End Sub
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        Dim Ipadress As IPAddress
+        Dim Ipadress As String = InputBox("Geef een IP-adres op.")
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("10.0.9.150"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse(Ipadress), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
