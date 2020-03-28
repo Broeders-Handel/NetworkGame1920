@@ -45,7 +45,6 @@ Public Class Client
             ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
             ConnectButton.Enabled = False
             ComunicatieThread.Start()
-
         Else
             MessageBox.Show("Je bent niet verbonden")
         End If
