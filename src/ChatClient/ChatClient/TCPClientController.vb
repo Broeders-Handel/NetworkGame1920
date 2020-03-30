@@ -5,12 +5,14 @@ Public Class TCPClientController
     Private _TCPClient As TcpClient
     Private _username As String
 
+
     Public Property Username As String
         Get
             Return _username
         End Get
         Set(ByVal value As String)
             _username = value
+
         End Set
     End Property
 
@@ -21,15 +23,18 @@ Public Class TCPClientController
         Set(ByVal value As TcpClient)
             _TCPClient = value
         End Set
+
     End Property
     Public ReadOnly Property TCPClientStream() As NetworkStream
         Get
             Return TCPClient.GetStream()
         End Get
 
+
     End Property
     Public Sub DisconnectUser()
         TCPClient = New TcpClient()
+
     End Sub
     Public Function Connect(IpAdress As String) As Boolean
         Try
@@ -40,6 +45,7 @@ Public Class TCPClientController
             Console.WriteLine(ex.Message)
             Return False
         End Try
+
     End Function
 
     Public Sub Write(Message As String, Optional isUsername As Boolean = False)
@@ -51,6 +57,7 @@ Public Class TCPClientController
         Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
         strWrit.WriteLine(Message)
         strWrit.Flush()
+
     End Sub
 End Class
 
