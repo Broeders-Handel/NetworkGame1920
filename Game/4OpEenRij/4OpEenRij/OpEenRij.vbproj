@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9B39BE45-8E72-4FEA-9C30-C65B5D4832C9}</ProjectGuid>
+    <ProjectGuid>{8E030B8C-D7E4-4108-BB4F-D872E2D67813}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <StartupObject>ConnectFourTut.My.MyApplication</StartupObject>
     <RootNamespace>ConnectFourTut</RootNamespace>
