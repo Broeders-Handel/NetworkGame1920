@@ -42,10 +42,7 @@ Public Class Server
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
-
         End Try
-
-
     End Sub
 
     Private Sub ConnectClient()
@@ -60,7 +57,6 @@ Public Class Server
         Loop
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
-        Dim strWrit As StreamWriter
         Try
             'pas eigen textbox aan
             Dim message As String = username & ": " & data.Substring(6)
@@ -76,7 +72,6 @@ Public Class Server
         For Each usr In UsersController.Users.Keys
             usr.write(message)
         Next
-
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then

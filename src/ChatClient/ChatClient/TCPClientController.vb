@@ -38,14 +38,17 @@ Public Class TCPClientController
     End Sub
     Public Function Connect(IpAdress As String) As Boolean
         Try
-            TCPClient = New TcpClient(IpAdress, 64553)
-            Write(Username, True)
-            Return True
+            If Username = "" Then
+                Return False
+            Else
+                TCPClient = New TcpClient(IpAdress, 64553)
+                Write(Username, True)
+                Return True
+            End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
             Return False
         End Try
-
     End Function
 
     Public Sub Write(Message As String, Optional isUsername As Boolean = False)

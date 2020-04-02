@@ -1,4 +1,5 @@
 ﻿Imports System.Net.Sockets
+Imports System.IO
 Class UsersController
     Private _Users As New Dictionary(Of Users, String)
     Private _DuplicateUser As Users
