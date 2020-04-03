@@ -20,11 +20,12 @@ Public Class frmLogin
         End If
 
         Me.Hide()
+        Dim frm As frmMain = New frmMain
 
-        frmMain.Players(0) = player1
-        frmMain.Players(1) = player2
-        frmMain.Init()
-        frmMain.Show()
+        frm.Players(0) = player1
+        frm.Players(1) = player2
+        frm.Init()
+        frm.Show()
     End Sub
 
     Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
