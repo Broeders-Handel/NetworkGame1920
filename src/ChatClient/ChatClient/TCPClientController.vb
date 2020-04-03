@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.Net.Sockets
 Imports System.IO
+Imports System.Net
+
 Public Class TCPClientController
     Private _TCPClient As TcpClient
     Private _username As String

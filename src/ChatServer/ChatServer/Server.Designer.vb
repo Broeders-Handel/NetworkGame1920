@@ -28,8 +28,6 @@ Partial Class Server
         Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.SendButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
-        Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.StartLocalButton = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
@@ -85,23 +83,6 @@ Partial Class Server
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
         '
-        'IpAdressTextBox
-        '
-        Me.IpAdressTextBox.Location = New System.Drawing.Point(12, 165)
-        Me.IpAdressTextBox.Name = "IpAdressTextBox"
-        Me.IpAdressTextBox.Size = New System.Drawing.Size(100, 20)
-        Me.IpAdressTextBox.TabIndex = 6
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(118, 166)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(28, 15)
-        Me.Label2.TabIndex = 7
-        Me.Label2.Text = ": IP"
-        '
         'StartLocalButton
         '
         Me.StartLocalButton.Location = New System.Drawing.Point(175, 13)
@@ -115,10 +96,8 @@ Partial Class Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(257, 199)
+        Me.ClientSize = New System.Drawing.Size(257, 178)
         Me.Controls.Add(Me.StartLocalButton)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.IpAdressTextBox)
         Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.MessageTextBox)
@@ -138,7 +117,5 @@ Partial Class Server
     Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents SendButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
-    Friend WithEvents IpAdressTextBox As TextBox
-    Friend WithEvents Label2 As Label
     Friend WithEvents StartLocalButton As Button
 End Class
