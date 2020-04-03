@@ -39,7 +39,6 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Connected = False
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
             If Username = "" Then
@@ -87,17 +86,7 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
-        If Connected = True Then
-            Connected = False
-            islistening = False
-            ConnectButton.Text = "Connect"
-            ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
-            ConnectButton.Enabled = True
-            DisconnectButton.Enabled = False
-            clienController.DisconnectUser()
-        Else
-            MessageBox.Show("Je bent niet geconnecteerd met een server.")
-        End If
+
     End Sub
 End Class
 
