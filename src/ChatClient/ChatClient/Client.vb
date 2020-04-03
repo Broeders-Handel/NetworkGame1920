@@ -1,14 +1,22 @@
 ﻿Imports System.IO
-Imports System.Net
 Imports System.Threading
 
 Public Class Client
+    Private _Username As String
     Dim Connected As Boolean
     Dim clienController As New TCPClientController
     Public Event MessageRecieved(data As String)
     Private ComunicatieThread As Thread = New Thread(New ThreadStart(AddressOf Listening))
     Dim islistening As Boolean
 
+    Public Property Username As String
+        Get
+            Return _Username
+        End Get
+        Set(value As String)
+            _Username = value
+        End Set
+    End Property
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
@@ -31,22 +39,21 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-        Connected = False
-        Dim ipaddress As String = InputBox("Geef een IP-adres op.")
-        If ipaddress Like "*.*.*.*" Then
-            clienController.Username = InputBox("Geef een gebruikersnaam op.")
-            Connected = clienController.Connect(ipaddress)
+        If IpAdressTextBox.Text Like "*.*.*.*" Then
+            Username = InputBox("Geef een gebruikersnaam op.")
+            If Username = "" Then
+                MessageBox.Show("Je moet een geldige username ingeven")
+            Else
+                clienController.Username = Username
+                clienController.Connect(IpAdressTextBox.Text)
+                islistening = True
+                ConnectButton.Text = "Connected"
+                ConnectButton.Enabled = False
+                ComunicatieThread.Start()
+                IpAdressTextBox.ReadOnly = True
+            End If
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
-        End If
-        If Connected = True Then
-            islistening = True
-            ConnectButton.Text = "Connected"
-            ChatRichTextBox.Text = "<< CONNECTED TO SERVER >>"
-            ConnectButton.Enabled = False
-            ComunicatieThread.Start()
-        Else
-            MessageBox.Show("Je bent niet verbonden")
         End If
     End Sub
     Private Sub Listening()
@@ -55,8 +62,11 @@ Public Class Client
         Do While islistening
             Try
                 streamRdr = New StreamReader(clienController.TCPClientStream)
-                UpdateText(ChatRichTextBox, data)
                 data = streamRdr.ReadLine
+                If data Like "server => " & Username & " JOINED" Then
+                    UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
+                End If
+                UpdateText(ChatRichTextBox, data)
             Catch ex As Exception
                 Console.WriteLine(ex.Message)
             End Try
@@ -76,20 +86,7 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
-        If Connected = True Then
-            Connected = False
-            islistening = False
-            ConnectButton.Text = "Connect"
-            ChatRichTextBox.Text &= "<< DISCONNECTED FROM THE SERVER >>"
-            ConnectButton.Enabled = True
-            DisconnectButton.Enabled = False
-            clienController.DisconnectUser()
-            ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
-        Else
-            MessageBox.Show("Je bent niet geconnecteerd met een server.")
-        End If
+
     End Sub
-
-
 End Class
 
