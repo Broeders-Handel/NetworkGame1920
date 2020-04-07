@@ -28,14 +28,19 @@ Public Class Server
             Dim username As String = streamRdr.ReadLine
             username = username.Substring(6)
             UpdateText(ChatRichTextBox, username)
-
+            Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            Dim usr As Users = UsersController.addUser(username, client)
-            'meld alle gebruikers van nieuwe client
-            sendMessageAsServer(username & " JOINED")
-            'luister naar inkomende berichten
-            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-            usr.Listen()
+            If UsersController.Users.ContainsValue(username) Then
+                MessageBox.Show("Deze username is al in gebruik")
+                client = Nothing
+            Else
+                Dim usr As Users = UsersController.addUser(username, client)
+                'meld alle gebruikers van nieuwe client
+                sendMessageAsServer(username & " JOINED")
+                'luister naar inkomende berichten
+                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+                usr.Listen()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -53,7 +58,6 @@ Public Class Server
         Loop
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
-        Dim strWrit As StreamWriter
         Try
             'pas eigen textbox aan
             Dim message As String = username & ": " & data.Substring(6)
@@ -66,10 +70,9 @@ Public Class Server
     End Sub
 
     Public Sub SendToClients(message As String)
-        For Each usr In UsersController.Users.Values
+        For Each usr In UsersController.Users.Keys
             usr.write(message)
         Next
-
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -89,9 +92,9 @@ Public Class Server
     End Sub
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        Dim Ipadress As String = InputBox("Geef een IP-adres op.")
+        Dim Ipadress As IPAddress
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse(Ipadress), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
