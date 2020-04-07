@@ -19,6 +19,7 @@ Public Class Server
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
 
+
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
@@ -108,6 +109,7 @@ Public Class Server
         StartButton.Enabled = False
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        TCPListener.Stop()
         StopServer = True
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
