@@ -88,12 +88,12 @@ Partial Class frmMain
         Me.pnlButtons.TabIndex = 4
         Me.pnlButtons.Used = False
         '
-        'Grid4
+        'Grid5
         '
-        Me.Grid4.Location = New System.Drawing.Point(12, 68)
-        Me.Grid4.Name = "Grid4"
-        Me.Grid4.Size = New System.Drawing.Size(400, 400)
-        Me.Grid4.TabIndex = 5
+        Me.Grid5.Location = New System.Drawing.Point(12, 68)
+        Me.Grid5.Name = "Grid5"
+        Me.Grid5.Size = New System.Drawing.Size(400, 400)
+        Me.Grid5.TabIndex = 5
         '
         'frmMain
         '
@@ -101,7 +101,7 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(739, 480)
-        Me.Controls.Add(Me.Grid4)
+        Me.Controls.Add(Me.Grid5)
         Me.Controls.Add(Me.pnlButtons)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "frmMain"
@@ -121,4 +121,5 @@ Partial Class frmMain
     Friend WithEvents Grid3 As Grid
     Friend WithEvents pnlButtons As PanelBox
     Friend WithEvents Grid4 As Grid
+    Friend WithEvents Grid5 As Grid
 End Class

@@ -91,13 +91,13 @@ Public Class Grid
 
         lstItems.Add(grid(x, y))
 
-        For intY = y + 1 To Columns - 1
-            If (intY > Rows - 1) Then
+        For i As Integer = y + 1 To Columns - 1
+            If (i > Rows - 1) Then
                 Exit For
             Else
-                If (grid(x, intY).Used = True) Then
-                    If (grid(x, intY).BackColor = currColor) Then
-                        lstItems.Add(grid(x, intY))
+                If (grid(x, i).Used = True) Then
+                    If (grid(x, i).BackColor = currColor) Then
+                        lstItems.Add(grid(x, i))
                     Else
                         Exit For
                     End If
@@ -107,13 +107,13 @@ Public Class Grid
             End If
         Next
 
-        For intY = y - 1 To 0 Step -1
-            If (intY < 0) Then
+        For i As Integer = y - 1 To 0 Step -1
+            If (i < 0) Then
                 Exit For
             Else
-                If (grid(x, intY).Used = True) Then
-                    If (grid(x, intY).BackColor = currColor) Then
-                        lstItems.Add(grid(x, intY))
+                If (grid(x, i).Used = True) Then
+                    If (grid(x, i).BackColor = currColor) Then
+                        lstItems.Add(grid(x, i))
                     Else
                         Exit For
                     End If
@@ -138,13 +138,13 @@ Public Class Grid
 
         lstItems.Add(grid(x, y))
 
-        For intX = x + 1 To Columns - 1
-            If (intX > Columns - 1) Then
+        For i As Integer = x + 1 To Columns - 1
+            If (i > Columns - 1) Then
                 Exit For
             Else
-                If (grid(intX, y).Used = True) Then
-                    If (grid(intX, y).BackColor = currColor) Then
-                        lstItems.Add(grid(intX, y))
+                If (grid(i, y).Used = True) Then
+                    If (grid(i, y).BackColor = currColor) Then
+                        lstItems.Add(grid(i, y))
                     Else
                         Exit For
                     End If
@@ -154,13 +154,13 @@ Public Class Grid
             End If
         Next
 
-        For intX = x - 1 To 0 Step -1
-            If (intX < 0) Then
+        For i = x - 1 To 0 Step -1
+            If (i < 0) Then
                 Exit For
             Else
-                If (grid(intX, y).Used = True) Then
-                    If (grid(intX, y).BackColor = currColor) Then
-                        lstItems.Add(grid(intX, y))
+                If (grid(i, y).Used = True) Then
+                    If (grid(i, y).BackColor = currColor) Then
+                        lstItems.Add(grid(i, y))
                     Else
                         Exit For
                     End If
@@ -185,7 +185,7 @@ Public Class Grid
 
         ' x + 1 | y - 1
         Dim intY As Integer = y + 1
-        For intX = x + 1 To Columns - 1
+        For intX As Integer = x + 1 To Columns - 1
             If (intX > Columns - 1 Or intY > Rows - 1) Then
                 Exit For
             Else
