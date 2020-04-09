@@ -72,10 +72,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmLogin.Designer.vb">
-      <DependentUpon>frmLogin.vb</DependentUpon>
+    <Compile Include="frmReady.Designer.vb">
+      <DependentUpon>frmReady.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmLogin.vb">
+    <Compile Include="frmReady.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.vb">
@@ -115,8 +115,8 @@
     <Compile Include="Stuff\Players\Player.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmLogin.resx">
-      <DependentUpon>frmLogin.vb</DependentUpon>
+    <EmbeddedResource Include="frmReady.resx">
+      <DependentUpon>frmReady.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>

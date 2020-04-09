@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 
+
 Public Class Client
     Private _Username As String
     Dim Connected As Boolean
@@ -86,6 +87,15 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
+
+    End Sub
+
+    Private Sub ChallengeGame(txt As String)
+        Dim Readyform As New Form
+        If MessageTextBox.Text = "!Challenge @" Then
+            Me.Hide()
+            Readyform.Show()
+        End If
 
     End Sub
 End Class
