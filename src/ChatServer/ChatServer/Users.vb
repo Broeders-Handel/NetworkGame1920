@@ -44,7 +44,6 @@ Public Class Users
         Catch ex As Exception
 
         End Try
-
     End Sub
 
     Public Overrides Function ToString() As String
@@ -76,7 +75,6 @@ Public Class Users
                 RaiseEvent MessageRecieved(Username, invoer)
             Loop
         Catch ex As Exception
-
         End Try
     End Sub
 End Class

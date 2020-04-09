@@ -35,8 +35,8 @@ Public Class TCPClientController
 
     End Property
     Public Sub DisconnectUser()
-        TCPClient = New TcpClient()
-
+        Write("//DISC//")
+        TCPClient = New TcpClient
     End Sub
     Public Function Connect(IpAdress As String) As Boolean
         Try

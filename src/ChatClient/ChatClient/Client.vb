@@ -86,6 +86,7 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
+        clienController.DisconnectUser()
 
     End Sub
 End Class
