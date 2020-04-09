@@ -91,7 +91,6 @@ Public Class Client
     End Sub
 
     Private Sub ChallengeGame(txt As String)
-        Dim Readyform As New Form
         If MessageTextBox.Text = "!Challenge @" Then
             Me.Hide()
             Readyform.Show()
