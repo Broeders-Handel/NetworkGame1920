@@ -47,15 +47,20 @@ Public Class Server
     End Sub
 
     Private Sub ConnectClient()
-        Do Until StopServer = True
+        Try
 
-            Dim TCPClient As TcpClient
-            TCPClient = TCPListener.AcceptTcpClient()
-            Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
-            Dim parameter = New Object() {TCPClient}
-            ThreadClientConnected.Start(parameter)
 
-        Loop
+            Do Until StopServer = True
+
+                Dim TCPClient As TcpClient
+                TCPClient = TCPListener.AcceptTcpClient()
+                Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
+                Dim parameter = New Object() {TCPClient}
+                ThreadClientConnected.Start(parameter)
+
+            Loop
+        Catch ex As Exception
+        End Try
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
@@ -93,8 +98,9 @@ Public Class Server
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
+        StopServer = False
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.115"), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
@@ -112,10 +118,13 @@ Public Class Server
         StartButton.Enabled = False
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+
         TCPListener.Stop()
-        StopServer = True
-        StartLocalButton.Enabled = True
-        StartButton.Enabled = True
+            StopServer = True
+            StartLocalButton.Enabled = True
+            StartButton.Enabled = True
+            SendToClients("De server is afgesloten. Kom later terug!")
+
     End Sub
 #End Region
 #Region "Textbox"
