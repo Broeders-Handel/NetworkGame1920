@@ -12,7 +12,7 @@ Public Class frmMain
 
     Public Sub Init()
         PlayerTurn = Players(i)
-        Grid1.Init()
+        Grid5.Init()
         UpdateStatus()
         pnlButtons.Enabled = True
     End Sub
@@ -44,7 +44,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btnNewGame_Click(sender As System.Object, e As System.EventArgs) Handles btnNewGame.Click
-        frmLogin.Show()
+        ReadyForm.Show()
         Me.Close()
     End Sub
 
