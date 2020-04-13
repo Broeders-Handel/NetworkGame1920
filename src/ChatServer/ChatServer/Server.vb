@@ -47,20 +47,19 @@ Public Class Server
     End Sub
 
     Private Sub ConnectClient()
+
         Try
-
-
             Do Until StopServer = True
-
                 Dim TCPClient As TcpClient
                 TCPClient = TCPListener.AcceptTcpClient()
                 Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
                 Dim parameter = New Object() {TCPClient}
                 ThreadClientConnected.Start(parameter)
-
             Loop
-        Catch ex As Exception
+        Catch ex As SocketException
+
         End Try
+
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
@@ -102,7 +101,7 @@ Public Class Server
         serverStatus = True
         TCPListener = New TcpListener(IPAddress.Parse("192.168.0.115"), 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
@@ -111,20 +110,19 @@ Public Class Server
     Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
         TCPListener = New TcpListener(IPAddress.Loopback, 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
         StartButton.Enabled = False
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
-
+        StopServer = True
+        ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
+        SendToClients("De server is afgesloten. Kom later terug!")
         TCPListener.Stop()
-            StopServer = True
-            StartLocalButton.Enabled = True
-            StartButton.Enabled = True
-            SendToClients("De server is afgesloten. Kom later terug!")
-
+        StartLocalButton.Enabled = True
+        StartButton.Enabled = True
     End Sub
 #End Region
 #Region "Textbox"
