@@ -35,7 +35,7 @@ Public Class TCPClientController
 
     End Property
     Public Sub DisconnectUser()
-        Write("//DISC//")
+        Write("", False, True)
         TCPClient = New TcpClient
     End Sub
     Public Function Connect(IpAdress As String) As Boolean
@@ -53,16 +53,21 @@ Public Class TCPClientController
         End Try
     End Function
 
-    Public Sub Write(Message As String, Optional isUsername As Boolean = False)
-        If isUsername Then
-            Message = "//UN//" & Message
-        Else
-            Message = "//MS//" & Message
-        End If
-        Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
-        strWrit.WriteLine(Message)
-        strWrit.Flush()
-
+    Public Sub Write(Message As String, Optional isUsername As Boolean = False, Optional IsDisconnect As Boolean = False)
+        Try
+            If isUsername = True And IsDisconnect = False Then
+                Message = "//UN//" & Message
+            ElseIf isUsername = False And IsDisconnect = False Then
+                Message = "//MS//" & Message
+            ElseIf isUsername = False And IsDisconnect = True Then
+                Message = "//DISC//" & Message
+            End If
+            Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
+            strWrit.WriteLine(Message)
+            strWrit.Flush()
+        Catch ex As Exception
+            MessageBox.Show("Je bent niet meer verbonden")
+        End Try
     End Sub
 End Class
 

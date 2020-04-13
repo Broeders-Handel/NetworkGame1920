@@ -87,7 +87,12 @@ Public Class Client
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clienController.DisconnectUser()
-
+        ConnectButton.Enabled = True
+        DisconnectButton.Enabled = False
+        IpAdressTextBox.Text = ""
+        IpAdressTextBox.ReadOnly = False
+        ChatRichTextBox.Text = ""
+        ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
     End Sub
 End Class
 

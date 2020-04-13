@@ -28,13 +28,7 @@ Class UsersController
         Dim user As Users
         user = New Users(username, client)
         Try
-            If _Users.ContainsKey(user.Username) Then
-                DuplicateUser = user
-                MessageBox.Show("Deze username is al in gebruik.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                RemoveUser(DuplicateUser.Username)
-            Else
-                _Users.Add(username, user)
-            End If
+            _Users.Add(username, user)
         Catch ex As Exception
             MessageBox.Show("User disconnected")
         End Try
