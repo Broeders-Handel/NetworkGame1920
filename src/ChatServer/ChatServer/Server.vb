@@ -7,7 +7,6 @@ Imports System.Threading
 Public Class Server
 
     Dim ThreadConnectClient As Thread
-    Dim ThreadSendToClient As Thread
     Dim Islistening As Boolean
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
@@ -18,6 +17,7 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
+    Dim usr As Users
 
 
     Private Sub ClientConnected(clientObject As Object)
@@ -34,7 +34,7 @@ Public Class Server
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
-                Dim usr As Users = UsersController.addUser(username, client)
+                usr = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
                 'luister naar inkomende berichten
@@ -121,6 +121,8 @@ Public Class Server
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
         TCPListener.Stop()
+        ThreadConnectClient.Abort()
+        usr.stopListen()
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
     End Sub

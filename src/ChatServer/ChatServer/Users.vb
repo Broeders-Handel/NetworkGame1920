@@ -65,6 +65,9 @@ Public Class Users
         ListenThread = New Thread(AddressOf ListenThreadProc)
         ListenThread.Start()
     End Sub
+    Public Sub stopListen()
+        ListenThread.Abort()
+    End Sub
     Public Event MessageRecieved(username As String, data As String)
     'bij het luisteren => gooi event wanneer iets ontvangen
     Public Sub ListenThreadProc()
