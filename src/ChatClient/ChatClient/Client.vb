@@ -51,6 +51,7 @@ Public Class Client
                 ConnectButton.Enabled = False
                 ComunicatieThread.Start()
                 IpAdressTextBox.ReadOnly = True
+                DisconnectButton.Enabled = True
             End If
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
