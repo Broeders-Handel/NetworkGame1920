@@ -88,20 +88,12 @@ Partial Class frmMain
         Me.pnlButtons.TabIndex = 4
         Me.pnlButtons.Used = False
         '
-        'Grid4
-        '
-        Me.Grid4.Location = New System.Drawing.Point(12, 68)
-        Me.Grid4.Name = "Grid4"
-        Me.Grid4.Size = New System.Drawing.Size(400, 400)
-        Me.Grid4.TabIndex = 5
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(739, 480)
-        Me.Controls.Add(Me.Grid4)
         Me.Controls.Add(Me.pnlButtons)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "frmMain"

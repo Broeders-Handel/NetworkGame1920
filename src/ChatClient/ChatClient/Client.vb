@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 
+
 Public Class Client
     Private _Username As String
     Dim Connected As Boolean
@@ -94,6 +95,14 @@ Public Class Client
         IpAdressTextBox.ReadOnly = False
         ChatRichTextBox.Text = ""
         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+    End Sub
+
+    Private Sub ChallengeGame(txt As String)
+        If MessageTextBox.Text = "!Challenge @" Then
+            Me.Hide()
+            Readyform.Show()
+        End If
+
     End Sub
 End Class
 

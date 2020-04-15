@@ -1,6 +1,4 @@
-﻿
-
-Public Class AI
+﻿Public Class AI
     Implements IPlayer
 
     Public Sub New(clr As Color)

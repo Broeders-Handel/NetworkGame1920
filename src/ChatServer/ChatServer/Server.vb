@@ -78,6 +78,7 @@ Public Class Server
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values
             usr.write(message)
+
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
