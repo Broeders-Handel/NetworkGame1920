@@ -37,11 +37,11 @@ Public Class Server
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
                 'Laat gebruiker zien in de listbox
-                ' Dim kvp As KeyValuePair(Of String, Users)
-                'For Each kvp In UsersController.Users
-                'Dim Mystring As String = String.Format("{0}: {1}", kvp.Key, kvp.Value)
-                'ClientsListBox.Items.Add(Mystring)
-                'Next
+                Dim kvp As KeyValuePair(Of String, Users)
+                For Each kvp In UsersController.Users
+                    Dim Mystring As String = String.Format("{0}: {1}", kvp.Key, kvp.Value)
+                    ClientsListBox.Items.Add(Mystring)
+                Next
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                 usr.Listen()
