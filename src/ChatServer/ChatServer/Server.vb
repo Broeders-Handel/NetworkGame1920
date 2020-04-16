@@ -34,7 +34,7 @@ Public Class Server
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
-                usr = UsersController.addUser(username, client)
+                Dim usr As Users = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
                 'luister naar inkomende berichten
