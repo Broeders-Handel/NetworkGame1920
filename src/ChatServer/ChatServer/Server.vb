@@ -60,7 +60,7 @@ Public Class Server
         Try
             If data Like "//DISC//*" Then
                 UsersController.RemoveUser(username)
-                Dim message As String = username & "<< DISCONNECTED >>"
+                Dim message As String = username & " DISCONNECTED "
                 UpdateText(ChatRichTextBox, message)
                 sendMessageAsServer(message)
             Else
