@@ -53,7 +53,6 @@ Public Class Server
             Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
             Dim parameter = New Object() {TCPClient}
             ThreadClientConnected.Start(parameter)
-            ClientsListBox.DataSource = UsersController.Users
         Loop
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
