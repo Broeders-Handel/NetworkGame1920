@@ -30,7 +30,7 @@ Public Class Server
             UpdateText(ChatRichTextBox, username)
             Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            If UsersController.Users.ContainsValue(username) Then
+            If UsersController.Users.ContainsKey(username) Then
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
@@ -74,7 +74,7 @@ Public Class Server
     End Sub
 
     Public Sub SendToClients(message As String)
-        For Each usr In UsersController.Users.Keys
+        For Each usr In UsersController.Users.Values
             usr.write(message)
         Next
     End Sub
@@ -99,7 +99,7 @@ Public Class Server
         Dim Ipadress As IPAddress
         StopServer = False
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.115"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("127.0.0.1"), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)

@@ -53,6 +53,7 @@ Public Class Client
                 ComunicatieThread.Start()
                 IpAdressTextBox.ReadOnly = True
                 DisconnectButton.Enabled = True
+                Connected = True
             End If
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
