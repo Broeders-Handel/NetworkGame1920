@@ -36,6 +36,12 @@ Public Class Server
                 Dim usr As Users = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
+                'Laat gebruiker zien in de listbox
+                ' Dim kvp As KeyValuePair(Of String, Users)
+                'For Each kvp In UsersController.Users
+                'Dim Mystring As String = String.Format("{0}: {1}", kvp.Key, kvp.Value)
+                'ClientsListBox.Items.Add(Mystring)
+                'Next
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                 usr.Listen()
@@ -53,7 +59,7 @@ Public Class Server
             Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
             Dim parameter = New Object() {TCPClient}
             ThreadClientConnected.Start(parameter)
-            ClientsListBox.DataSource = UsersController.Users
+
         Loop
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
@@ -101,14 +107,13 @@ Public Class Server
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.1.13"), 64553)
         TCPListener.Start()
         ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
         StartLocalButton.Enabled = False
-        ClientsListBox.DataSource = UsersController.Users
     End Sub
     Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
         TCPListener = New TcpListener(IPAddress.Loopback, 64553)
@@ -124,6 +129,7 @@ Public Class Server
         StopServer = True
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
+        ChatRichTextBox.Clear()
     End Sub
 #End Region
 #Region "Textbox"

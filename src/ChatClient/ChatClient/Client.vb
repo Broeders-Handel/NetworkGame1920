@@ -22,8 +22,12 @@ Public Class Client
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                clienController.Write(MessageTextBox.Text)
-                MessageTextBox.Clear()
+                If MessageTextBox.Text = "!challenge" Then
+                    ChallengeGame()
+                Else
+                    clienController.Write(MessageTextBox.Text)
+                    MessageTextBox.Clear()
+                End If
             End If
         End If
     End Sub
@@ -97,12 +101,9 @@ Public Class Client
         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
     End Sub
 
-    Private Sub ChallengeGame(txt As String)
-        If MessageTextBox.Text = "!Challenge @" Then
-            Me.Hide()
-            Readyform.Show()
-        End If
-
+    Private Sub ChallengeGame()
+        Me.Hide()
+        Readyform.Show()
     End Sub
 End Class
 
