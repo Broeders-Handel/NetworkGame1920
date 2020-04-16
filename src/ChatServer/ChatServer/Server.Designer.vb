@@ -29,6 +29,7 @@ Partial Class Server
         Me.SendButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.StartLocalButton = New System.Windows.Forms.Button()
+        Me.ClientsListBox = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
         'StartButton
@@ -60,16 +61,16 @@ Partial Class Server
         '
         'MessageTextBox
         '
-        Me.MessageTextBox.Location = New System.Drawing.Point(12, 139)
+        Me.MessageTextBox.Location = New System.Drawing.Point(13, 240)
         Me.MessageTextBox.Name = "MessageTextBox"
-        Me.MessageTextBox.Size = New System.Drawing.Size(100, 20)
+        Me.MessageTextBox.Size = New System.Drawing.Size(114, 20)
         Me.MessageTextBox.TabIndex = 3
         '
         'SendButton
         '
-        Me.SendButton.Location = New System.Drawing.Point(132, 139)
+        Me.SendButton.Location = New System.Drawing.Point(133, 237)
         Me.SendButton.Name = "SendButton"
-        Me.SendButton.Size = New System.Drawing.Size(75, 23)
+        Me.SendButton.Size = New System.Drawing.Size(113, 23)
         Me.SendButton.TabIndex = 4
         Me.SendButton.Text = "Send"
         Me.SendButton.UseVisualStyleBackColor = True
@@ -79,7 +80,7 @@ Partial Class Server
         Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 42)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
         Me.ChatRichTextBox.ReadOnly = True
-        Me.ChatRichTextBox.Size = New System.Drawing.Size(195, 96)
+        Me.ChatRichTextBox.Size = New System.Drawing.Size(233, 192)
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
         '
@@ -92,11 +93,20 @@ Partial Class Server
         Me.StartLocalButton.Text = "Local"
         Me.StartLocalButton.UseVisualStyleBackColor = True
         '
+        'ClientsListBox
+        '
+        Me.ClientsListBox.FormattingEnabled = True
+        Me.ClientsListBox.Location = New System.Drawing.Point(251, 13)
+        Me.ClientsListBox.Name = "ClientsListBox"
+        Me.ClientsListBox.Size = New System.Drawing.Size(172, 251)
+        Me.ClientsListBox.TabIndex = 9
+        '
         'Server
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(257, 178)
+        Me.ClientSize = New System.Drawing.Size(435, 272)
+        Me.Controls.Add(Me.ClientsListBox)
         Me.Controls.Add(Me.StartLocalButton)
         Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.SendButton)
@@ -118,4 +128,5 @@ Partial Class Server
     Friend WithEvents SendButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
     Friend WithEvents StartLocalButton As Button
+    Friend WithEvents ClientsListBox As ListBox
 End Class

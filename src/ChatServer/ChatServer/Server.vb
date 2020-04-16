@@ -53,7 +53,7 @@ Public Class Server
             Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
             Dim parameter = New Object() {TCPClient}
             ThreadClientConnected.Start(parameter)
-
+            ClientsListBox.DataSource = UsersController.Users
         Loop
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
@@ -100,6 +100,7 @@ Public Class Server
         isBusy = True
         ThreadConnectClient.Start()
         StartLocalButton.Enabled = False
+        ClientsListBox.DataSource = UsersController.Users
     End Sub
     Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
         TCPListener = New TcpListener(IPAddress.Loopback, 64553)
@@ -109,6 +110,7 @@ Public Class Server
         isBusy = True
         ThreadConnectClient.Start()
         StartButton.Enabled = False
+
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
@@ -129,6 +131,10 @@ Public Class Server
                 RTB.AppendText(txt & Environment.NewLine)
             End If
         End If
+    End Sub
+
+    Private Sub MessageTextBox_TextChanged(sender As Object, e As EventArgs) Handles MessageTextBox.TextChanged
+
     End Sub
 #End Region
 End Class
