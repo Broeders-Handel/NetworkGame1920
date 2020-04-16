@@ -7,7 +7,6 @@ Imports System.Threading
 Public Class Server
 
     Dim ThreadConnectClient As Thread
-    Dim ThreadSendToClient As Thread
     Dim Islistening As Boolean
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
@@ -18,6 +17,8 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
+    Dim usr As Users
+
 
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
@@ -33,7 +34,7 @@ Public Class Server
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
-                Dim usr As Users = UsersController.addUser(username, client)
+                usr = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
                 'luister naar inkomende berichten
@@ -46,15 +47,19 @@ Public Class Server
     End Sub
 
     Private Sub ConnectClient()
-        Do Until StopServer = True
 
-            Dim TCPClient As TcpClient
-            TCPClient = TCPListener.AcceptTcpClient()
-            Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
-            Dim parameter = New Object() {TCPClient}
-            ThreadClientConnected.Start(parameter)
+        Try
+            Do Until StopServer = True
+                Dim TCPClient As TcpClient
+                TCPClient = TCPListener.AcceptTcpClient()
+                Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
+                Dim parameter = New Object() {TCPClient}
+                ThreadClientConnected.Start(parameter)
+            Loop
+        Catch ex As SocketException
 
-        Loop
+        End Try
+
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
@@ -92,10 +97,11 @@ Public Class Server
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
+        StopServer = False
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.150"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.115"), 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
@@ -104,7 +110,7 @@ Public Class Server
     Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
         TCPListener = New TcpListener(IPAddress.Loopback, 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
@@ -112,6 +118,11 @@ Public Class Server
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
+        SendToClients("De server is afgesloten. Kom later terug!")
+        TCPListener.Stop()
+        ThreadConnectClient.Abort()
+        usr.stopListen()
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
     End Sub
