@@ -29,7 +29,7 @@ Public Class Server
             UpdateText(ChatRichTextBox, username)
             Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            If UsersController.Users.ContainsValue(username) Then
+            If UsersController.Users.ContainsKey(username) Then
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
@@ -58,19 +58,27 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            'pas eigen textbox aan
-            Dim message As String = username & ": " & data.Substring(6)
-            UpdateText(ChatRichTextBox, message)
-            'stuur naar alle andere clients
-            SendToClients(message)
+            If data Like "//DISC//*" Then
+                UsersController.RemoveUser(username)
+                Dim message As String = username & " DISCONNECTED"
+                UpdateText(ChatRichTextBox, message)
+                sendMessageAsServer(message)
+            Else
+                'pas eigen textbox aan
+                Dim message As String = username & ": " & data.Substring(6)
+                UpdateText(ChatRichTextBox, message)
+                'stuur naar alle andere clients
+                SendToClients(message)
+            End If
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
 
     Public Sub SendToClients(message As String)
-        For Each usr In UsersController.Users.Keys
+        For Each usr In UsersController.Users.Values
             usr.write(message)
+
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown

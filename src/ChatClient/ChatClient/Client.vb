@@ -52,6 +52,7 @@ Public Class Client
                 ConnectButton.Enabled = False
                 ComunicatieThread.Start()
                 IpAdressTextBox.ReadOnly = True
+                DisconnectButton.Enabled = True
             End If
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
@@ -87,7 +88,13 @@ Public Class Client
     End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
-
+        clienController.DisconnectUser()
+        ConnectButton.Enabled = True
+        DisconnectButton.Enabled = False
+        IpAdressTextBox.Text = ""
+        IpAdressTextBox.ReadOnly = False
+        ChatRichTextBox.Text = ""
+        ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
     End Sub
 
     Private Sub ChallengeGame(txt As String)
