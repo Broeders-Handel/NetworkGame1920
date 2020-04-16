@@ -7,7 +7,6 @@ Imports System.Threading
 Public Class Server
 
     Dim ThreadConnectClient As Thread
-    Dim ThreadSendToClient As Thread
     Dim Islistening As Boolean
     Dim TCPListener As TcpListener
     Dim serverStatus As Boolean = False
@@ -18,6 +17,8 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
+    Dim usr As Users
+
 
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
@@ -29,19 +30,13 @@ Public Class Server
             UpdateText(ChatRichTextBox, username)
             Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            If UsersController.Users.ContainsKey(username) Then
+            If UsersController.Users.ContainsValue(username) Then
                 MessageBox.Show("Deze username is al in gebruik")
                 client = Nothing
             Else
-                Dim usr As Users = UsersController.addUser(username, client)
+                usr = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
-                'Laat gebruiker zien in de listbox
-                Dim kvp As KeyValuePair(Of String, Users)
-                For Each kvp In UsersController.Users
-                    Dim Mystring As String = String.Format("{0}: {1}", kvp.Key, kvp.Value)
-                    ClientsListBox.Items.Add(Mystring)
-                Next
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                 usr.Listen()
@@ -52,39 +47,35 @@ Public Class Server
     End Sub
 
     Private Sub ConnectClient()
-        Do Until StopServer = True
 
-            Dim TCPClient As TcpClient
-            TCPClient = TCPListener.AcceptTcpClient()
-            Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
-            Dim parameter = New Object() {TCPClient}
-            ThreadClientConnected.Start(parameter)
+        Try
+            Do Until StopServer = True
+                Dim TCPClient As TcpClient
+                TCPClient = TCPListener.AcceptTcpClient()
+                Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
+                Dim parameter = New Object() {TCPClient}
+                ThreadClientConnected.Start(parameter)
+            Loop
+        Catch ex As SocketException
 
-        Loop
+        End Try
+
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            If data Like "//DISC//*" Then
-                UsersController.RemoveUser(username)
-                Dim message As String = username & " DISCONNECTED"
-                UpdateText(ChatRichTextBox, message)
-                sendMessageAsServer(message)
-            Else
-                'pas eigen textbox aan
-                Dim message As String = username & ": " & data.Substring(6)
-                UpdateText(ChatRichTextBox, message)
-                'stuur naar alle andere clients
-                SendToClients(message)
-            End If
+            'pas eigen textbox aan
+            Dim message As String = username & ": " & data.Substring(6)
+            UpdateText(ChatRichTextBox, message)
+            'stuur naar alle andere clients
+            SendToClients(message)
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
 
     Public Sub SendToClients(message As String)
-        For Each usr In UsersController.Users.Values
+        For Each usr In UsersController.Users.Keys
             usr.write(message)
-
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -106,10 +97,11 @@ Public Class Server
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         Dim Ipadress As IPAddress
+        StopServer = False
         serverStatus = True
-        TCPListener = New TcpListener(IPAddress.Parse("192.168.1.13"), 64553)
+        TCPListener = New TcpListener(IPAddress.Parse("192.168.0.115"), 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
@@ -118,18 +110,21 @@ Public Class Server
     Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
         TCPListener = New TcpListener(IPAddress.Loopback, 64553)
         TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN>>" & Environment.NewLine
+        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
         StartButton.Enabled = False
-
     End Sub
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
+        ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
+        SendToClients("De server is afgesloten. Kom later terug!")
+        TCPListener.Stop()
+        ThreadConnectClient.Abort()
+        usr.stopListen()
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
-        ChatRichTextBox.Clear()
     End Sub
 #End Region
 #Region "Textbox"
@@ -145,10 +140,6 @@ Public Class Server
                 RTB.AppendText(txt & Environment.NewLine)
             End If
         End If
-    End Sub
-
-    Private Sub MessageTextBox_TextChanged(sender As Object, e As EventArgs) Handles MessageTextBox.TextChanged
-
     End Sub
 #End Region
 End Class

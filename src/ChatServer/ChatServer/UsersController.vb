@@ -2,17 +2,6 @@
 Imports System.IO
 Class UsersController
     Private _Users As New Dictionary(Of String, Users)
-    Private _DuplicateUser As Users
-    Public Property DuplicateUser As Users
-        Get
-            Return _DuplicateUser
-        End Get
-        Set(value As Users)
-            _DuplicateUser = value
-        End Set
-    End Property
-
-
     Public Property Users As Dictionary(Of String, Users)
         Get
             Return _Users
