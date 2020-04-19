@@ -43,12 +43,15 @@ Public Class Client
 
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-            If Username = "" Then
+
+            Do While Username = ""
                 MessageBox.Show("Je moet een geldige username ingeven")
+                Username = InputBox("Geef een gebruikersnaam op.")
                 ConnectButton.Enabled = True
                 DisconnectButton.Enabled = False
-            Else
-                clienController.Username = Username
+            Loop
+
+            clienController.Username = Username
                 clienController.Connect(IpAdressTextBox.Text)
                 islistening = True
                 ConnectButton.Text = "Connected"
@@ -57,7 +60,7 @@ Public Class Client
                 IpAdressTextBox.ReadOnly = True
                 DisconnectButton.Enabled = True
                 Connected = True
-            End If
+
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
         End If
