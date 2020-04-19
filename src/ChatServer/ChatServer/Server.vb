@@ -30,17 +30,18 @@ Public Class Server
             UpdateText(ChatRichTextBox, username)
             Dim User As New Users(username, client)
             'voeg client toe aan dictionairy
-            If UsersController.Users.ContainsKey(username) Then
+            Do While UsersController.Users.ContainsKey(username)
                 MessageBox.Show("Deze username is al in gebruik")
+                username = InputBox("Geef een gebruikersnaam op.")
                 client = Nothing
-            Else
-                usr = UsersController.addUser(username, client)
+            Loop
+            usr = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
                 sendMessageAsServer(username & " JOINED")
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                 usr.Listen()
-            End If
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
