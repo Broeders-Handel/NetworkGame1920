@@ -40,10 +40,13 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
+
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
             If Username = "" Then
                 MessageBox.Show("Je moet een geldige username ingeven")
+                ConnectButton.Enabled = True
+                DisconnectButton.Enabled = False
             Else
                 clienController.Username = Username
                 clienController.Connect(IpAdressTextBox.Text)
