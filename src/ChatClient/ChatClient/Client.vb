@@ -52,14 +52,14 @@ Public Class Client
             Loop
 
             clienController.Username = Username
-                clienController.Connect(IpAdressTextBox.Text)
-                islistening = True
-                ConnectButton.Text = "Connected"
-                ConnectButton.Enabled = False
-                ComunicatieThread.Start()
-                IpAdressTextBox.ReadOnly = True
-                DisconnectButton.Enabled = True
-                Connected = True
+            clienController.Connect(IpAdressTextBox.Text)
+            islistening = True
+            ConnectButton.Text = "Connected"
+            ConnectButton.Enabled = False
+            ComunicatieThread.Start()
+            IpAdressTextBox.ReadOnly = True
+            DisconnectButton.Enabled = True
+            Connected = True
 
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
