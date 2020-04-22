@@ -33,7 +33,7 @@ Public Class Server
             Do While UsersController.Users.ContainsKey(username)
                 MessageBox.Show("Deze username is al in gebruik")
                 username = InputBox("Geef een gebruikersnaam op.")
-                client = Nothing
+                client = client
             Loop
             usr = UsersController.addUser(username, client)
                 'meld alle gebruikers van nieuwe client
