@@ -36,11 +36,11 @@ Public Class Server
                 client = client
             Loop
             usr = UsersController.addUser(username, client)
-                'meld alle gebruikers van nieuwe client
-                sendMessageAsServer(username & " JOINED")
-                'luister naar inkomende berichten
-                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                usr.Listen()
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -64,9 +64,9 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            If data Like "//DISC//*" Then
+            If data Like "//DISC//" Then
                 UsersController.RemoveUser(username)
-                Dim message As String = username & " DISCONNECTED"
+                Dim message As String = username & " DISCONNECTED "
                 UpdateText(ChatRichTextBox, message)
                 sendMessageAsServer(message)
             Else
@@ -128,6 +128,7 @@ Public Class Server
         StopServer = True
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
+        SendToClients("//DISC//")
         TCPListener.Stop()
         ThreadConnectClient.Abort()
         usr.stopListen()

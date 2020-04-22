@@ -78,8 +78,7 @@ Public Class Client
                     ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
                     clienController.stopServer()
                     updateClient(ConnectButton)
-                    ConnectButton.Enabled = True
-                    DisconnectButton.Enabled = False
+                    updateClient(DisconnectButton)
                     IpAdressTextBox.Text = ""
                     IpAdressTextBox.ReadOnly = False
                     ChatRichTextBox.Text = ""
