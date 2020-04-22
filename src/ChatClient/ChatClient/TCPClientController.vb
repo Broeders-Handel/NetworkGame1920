@@ -31,9 +31,10 @@ Public Class TCPClientController
         Get
             Return TCPClient.GetStream()
         End Get
-
-
     End Property
+    Public Sub stopServer()
+        TCPClient = New TcpClient
+    End Sub
     Public Sub DisconnectUser()
         Write("", False, True)
         TCPClient = New TcpClient
@@ -70,4 +71,3 @@ Public Class TCPClientController
         End Try
     End Sub
 End Class
-

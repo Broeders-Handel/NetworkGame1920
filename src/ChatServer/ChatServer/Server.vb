@@ -63,11 +63,18 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            'pas eigen textbox aan
-            Dim message As String = username & ": " & data.Substring(6)
-            UpdateText(ChatRichTextBox, message)
-            'stuur naar alle andere clients
-            SendToClients(message)
+            If data Like "//DISC//*" Then
+                UsersController.RemoveUser(username)
+                Dim message As String = username & " DISCONNECTED "
+                UpdateText(ChatRichTextBox, message)
+                sendMessageAsServer(message)
+            Else
+                'pas eigen textbox aan
+                Dim message As String = username & ": " & data.Substring(6)
+                UpdateText(ChatRichTextBox, message)
+                'stuur naar alle andere clients
+                SendToClients(message)
+            End If
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
@@ -120,6 +127,7 @@ Public Class Server
         StopServer = True
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
+        SendToClients("//DISC//")
         TCPListener.Stop()
         ThreadConnectClient.Abort()
         usr.stopListen()

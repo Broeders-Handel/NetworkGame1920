@@ -68,6 +68,15 @@ Public Class Client
                 data = streamRdr.ReadLine
                 If data Like "server => " & Username & " JOINED" Then
                     UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
+                ElseIf data Like "//DISC//" Then
+                    ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+                    clienController.stopServer()
+                    ConnectButton.Enabled = True
+                    DisconnectButton.Enabled = False
+                    IpAdressTextBox.Text = ""
+                    IpAdressTextBox.ReadOnly = False
+                    ChatRichTextBox.Text = ""
+
                 End If
                 UpdateText(ChatRichTextBox, data)
             Catch ex As Exception
@@ -77,6 +86,7 @@ Public Class Client
         Loop
     End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
