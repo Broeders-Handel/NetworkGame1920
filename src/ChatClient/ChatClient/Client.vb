@@ -44,20 +44,27 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
+
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-            If Username = "" Then
+
+            Do While Username = ""
                 MessageBox.Show("Je moet een geldige username ingeven")
-            Else
-                clienController.Username = Username
-                clienController.Connect(IpAdressTextBox.Text)
-                islistening = True
-                ConnectButton.Text = "Connected"
-                ConnectButton.Enabled = False
-                ComunicatieThread.Start()
-                IpAdressTextBox.ReadOnly = True
-                DisconnectButton.Enabled = True
-            End If
+                Username = InputBox("Geef een gebruikersnaam op.")
+                ConnectButton.Enabled = True
+                DisconnectButton.Enabled = False
+            Loop
+
+            clienController.Username = Username
+            clienController.Connect(IpAdressTextBox.Text)
+            islistening = True
+            ConnectButton.Text = "Connected"
+            ConnectButton.Enabled = False
+            ComunicatieThread.Start()
+            IpAdressTextBox.ReadOnly = True
+            DisconnectButton.Enabled = True
+            Connected = True
+
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
         End If
