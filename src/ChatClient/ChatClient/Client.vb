@@ -79,6 +79,8 @@ Public Class Client
                     clienController.stopServer()
                     updateClient(ConnectButton)
                     updateClient(DisconnectButton)
+                    ConnectButton.Enabled = True
+                    DisconnectButton.Enabled = False
                     IpAdressTextBox.Text = ""
                     IpAdressTextBox.ReadOnly = False
                     ChatRichTextBox.Text = ""
