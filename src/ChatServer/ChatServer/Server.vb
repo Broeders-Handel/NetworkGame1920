@@ -63,7 +63,7 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            If data Like "//DISC//*" Then
+            If data Like "//DISC//" Then
                 UsersController.RemoveUser(username)
                 Dim message As String = username & " DISCONNECTED "
                 UpdateText(ChatRichTextBox, message)
