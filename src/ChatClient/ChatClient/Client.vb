@@ -4,12 +4,21 @@ Imports System.Threading
 
 Public Class Client
     Private _Username As String
+    Private _Users As List(Of String)
     Dim Connected As Boolean
     Dim clienController As New TCPClientController
     Public Event MessageRecieved(data As String)
     Private ComunicatieThread As Thread = New Thread(New ThreadStart(AddressOf Listening))
     Dim islistening As Boolean
 
+    Public Property Users As List(Of String)
+        Get
+            Return _Users
+        End Get
+        Set(value As List(Of String))
+            _Users = value
+        End Set
+    End Property
     Public Property Username As String
         Get
             Return _Username
@@ -74,6 +83,18 @@ Public Class Client
                 data = streamRdr.ReadLine
                 If data Like "server => " & Username & " JOINED" Then
                     UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
+                ElseIf data Like "//USST//*" Then
+                    data = data.Substring(8)
+                    Dim IndexKomma As Integer
+                    Dim Username As String
+                    Do While data.Contains(",")
+                        IndexKomma = data.IndexOf(",")
+                        Username = data.Substring(0, IndexKomma)
+                        data = data.Substring(IndexKomma + 1)
+                        Users.Add(Username)
+                    Loop
+                    UsersListBox.DataSource = Nothing
+                    UsersListBox.Items.Add(Users)
                 End If
                 UpdateText(ChatRichTextBox, data)
             Catch ex As Exception

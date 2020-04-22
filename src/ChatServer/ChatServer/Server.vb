@@ -36,19 +36,17 @@ Public Class Server
                 client = client
             Loop
             usr = UsersController.addUser(username, client)
-                'meld alle gebruikers van nieuwe client
-                sendMessageAsServer(username & " JOINED")
-                'luister naar inkomende berichten
-                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                usr.Listen()
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
     Private Sub ConnectClient()
-
         Try
             Do Until StopServer = True
                 Dim TCPClient As TcpClient
@@ -64,9 +62,9 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            If data Like "//DISC//*" Then
+            If data Like "//DISC//" Then
                 UsersController.RemoveUser(username)
-                Dim message As String = username & " DISCONNECTED"
+                Dim message As String = username & " DISCONNECTED "
                 UpdateText(ChatRichTextBox, message)
                 sendMessageAsServer(message)
             Else
