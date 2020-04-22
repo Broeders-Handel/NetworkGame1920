@@ -36,10 +36,14 @@ Public Class Server
                 client = Nothing
             Loop
             usr = UsersController.addUser(username, client)
-                'meld alle gebruikers van nieuwe client
-                sendMessageAsServer(username & " JOINED")
-                'luister naar inkomende berichten
-                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'displayed de user in de lisbox
+            For Each key As String In UsersController.Users.Keys
+                ClientsListBox.Items.Add(key)
+            Next
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
                 usr.Listen()
 
         Catch ex As Exception
@@ -56,6 +60,7 @@ Public Class Server
                 Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
                 Dim parameter = New Object() {TCPClient}
                 ThreadClientConnected.Start(parameter)
+
             Loop
         Catch ex As SocketException
 
