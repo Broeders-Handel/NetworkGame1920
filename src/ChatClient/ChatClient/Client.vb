@@ -77,8 +77,8 @@ Public Class Client
                 ElseIf data Like "//DISC//" Then
                     ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
                     clienController.stopServer()
-                    updateClient(ConnectButton)
-                    updateClient(DisconnectButton)
+                    updateBut(ConnectButton)
+
                     ConnectButton.Enabled = True
                     DisconnectButton.Enabled = False
                     IpAdressTextBox.Text = ""
@@ -95,9 +95,12 @@ Public Class Client
     End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     Private Delegate Sub UpdateButDelegate(But As Button)
-    Private Sub updateClient(but As Button)
+    Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
-            but.Invoke(New UpdateButDelegate(AddressOf updateClient), New Button)
+            but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
+        Else
+            but.Text = "Connect"
+            but.Enabled = True
         End If
     End Sub
     'Update textbox
