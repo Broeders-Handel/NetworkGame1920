@@ -44,7 +44,7 @@ Public Class Server
             Next
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                usr.Listen()
+            usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -136,6 +136,7 @@ Public Class Server
 #Region "Textbox"
 
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    Private Delegate Sub UpdateListBox(ByVal Item As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
@@ -144,6 +145,17 @@ Public Class Server
         Else
             If txt IsNot Nothing Then
                 RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+
+    'update listbox
+    Private Sub UpdateList(ByVal Item As String)
+        If Me.InvokeRequired Then
+            Me.Invoke(New UpdateListBox(AddressOf UpdateList), Item)
+        Else
+            If Item IsNot Nothing Then
+                ClientsListBox.Items.Add(Item)
             End If
         End If
     End Sub
