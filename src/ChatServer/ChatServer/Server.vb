@@ -39,9 +39,7 @@ Public Class Server
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
             'displayed de user in de lisbox
-            For Each key As String In UsersController.Users.Keys
-                ClientsListBox.Items.Add(key)
-            Next
+            UpdateClientList(username)
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
             usr.Listen()
@@ -150,9 +148,9 @@ Public Class Server
     End Sub
 
     'update listbox
-    Private Sub UpdateList(ByVal Item As String)
-        If Me.InvokeRequired Then
-            Me.Invoke(New UpdateListBox(AddressOf UpdateList), Item)
+    Private Sub UpdateClientList(ByVal Item As String)
+        If ClientsListBox.InvokeRequired Then
+            ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
         Else
             If Item IsNot Nothing Then
                 ClientsListBox.Items.Add(Item)
