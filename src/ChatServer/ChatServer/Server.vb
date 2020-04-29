@@ -33,14 +33,19 @@ Public Class Server
             Do While UsersController.Users.ContainsKey(username)
                 MessageBox.Show("Deze username is al in gebruik")
                 username = InputBox("Geef een gebruikersnaam op.")
-                client = client
+                If username = "" Then
+                    MessageBox.Show("Geannuleerd")
+                    Exit Sub
+                Else
+                    client = client
+                End If
             Loop
             usr = UsersController.addUser(username, client)
-                'meld alle gebruikers van nieuwe client
-                sendMessageAsServer(username & " JOINED")
-                'luister naar inkomende berichten
-                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                usr.Listen()
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -64,11 +69,18 @@ Public Class Server
     End Sub
     Public Sub IncomingMessage(username As String, data As String)
         Try
-            'pas eigen textbox aan
-            Dim message As String = username & ": " & data.Substring(6)
-            UpdateText(ChatRichTextBox, message)
-            'stuur naar alle andere clients
-            SendToClients(message)
+            If data Like "//DISC//" Then
+                UsersController.RemoveUser(username)
+                Dim message As String = username & " DISCONNECTED "
+                UpdateText(ChatRichTextBox, message)
+                sendMessageAsServer(message)
+            Else
+                'pas eigen textbox aan
+                Dim message As String = username & ": " & data.Substring(6)
+                UpdateText(ChatRichTextBox, message)
+                'stuur naar alle andere clients
+                SendToClients(message)
+            End If
         Catch ex As Exception
             Throw New Exception("bericht niet verzonden")
         End Try
