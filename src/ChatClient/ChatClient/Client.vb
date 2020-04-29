@@ -98,9 +98,11 @@ Public Class Client
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
-        Else
+        ElseIf but.enabled = False Then
             but.Text = "Connect"
             but.Enabled = True
+        ElseIf but.Enabled = True Then
+            but.Enabled = False
         End If
     End Sub
     'Update textbox
