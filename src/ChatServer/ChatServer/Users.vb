@@ -37,14 +37,11 @@ Public Class Users
     Friend Sub write(message As String)
         Dim strWrit As StreamWriter
         Try
-            'Dim users As Users = getinstance()
             strWrit = New StreamWriter(TCPClientStream)
             strWrit.WriteLine(message)
             strWrit.Flush()
         Catch ex As Exception
-
         End Try
-
     End Sub
 
     Public Overrides Function ToString() As String

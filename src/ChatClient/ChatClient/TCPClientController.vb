@@ -34,10 +34,6 @@ Public Class TCPClientController
 
 
     End Property
-    Public Sub DisconnectUser()
-        Write("", False, True)
-        TCPClient = New TcpClient
-    End Sub
     Public Function Connect(IpAdress As String) As Boolean
         Try
             If Username = "" Then
@@ -52,7 +48,22 @@ Public Class TCPClientController
             Return False
         End Try
     End Function
-
+    Private Function getCommand(message As String)
+        Dim IndexSlash As Integer = message.LastIndexOf("/")
+        Dim command As String = message.Substring(0, IndexSlash)
+        Return command
+    End Function
+    Public Function HandleMessageWithCommand(message As String) As String
+        Dim command As String = getCommand(message)
+        If command = "//DISC//" Then
+            DisconnectUser()
+            Return Nothing
+        ElseIf command = "//MS//" Then
+            Return message
+        ElseIf command = "//CONNECTED//" Then
+            Return "<< CONNECTED TO SERVER >>"
+        End If
+    End Function
     Public Sub Write(Message As String, Optional isUsername As Boolean = False, Optional IsDisconnect As Boolean = False)
         Try
             If isUsername = True And IsDisconnect = False Then
@@ -68,6 +79,10 @@ Public Class TCPClientController
         Catch ex As Exception
             MessageBox.Show("Je bent niet meer verbonden")
         End Try
+    End Sub
+    Public Sub DisconnectUser()
+        Write("", False, True)
+        TCPClient = New TcpClient
     End Sub
 End Class
 

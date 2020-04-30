@@ -36,11 +36,12 @@ Public Class Server
                 client = client
             Loop
             usr = UsersController.addUser(username, client)
-                'meld alle gebruikers van nieuwe client
-                sendMessageAsServer(username & " JOINED")
-                'luister naar inkomende berichten
-                AddHandler usr.MessageRecieved, AddressOf IncomingMessage
-                usr.Listen()
+            SendToOneClient("//CONNECTED//", username)
+            'meld alle gebruikers van nieuwe client
+            sendMessageAsServer(username & " JOINED")
+            'luister naar inkomende berichten
+            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -80,7 +81,13 @@ Public Class Server
             Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
-
+    Public Sub SendToOneClient(message As String, username As String)
+        For i As Integer = 0 To UsersController.Users.Count - 1
+            If UsersController.Users(i).Username = username Then
+                UsersController.Users(i).write(message)
+            End If
+        Next
+    End Sub
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values
             usr.write(message)

@@ -72,15 +72,25 @@ Public Class Client
             Try
                 streamRdr = New StreamReader(clienController.TCPClientStream)
                 data = streamRdr.ReadLine
-                If data Like "server => " & Username & " JOINED" Then
-                    UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
-                End If
-                UpdateText(ChatRichTextBox, data)
+                UpdateText(ChatRichTextBox, clienController.HandleMessageWithCommand(data))
             Catch ex As Exception
                 Console.WriteLine(ex.Message)
             End Try
             Thread.Sleep(100)
         Loop
+        'Do While islistening
+        '    Try
+        '        streamRdr = New StreamReader(clienController.TCPClientStream)
+        '        data = streamRdr.ReadLine
+        '        If data Like "server => " & Username & " JOINED" Then
+        '            UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
+        '        End If
+        '        UpdateText(ChatRichTextBox, data)
+        '    Catch ex As Exception
+        '        Console.WriteLine(ex.Message)
+        '    End Try
+        '    Thread.Sleep(100)
+        'Loop
     End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
