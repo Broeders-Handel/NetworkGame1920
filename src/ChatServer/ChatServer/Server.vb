@@ -49,6 +49,23 @@ Public Class Server
         End Try
     End Sub
 
+    Private Sub ClientDisconnected(Clientobject As Object)
+        Dim client As TcpClient = CType(Clientobject(0), TcpClient)
+        Dim streamRdr As StreamReader
+        Try
+            streamRdr = New StreamReader(client.GetStream)
+            UpdateText(ChatRichTextBox, username)
+            Dim User As New Users(username, client)
+            'meld alle gebruikers dat een client disconnect
+            sendMessageAsServer(username & " DISCONECTED")
+            'displayed de user in de lisbox
+            RemoveClientListbox(username)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
     Private Sub ConnectClient()
 
         Try
@@ -80,7 +97,6 @@ Public Class Server
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values
             usr.write(message)
-
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -130,6 +146,7 @@ Public Class Server
         usr.stopListen()
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
+        ClientsListBox.Items.Clear()
     End Sub
 #End Region
 #Region "Textbox"
@@ -148,7 +165,7 @@ Public Class Server
         End If
     End Sub
 
-    'update listbox
+    'AddInListbox
     Private Sub UpdateClientList(ByVal Item As String)
         If ClientsListBox.InvokeRequired Then
             ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
@@ -158,5 +175,17 @@ Public Class Server
             End If
         End If
     End Sub
+
+    'RemoveInListbox
+    Private Sub RemoveClientListbox(ByVal Item As String)
+        If ClientsListBox.InvokeRequired Then
+            ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
+        Else
+            If Item IsNot Nothing Then
+                ClientsListBox.Items.Remove(Item)
+            End If
+        End If
+    End Sub
+
 #End Region
 End Class
