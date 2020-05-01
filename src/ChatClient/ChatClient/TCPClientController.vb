@@ -38,14 +38,22 @@ Public Class TCPClientController
         Write("", False, True)
         TCPClient = New TcpClient
     End Sub
-    Public Function Connect(IpAdress As String) As Boolean
+
+    Enum ConnectResponse
+        NoUsername
+        DuplicateUsername
+        CorrectUsername
+    End Enum
+    Public Function Connect(IpAdress As String) As ConnectResponse
         Try
             If Username = "" Then
-                Return False
+                Return ConnectResponse.NoUsername
             Else
                 TCPClient = New TcpClient(IpAdress, 64553)
+                'Luister naar antwoord server, als niet ok => DuplicateUsername
                 Write(Username, True)
-                Return True
+
+                Return ConnectResponse.CorrectUsername
             End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)

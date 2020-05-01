@@ -40,17 +40,20 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-
+        Dim connectionSucces As Boolean = True
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
 
-            If Username = "" Then
-                MessageBox.Show("Geannuleerd")
-                DisconnectButton.Enabled = False
-                ConnectButton.Enabled = True
-            Else
+
+            clienController.Username = Username
+            Dim response As ConnectedResponse = clienController.Connect(IpAdressTextBox.Text)
+            Do While response = connectResponse.DuplicateUsername
+                Username = InputBox("Geef een gebruikersnaam op.")
                 clienController.Username = Username
-                clienController.Connect(IpAdressTextBox.Text)
+                response = clienController.Connect(IpAdressTextBox.Text)
+            Loop
+
+            If response = ConnectedResponse.CorrectUsername Then
                 islistening = True
                 ConnectButton.Text = "Connected"
                 ConnectButton.Enabled = True
@@ -58,11 +61,20 @@ Public Class Client
                 IpAdressTextBox.ReadOnly = True
                 DisconnectButton.Enabled = True
                 Connected = True
+            Else
+                MessageBox.Show("Geannuleerd")
+                DisconnectButton.Enabled = False
+                ConnectButton.Enabled = True
             End If
+
+
         Else
-                MessageBox.Show("Dit Is geen correct IP adres")
+            MessageBox.Show("Dit is geen correct IP adres")
         End If
     End Sub
+
+
+    'Moet in controller staan. 
     Private Sub Listening()
         Dim streamRdr As StreamReader
         Dim data As String = ""
@@ -82,6 +94,7 @@ Public Class Client
     End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
+    'Bekijk server voor doorgeven event
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
