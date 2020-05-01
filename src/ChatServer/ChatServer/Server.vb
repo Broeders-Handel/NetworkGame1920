@@ -39,7 +39,7 @@ Public Class Server
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
             'luister naar inkomende berichten
-            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
             usr.Listen()
 
         Catch ex As Exception
@@ -201,6 +201,7 @@ Public Class Server
         DISCONNECTED
         MESSAGE
         CONNECTED
+        CONNECTEDUSERS
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -220,6 +221,8 @@ Public Class Server
             Return "//UN//"
         ElseIf commEnum = COM_COMMAND.MESSAGE Then
             Return "//MS//"
+        ElseIf commEnum = COM_COMMAND.CONNECTEDUSERS Then
+            Return "//USST//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         End If
