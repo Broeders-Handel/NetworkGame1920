@@ -36,20 +36,18 @@ Public Class Server
                 client = client
             Loop
             usr = UsersController.addUser(username, client)
-            SendToOneClient("//CONNECTED//", username)
+            SendToOneClient("", username, COM_COMMAND.CONNECTED)
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
             'luister naar inkomende berichten
-            AddHandler usr.MessageRecieved, AddressOf IncomingMessage
+            AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
             usr.Listen()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
     Private Sub ConnectClient()
-
         Try
             Do Until StopServer = True
                 Dim TCPClient As TcpClient
@@ -59,34 +57,15 @@ Public Class Server
                 ThreadClientConnected.Start(parameter)
             Loop
         Catch ex As SocketException
-
-        End Try
-
-    End Sub
-    Public Sub IncomingMessage(username As String, data As String)
-        Try
-            If data Like "//DISC//*" Then
-                UsersController.RemoveUser(username)
-                Dim message As String = username & " DISCONNECTED"
-                UpdateText(ChatRichTextBox, message)
-                sendMessageAsServer(message)
-            Else
-                'pas eigen textbox aan
-                Dim message As String = username & ": " & data.Substring(6)
-                UpdateText(ChatRichTextBox, message)
-                'stuur naar alle andere clients
-                SendToClients(message)
-            End If
-        Catch ex As Exception
-            Throw New Exception("bericht niet verzonden")
         End Try
     End Sub
-    Public Sub SendToOneClient(message As String, username As String)
+
+    Public Sub SendToOneClient(message As String, username As String, commando As COM_COMMAND)
         Dim usr As Users = UsersController.Users.Item(username)
         If usr Is Nothing Then
             '.....
         Else
-            usr.write(message)
+            usr.write(message, commando)
         End If
 
         'For Each un As String In UsersController.Users.Keys
@@ -100,7 +79,7 @@ Public Class Server
     End Sub
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values
-            usr.write(message)
+            usr.write(message, COM_COMMAND.MESSAGE)
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -166,5 +145,95 @@ Public Class Server
             End If
         End If
     End Sub
+#End Region
+
+#Region "HANDLECOMMANDS"
+    Private Function HandleDisconnectedClient(username As String, message As String)
+        UsersController.RemoveUser(username)
+        message = username & " DISCONNECTED"
+        UpdateText(ChatRichTextBox, message)
+        sendMessageAsServer(message)
+    End Function
+    Private Function HandleIncommingMessage(username As String, message As String)
+
+        message = username & " : " & message
+        UpdateText(ChatRichTextBox, message)
+        SendToClients(message)
+    End Function
+    'Public Sub IncomingMessage(username As String, data As String)
+    '    Try
+    '        If data Like "//DISC//*" Then
+    '            UsersController.RemoveUser(username)
+    '            Dim message As String = username & " DISCONNECTED"
+    '            UpdateText(ChatRichTextBox, message)
+    '            sendMessageAsServer(message)
+    '        Else
+    '            'pas eigen textbox aan
+    '            Dim message As String = username & ": " & data.Substring(6)
+    '            UpdateText(ChatRichTextBox, message)
+    '            'stuur naar alle andere clients
+    '            SendToClients(message)
+    '        End If
+    '    Catch ex As Exception
+    ' Throw New Exception("bericht niet verzonden")
+    '    End Try
+    'End Sub
+#End Region
+
+
+    '###################### ADD COMMAND TYPE IF NECESSARY ###################### 
+#Region "COMMAND"
+
+    Enum COM_COMMAND
+        USERNAME
+        DISCONNECTED
+        MESSAGE
+        CONNECTED
+    End Enum
+    Public Shared Function getCommand(message As String) As COM_COMMAND
+        Dim IndexSlash As Integer = message.IndexOf("//", 2)
+        Dim command As String = message.Substring(0, IndexSlash + 2)
+        Return fromTextToComm(command)
+    End Function
+    Public Shared Function getMessage(message As String) As String
+        Dim IndexSlash As Integer = message.IndexOf("//", 2)
+        message = message.Substring(IndexSlash + 2)
+        Return message
+    End Function
+
+    Public Shared Function fromCommToText(commEnum As COM_COMMAND) As String
+        If commEnum = COM_COMMAND.DISCONNECTED Then
+            Return "//DISC//"
+        ElseIf commEnum = COM_COMMAND.USERNAME Then
+            Return "//UN//"
+        ElseIf commEnum = COM_COMMAND.MESSAGE Then
+            Return "//MS//"
+            'ElseIf commEnum = "//CONNECTED//" Then
+            '    Return COM_COMMAND.CONNECTED
+        End If
+    End Function
+    Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND
+        If commStr = "//DISC//" Then
+            Return COM_COMMAND.DISCONNECTED
+        ElseIf commStr = "//MS//" Then
+            Return COM_COMMAND.MESSAGE
+        ElseIf commStr = "//CONNECTED//" Then
+            Return COM_COMMAND.CONNECTED
+        ElseIf commStr = "//UN//" Then
+            Return COM_COMMAND.USERNAME
+        End If
+    End Function
+    Public Function HandleMessageWithCommand(username As String, message As String) As String
+        Dim command As COM_COMMAND = getCommand(message)
+        message = getMessage(message)
+        If command = COM_COMMAND.DISCONNECTED Then
+            HandleDisconnectedClient(username, message)
+        ElseIf command = COM_COMMAND.MESSAGE Then
+            HandleIncommingMessage(username, message)
+            'ElseIf command = COM_COMMAND.CONNECTED Then
+            '    Return username & " JOINED"
+            'ElseIf command = COM_COMMAND.USERNAME Then
+        End If
+    End Function
 #End Region
 End Class

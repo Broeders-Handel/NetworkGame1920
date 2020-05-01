@@ -4,6 +4,7 @@ Imports System.Threading
 
 Public Class Users
     Private Shared instance As Users
+    Dim usercontroller As New UsersController
     Private _username As String
     Private _client As TcpClient
     Dim Islistening As Boolean = True
@@ -34,11 +35,11 @@ Public Class Users
             Return Client.GetStream()
         End Get
     End Property
-    Friend Sub write(message As String)
+    Friend Sub write(message As String, commando As Server.COM_COMMAND)
         Dim strWrit As StreamWriter
         Try
             strWrit = New StreamWriter(TCPClientStream)
-            strWrit.WriteLine(message)
+            strWrit.WriteLine(Server.fromCommToText(commando) & message)
             strWrit.Flush()
         Catch ex As Exception
         End Try
@@ -76,7 +77,6 @@ Public Class Users
                 RaiseEvent MessageRecieved(Username, invoer)
             Loop
         Catch ex As Exception
-
         End Try
     End Sub
 End Class
