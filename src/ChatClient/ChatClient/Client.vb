@@ -80,17 +80,17 @@ Public Class Client
         End If
     End Sub
 
-    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
-    'Update textbox
-    Private Sub UpdateText(RTB As RichTextBox, txt As String)
-        If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
-        Else
-            If txt IsNot Nothing Then
-                RTB.AppendText(txt & Environment.NewLine)
-            End If
-        End If
-    End Sub
+    'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    ''Update textbox
+    'Private Sub UpdateText(RTB As RichTextBox, txt As String)
+    '    If RTB.InvokeRequired Then
+    '        RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+    '    Else
+    '        If txt IsNot Nothing Then
+    '            RTB.AppendText(txt & Environment.NewLine)
+    '        End If
+    '    End If
+    'End Sub
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
@@ -110,7 +110,7 @@ Public Class Client
         End If
 
     End Sub
-    Private Delegate Sub UpdateListBox(ByVal Item As String)
+    Private Delegate Sub UpdateListBox(ByVal users As List(Of String))
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
@@ -123,13 +123,12 @@ Public Class Client
         End If
     End Sub
 
-    Private Sub UpdateClientList(ByVal Item As String)
+    Private Sub UpdateClientList(users As List(Of String))
         If UsersListBox.InvokeRequired Then
-            UsersListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
+            UsersListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), users)
         Else
-            If Item IsNot Nothing Then
-                UsersListBox.Items.Add(Item)
-            End If
+            UsersListBox.DataSource = Nothing
+            UsersListBox.DataSource = users
         End If
     End Sub
 End Class
