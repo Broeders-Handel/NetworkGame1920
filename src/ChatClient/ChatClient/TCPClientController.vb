@@ -48,27 +48,57 @@ Public Class TCPClientController
             Return False
         End Try
     End Function
-    Private Function getCommand(message As String)
-        Dim IndexSlash As Integer = message.LastIndexOf("/")
-        Dim command As String = message.Substring(0, IndexSlash + 1)
-        Return command
+
+#Region "COMMAND"
+    Private Function getCommand(message As String) As COM_COMMAND
+        Dim IndexSlash As Integer = message.IndexOf("//", 2)
+        Dim command As String = message.Substring(0, IndexSlash + 2)
+        Return fromTextToComm(command)
     End Function
 
+    Private Function fromCommToText(commEnum As COM_COMMAND) As String
+        If commEnum = COM_COMMAND.DISCONNECTED Then
+            Return "//DISC//"
+        ElseIf commEnum = COM_COMMAND.USERNAME Then
+            Return "//UN//"
+            'ElseIf commEnum = "//MS//" Then
+            '    Return COM_COMMAND.MESSAGE
+            'ElseIf commEnum = "//CONNECTED//" Then
+            '    Return COM_COMMAND.CONNECTED
+        End If
+    End Function
+    Private Function fromTextToComm(commStr As String) As COM_COMMAND
+        If commStr = "//DISC//" Then
+            Return COM_COMMAND.DISCONNECTED
+        ElseIf commStr = "//MS//" Then
+            Return COM_COMMAND.MESSAGE
+        ElseIf commStr = "//CONNECTED//" Then
+            Return COM_COMMAND.CONNECTED
+        End If
+    End Function
+    Enum COM_COMMAND
+        USERNAME
+        DISCONNECTED
+        MESSAGE
+        CONNECTED
+    End Enum
+
+#End Region
     Public Function HandleMessageWithCommand(message As String) As String
-        Dim command As String = getCommand(message)
-        If command = "//DISC//" Then
+        Dim command As COM_COMMAND = getCommand(message)
+        If command = COM_COMMAND.DISCONNECTED Then
             DisconnectUser()
             Return "<< DISCONNECTED FROM SERVER >>"
-        ElseIf command = "//MS//" Then
+        ElseIf command = COM_COMMAND.MESSAGE Then
             Return message
-        ElseIf command = "//CONNECTED//" Then
+        ElseIf command = COM_COMMAND.CONNECTED Then
             Return "<< CONNECTED TO SERVER >>"
         End If
     End Function
     Public Sub Write(Message As String, Optional isUsername As Boolean = False, Optional IsDisconnect As Boolean = False)
         Try
             If isUsername = True And IsDisconnect = False Then
-                Message = "//UN//" & Message
+                Message = fromCommToText(COM_COMMAND.USERNAME) & Message
             ElseIf isUsername = False And IsDisconnect = False Then
                 Message = "//MS//" & Message
             ElseIf isUsername = False And IsDisconnect = True Then
