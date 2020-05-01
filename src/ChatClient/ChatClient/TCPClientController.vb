@@ -48,9 +48,15 @@ Public Class TCPClientController
             Return False
         End Try
     End Function
+    Public Enum COM_COMMAND
+        DISCONNECT
+        CONNECT
+        MESSAGE
+        USERNAME
+    End Enum
     Private Function getCommand(message As String)
-        Dim IndexSlash As Integer = message.LastIndexOf("/")
-        Dim command As String = message.Substring(0, IndexSlash + 1)
+        Dim IndexSlash As Integer = message.IndexOf("//", 2)
+        Dim command As String = message.Substring(0, IndexSlash + 2)
         Return command
     End Function
 
