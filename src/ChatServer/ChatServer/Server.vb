@@ -82,11 +82,21 @@ Public Class Server
         End Try
     End Sub
     Public Sub SendToOneClient(message As String, username As String)
-        For i As Integer = 0 To UsersController.Users.Count - 1
-            If UsersController.Users(i).Username = username Then
-                UsersController.Users(i).write(message)
-            End If
-        Next
+        Dim usr As Users = UsersController.Users.Item(username)
+        If usr Is Nothing Then
+            '.....
+        Else
+            usr.write(message)
+        End If
+
+        'For Each un As String In UsersController.Users.Keys
+        '    If un = username Then
+        'Next
+        'For i As Integer = 0 To UsersController.Users.Count - 1
+        '    If UsersController.Users(i).Username = username Then
+        '        UsersController.Users(i).write(message)
+        '    End If
+        'Next
     End Sub
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values

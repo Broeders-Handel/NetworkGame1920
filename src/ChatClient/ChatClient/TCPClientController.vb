@@ -50,14 +50,15 @@ Public Class TCPClientController
     End Function
     Private Function getCommand(message As String)
         Dim IndexSlash As Integer = message.LastIndexOf("/")
-        Dim command As String = message.Substring(0, IndexSlash)
+        Dim command As String = message.Substring(0, IndexSlash + 1)
         Return command
     End Function
+
     Public Function HandleMessageWithCommand(message As String) As String
         Dim command As String = getCommand(message)
         If command = "//DISC//" Then
             DisconnectUser()
-            Return Nothing
+            Return "<< DISCONNECTED FROM SERVER >>"
         ElseIf command = "//MS//" Then
             Return message
         ElseIf command = "//CONNECTED//" Then
