@@ -33,16 +33,25 @@ Public Class Server
             Do While UsersController.Users.ContainsKey(username)
                 MessageBox.Show("Deze username is al in gebruik")
                 username = InputBox("Geef een gebruikersnaam op.")
+<<<<<<< HEAD
                 If username = "" Then
                     MessageBox.Show("Geannuleerd")
                     Exit Sub
                 Else
                     client = client
                 End If
+=======
+                client = Nothing
+>>>>>>> master
             Loop
             usr = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
+<<<<<<< HEAD
+=======
+            'displayed de user in de lisbox
+            UpdateClientList(username)
+>>>>>>> master
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf IncomingMessage
             usr.Listen()
@@ -61,6 +70,7 @@ Public Class Server
                 Dim ThreadClientConnected As Thread = New Thread(AddressOf ClientConnected)
                 Dim parameter = New Object() {TCPClient}
                 ThreadClientConnected.Start(parameter)
+
             Loop
         Catch ex As SocketException
 
@@ -82,6 +92,7 @@ Public Class Server
     Public Sub SendToClients(message As String)
         For Each usr In UsersController.Users.Values
             usr.write(message)
+
         Next
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -136,6 +147,7 @@ Public Class Server
 #Region "Textbox"
 
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    Private Delegate Sub UpdateListBox(ByVal Item As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
@@ -144,6 +156,17 @@ Public Class Server
         Else
             If txt IsNot Nothing Then
                 RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+
+    'update listbox
+    Private Sub UpdateClientList(ByVal Item As String)
+        If ClientsListBox.InvokeRequired Then
+            ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
+        Else
+            If Item IsNot Nothing Then
+                ClientsListBox.Items.Add(Item)
             End If
         End If
     End Sub
