@@ -3,6 +3,7 @@ Imports System.Threading
 
 
 Public Class Client
+    Private _Users As List(Of String)
     Private _Username As String
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
@@ -20,6 +21,14 @@ Public Class Client
         End Get
         Set(value As String)
             _Username = value
+        End Set
+    End Property
+    Public Property Users As List(Of String)
+        Get
+            Return _Users
+        End Get
+        Set(value As List(Of String))
+            _Users = value
         End Set
     End Property
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
@@ -100,6 +109,28 @@ Public Class Client
             Readyform.Show()
         End If
 
+    End Sub
+    Private Delegate Sub UpdateListBox(ByVal Item As String)
+    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    'Update textbox
+    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+        If RTB.InvokeRequired Then
+            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+        Else
+            If txt IsNot Nothing Then
+                RTB.AppendText(txt & Environment.NewLine)
+            End If
+        End If
+    End Sub
+
+    Private Sub UpdateClientList(ByVal Item As String)
+        If UsersListBox.InvokeRequired Then
+            UsersListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
+        Else
+            If Item IsNot Nothing Then
+                UsersListBox.Items.Add(Item)
+            End If
+        End If
     End Sub
 End Class
 
