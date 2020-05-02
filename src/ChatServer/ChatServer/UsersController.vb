@@ -2,6 +2,16 @@
 Imports System.IO
 Class UsersController
     Private _Users As New Dictionary(Of String, Users)
+    Private _UsersString As String
+    Dim usr As Users
+    Public Property UsersString As String
+        Get
+            Return _UsersString
+        End Get
+        Set(value As String)
+            _UsersString = value
+        End Set
+    End Property
     Public Property Users As Dictionary(Of String, Users)
         Get
             Return _Users
@@ -18,6 +28,14 @@ Class UsersController
         user = New Users(username, client)
         Try
             _Users.Add(username, user)
+            UsersString = ""
+            For i As Integer = 0 To Users.Count - 1
+                UsersString &= Users.Keys(i) & ","
+            Next
+            For Each usr In Users.Values
+                usr.write(UsersString, Server.COM_COMMAND.CONNECTEDUSERS)
+            Next
+            UsersString = ""
         Catch ex As Exception
             MessageBox.Show("User disconnected")
         End Try
