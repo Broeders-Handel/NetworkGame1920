@@ -35,7 +35,7 @@ Public Class Client
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If MessageTextBox.Text.Length > 0 Then
-                clientController.Write(MessageTextBox.Text)
+                clientController.Write(MessageTextBox.Text, clientController.COM_COMMAND.MESSAGE)
                 MessageTextBox.Clear()
             End If
         End If
@@ -43,7 +43,7 @@ Public Class Client
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Try
             If Connected = True Then
-                clientController.Write(MessageTextBox.Text)
+                clientController.Write(MessageTextBox.Text, clientController.COM_COMMAND.MESSAGE)
                 MessageTextBox.Clear()
             Else
                 MessageBox.Show("Je bent niet verbonden met de server")
