@@ -129,9 +129,18 @@ Public Class Server
         StopServer = True
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
+
+        SendToClients("//DISC//")
         TCPListener.Stop()
         ThreadConnectClient.Abort()
         usr.stopListen()
+        Try
+            For Each usr In UsersController.Users.Values
+                UsersController.RemoveUser(usr.Username)
+            Next
+        Catch ex As Exception
+            UsersController.RemoveUser(usr.Username)
+        End Try
         StartLocalButton.Enabled = True
         StartButton.Enabled = True
     End Sub

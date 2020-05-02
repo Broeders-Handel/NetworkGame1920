@@ -33,9 +33,10 @@ Public Class TCPClientController
         Get
             Return TCPClient.GetStream()
         End Get
-
-
     End Property
+    Public Sub stopServer()
+        TCPClient = New TcpClient
+    End Sub
 
     Enum ConnectResponse
         NoUsername
@@ -168,4 +169,3 @@ Public Class TCPClientController
         TCPClient = New TcpClient
     End Sub
 End Class
-
