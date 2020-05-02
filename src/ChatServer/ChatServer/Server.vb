@@ -33,16 +33,12 @@ Public Class Server
             Do While UsersController.Users.ContainsKey(username)
                 MessageBox.Show("Deze username is al in gebruik")
                 username = InputBox("Geef een gebruikersnaam op.")
-<<<<<<< HEAD
                 If username = "" Then
                     MessageBox.Show("Geannuleerd")
                     Exit Sub
                 Else
-                    client = client
+                    client = Nothing
                 End If
-=======
-                client = Nothing
->>>>>>> master
             Loop
             usr = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client

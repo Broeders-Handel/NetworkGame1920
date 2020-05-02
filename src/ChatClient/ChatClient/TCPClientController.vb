@@ -36,10 +36,6 @@ Public Class TCPClientController
 
 
     End Property
-    Public Sub DisconnectUser()
-        Write("", False, True)
-        TCPClient = New TcpClient
-    End Sub
 
     Enum ConnectResponse
         NoUsername

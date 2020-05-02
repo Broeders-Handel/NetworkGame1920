@@ -58,14 +58,14 @@ Public Class Client
             Username = InputBox("Geef een gebruikersnaam op.")
 
 
-            clienController.Username = Username
-            Dim response As ConnectedResponse = clienController.Connect(IpAdressTextBox.Text)
-            Do While response = connectResponse.DuplicateUsername
+            clientController.Username = Username
+            Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text)
+            Do While response = TCPClientController.ConnectResponse.DuplicateUsername
                 Username = InputBox("Geef een gebruikersnaam op.")
-                clienController.Username = Username
-                response = clienController.Connect(IpAdressTextBox.Text)
+                clientController.Username = Username
+                response = clientController.Connect(IpAdressTextBox.Text)
             Loop
-            If response = ConnectedResponse.CorrectUsername Then
+            If response = TCPClientController.ConnectResponse.CorrectUsername Then
                 islistening = True
                 ConnectButton.Text = "Connected"
                 ConnectButton.Enabled = True
