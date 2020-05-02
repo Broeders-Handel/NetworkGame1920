@@ -28,12 +28,12 @@ Class UsersController
         user = New Users(username, client)
         Try
             _Users.Add(username, user)
-            UsersString = "//USST//"
+            UsersString = ""
             For i As Integer = 0 To Users.Count - 1
                 UsersString &= Users.Keys(i) & ","
             Next
             For Each usr In Users.Values
-                usr.write(UsersString)
+                usr.write(UsersString, Server.COM_COMMAND.CONNECTEDUSERS)
             Next
             UsersString = ""
         Catch ex As Exception
