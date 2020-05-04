@@ -46,6 +46,9 @@ Public Class Server
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+    Private Sub Server_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        StopButton.Enabled = False
+    End Sub
     Private Sub ConnectClient()
         Try
             Do Until StopServer = True
@@ -109,34 +112,28 @@ Public Class Server
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
-        StartLocalButton.Enabled = False
-    End Sub
-    Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
-        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
-        TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
-        ThreadConnectClient = New Thread(AddressOf ConnectClient)
-        isBusy = True
-        ThreadConnectClient.Start()
+        StopButton.Enabled = True
         StartButton.Enabled = False
     End Sub
+
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
-
-        SendToClients("//DISC//")
+        StartButton.Enabled = True
+        StopButton.Enabled = False
         TCPListener.Stop()
         ThreadConnectClient.Abort()
         usr.stopListen()
         Try
             For Each usr In UsersController.Users.Values
                 UsersController.RemoveUser(usr.Username)
+                usr.write("", COM_COMMAND.STOPSERVER)
             Next
         Catch ex As Exception
             UsersController.RemoveUser(usr.Username)
         End Try
-        StartLocalButton.Enabled = True
+
         StartButton.Enabled = True
     End Sub
 #End Region
@@ -181,6 +178,11 @@ Public Class Server
         UpdateText(ChatRichTextBox, message)
         SendToClients(message)
     End Function
+    Private Function HandleStopServer()
+        For Each usr In UsersController.Users.Values
+            usr.write("", COM_COMMAND.STOPSERVER)
+        Next
+    End Function
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -211,6 +213,7 @@ Public Class Server
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        STOPSERVER
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -232,8 +235,8 @@ Public Class Server
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTEDUSERS Then
             Return "//USST//"
-            'ElseIf commEnum = "//CONNECTED//" Then
-            '    Return COM_COMMAND.CONNECTED
+        ElseIf commEnum = COM_COMMAND.STOPSERVER Then
+            Return "//STOP//"
         End If
     End Function
     Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND
@@ -245,6 +248,8 @@ Public Class Server
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//STOP//" Then
+            Return COM_COMMAND.STOPSERVER
         End If
     End Function
     Public Function HandleMessageWithCommand(username As String, message As String) As String
@@ -254,10 +259,12 @@ Public Class Server
             HandleDisconnectedClient(username, message)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
-            'ElseIf command = COM_COMMAND.CONNECTED Then
-            '    Return username & " JOINED"
+        ElseIf command = COM_COMMAND.STOPSERVER Then
+            HandleStopServer()
             'ElseIf command = COM_COMMAND.USERNAME Then
         End If
     End Function
+
+
 #End Region
 End Class

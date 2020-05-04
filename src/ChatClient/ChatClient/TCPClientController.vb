@@ -9,7 +9,7 @@ Public Class TCPClientController
 
     Event MessageReceived(message As String)
     Event ConnectedUsers(users As List(Of String))
-
+    Event ServerStopped()
     Public Property Username As String
         Get
             Return _username
@@ -34,9 +34,7 @@ Public Class TCPClientController
             Return TCPClient.GetStream()
         End Get
     End Property
-    Public Sub stopServer()
-        TCPClient = New TcpClient
-    End Sub
+
     Public Function Connect(IpAdress As String) As Boolean
         Try
             If Username = "" Then
@@ -58,6 +56,7 @@ Public Class TCPClientController
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        STOPSERVER
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -79,7 +78,10 @@ Public Class TCPClientController
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTED Then
             Return "//CONNECTED//"
+        ElseIf commEnum = COM_COMMAND.STOPSERVER Then
+            Return "//STOP//"
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -92,7 +94,10 @@ Public Class TCPClientController
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//STOP//" Then
+            Return COM_COMMAND.STOPSERVER
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -136,7 +141,10 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
+        ElseIf command = COM_COMMAND.STOPSERVER Then
+            RaiseEvent ServerStopped()
         Else
+
             Throw New NotSupportedException
         End If
     End Sub
