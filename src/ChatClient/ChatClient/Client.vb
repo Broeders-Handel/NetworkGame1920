@@ -15,6 +15,10 @@ Public Class Client
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(ChatRichTextBox, message)
     End Function
+
+    Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
+        UpdateClientList(users)
+    End Function
     Public Property Username As String
         Get
             Return _Username
@@ -101,6 +105,7 @@ Public Class Client
         ChatRichTextBox.Text = ""
         ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
+        UsersListBox.DataSource = Nothing
     End Sub
 
     Private Sub ChallengeGame(txt As String)
@@ -132,4 +137,3 @@ Public Class Client
         End If
     End Sub
 End Class
-

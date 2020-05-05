@@ -22,16 +22,18 @@ Class UsersController
     End Property
     Public Sub RemoveUser(Username As String)
         _Users.Remove(Username)
+        UsersString = MakeUserstring()
+        For Each usr In Users.Values
+            usr.write(UsersString, Server.COM_COMMAND.CONNECTEDUSERS)
+        Next
+        UsersString = ""
     End Sub
     Public Function addUser(username As String, client As TcpClient) As Users
         Dim user As Users
         user = New Users(username, client)
         Try
             _Users.Add(username, user)
-            UsersString = ""
-            For i As Integer = 0 To Users.Count - 1
-                UsersString &= Users.Keys(i) & ","
-            Next
+            UsersString = MakeUserstring()
             For Each usr In Users.Values
                 usr.write(UsersString, Server.COM_COMMAND.CONNECTEDUSERS)
             Next
@@ -41,4 +43,12 @@ Class UsersController
         End Try
         Return user
     End Function
+    Private Function MakeUserstring() As String
+        UsersString = ""
+        For i As Integer = 0 To Users.Count - 1
+            UsersString &= Users.Keys(i) & ","
+        Next
+        Return UsersString
+    End Function
+
 End Class

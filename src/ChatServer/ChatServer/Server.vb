@@ -38,6 +38,8 @@ Public Class Server
             usr = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
+            'Voegt een User aan de lijst toe
+            UpdateClientList(username)
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
             usr.Listen()
@@ -160,9 +162,9 @@ Public Class Server
     End Sub
 
     'RemoveInListbox
-    Private Sub RemoveClientListbox(ByVal Item As String)
+    Private Sub RemoveClientListItem(ByVal Item As String)
         If ClientsListBox.InvokeRequired Then
-            ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
+            ClientsListBox.Invoke(New UpdateListBox(AddressOf RemoveClientListItem), Item)
         Else
             If Item IsNot Nothing Then
                 ClientsListBox.Items.Remove(Item)
@@ -256,6 +258,7 @@ Public Class Server
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
             HandleDisconnectedClient(username, message)
+            RemoveClientListItem(username)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
             'ElseIf command = COM_COMMAND.CONNECTED Then
