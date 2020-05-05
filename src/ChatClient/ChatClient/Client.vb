@@ -70,7 +70,7 @@ Public Class Client
                 response = clientController.Connect(IpAdressTextBox.Text)
             Loop
             If response = TCPClientController.ConnectResponse.CorrectUsername Then
-
+                Connected = True
             Else
                 MessageBox.Show("Geannuleerd")
                 Connected = False
