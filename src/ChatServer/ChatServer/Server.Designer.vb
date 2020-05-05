@@ -28,7 +28,6 @@ Partial Class Server
         Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.SendButton = New System.Windows.Forms.Button()
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
-        Me.StartLocalButton = New System.Windows.Forms.Button()
         Me.ClientsListBox = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
@@ -84,15 +83,6 @@ Partial Class Server
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
         '
-        'StartLocalButton
-        '
-        Me.StartLocalButton.Location = New System.Drawing.Point(175, 13)
-        Me.StartLocalButton.Name = "StartLocalButton"
-        Me.StartLocalButton.Size = New System.Drawing.Size(70, 23)
-        Me.StartLocalButton.TabIndex = 8
-        Me.StartLocalButton.Text = "Local"
-        Me.StartLocalButton.UseVisualStyleBackColor = True
-        '
         'ClientsListBox
         '
         Me.ClientsListBox.FormattingEnabled = True
@@ -107,7 +97,6 @@ Partial Class Server
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(435, 272)
         Me.Controls.Add(Me.ClientsListBox)
-        Me.Controls.Add(Me.StartLocalButton)
         Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.MessageTextBox)
@@ -127,6 +116,5 @@ Partial Class Server
     Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents SendButton As Button
     Friend WithEvents ChatRichTextBox As RichTextBox
-    Friend WithEvents StartLocalButton As Button
     Friend WithEvents ClientsListBox As ListBox
 End Class
