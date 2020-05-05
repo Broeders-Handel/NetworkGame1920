@@ -129,7 +129,7 @@ Public Class Client
         updateGUI()
     End Sub
     Public Sub stopServer()
-        tcpclient = New TcpClient
+
         clientController.DisconnectUser()
         Connected = False
         updateGUI()

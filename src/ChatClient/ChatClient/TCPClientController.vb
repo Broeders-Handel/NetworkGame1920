@@ -58,7 +58,7 @@ Public Class TCPClientController
             Else
                 If TCPClient Is Nothing Then
                     TCPClient = New TcpClient(IpAdress, 64553)
-
+                End If
                 If Not TCPClient Is Nothing Then
                         'islistening = True
                         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
@@ -69,11 +69,10 @@ Public Class TCPClientController
                         While connectResp = ConnectResponse.None
                             Thread.Sleep(200)
                         End While
-                        'wachten op antwoord
-                        'antwoord?
-                        Return connectResp
-
-                    End If
+                    'wachten op antwoord
+                    'antwoord?
+                    Return connectResp
+                End If
                 End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
