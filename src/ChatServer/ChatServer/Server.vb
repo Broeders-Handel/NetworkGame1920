@@ -17,7 +17,7 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
-    Dim usr As User
+
 
 
     Private Sub ClientConnected(clientObject As Object)
@@ -29,13 +29,13 @@ Public Class Server
             Dim username As String = streamRdr.ReadLine
             username = username.Substring(6)
             UpdateText(ChatRichTextBox, username)
-            Dim User As New User(username, client)
+            Dim usr As New User(username, client)
             'voeg client toe aan dictionairy
 
-            If Not UsersController.addUser(User) Then
-                SendToOneClient("", User, COM_COMMAND.DUPLICATE_USERNAME)
+            If Not UsersController.addUser(usr) Then
+                SendToOneClient("", usr, COM_COMMAND.DUPLICATE_USERNAME)
             Else
-                SendToOneClient("", User, COM_COMMAND.CORRECT_USERNAME)
+                SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 'meld alle gebruikers van nieuwe client
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
@@ -62,7 +62,7 @@ Public Class Server
         Catch ex As SocketException
         End Try
     End Sub
-    Public Sub SendToOneClient(message As String, user As User, commando As COM_COMMAND)
+    Public Sub SendToOneClient(message As String, usr As User, commando As COM_COMMAND)
         If usr Is Nothing Then
             '.....
         Else
@@ -141,15 +141,14 @@ Public Class Server
         StopButton.Enabled = False
         TCPListener.Stop()
         ThreadConnectClient.Abort()
-        usr.stopListen()
-        Try
-            For Each usr In UsersController.Users.Values
-                UsersController.RemoveUser(usr.Username)
-                usr.write("", COM_COMMAND.STOPSERVER)
-            Next
-        Catch ex As Exception
-            UsersController.RemoveUser(usr.Username)
-        End Try
+
+
+        For Each usr In UsersController.Users.Values
+            UsersController.RemoveUser(usr)
+
+        Next
+
+
 
         StartButton.Enabled = True
     End Sub

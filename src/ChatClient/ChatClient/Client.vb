@@ -61,11 +61,11 @@ Public Class Client
         Dim connectionSucces As Boolean = True
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-
-
             clientController.Username = Username
+
             Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text)
             Do While response = TCPClientController.ConnectResponse.DuplicateUsername
+                MessageBox.Show("Deze username is al in gebruik.")
                 Username = InputBox("Geef een gebruikersnaam op.")
                 clientController.Username = Username
                 response = clientController.Connect(IpAdressTextBox.Text)

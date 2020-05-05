@@ -112,6 +112,10 @@ Public Class TCPClientController
             Return "//CONNECTED//"
         ElseIf commEnum = COM_COMMAND.STOPSERVER Then
             Return "//STOP//"
+        ElseIf commEnum = COM_COMMAND.CORRECT_USERNAME Then
+            Return "//CORUS//"
+        ElseIf commEnum = COM_COMMAND.DUPLICATE_USERNAME Then
+            Return "//DUP//"
         Else
 
             Throw New NotSupportedException()
@@ -177,12 +181,12 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
-        ElseIf command = COM_COMMAND.CORRECT_USERNAME Then
-            connectResp = ConnectResponse.CorrectUsername
         ElseIf command = COM_COMMAND.STOPSERVER Then
             RaiseEvent ServerStopped()
         ElseIf command = COM_COMMAND.DUPLICATE_USERNAME Then
             connectResp = ConnectResponse.DuplicateUsername
+        ElseIf command = COM_COMMAND.CORRECT_USERNAME Then
+            connectResp = ConnectResponse.CorrectUsername
         Else
 
             Throw New NotSupportedException
