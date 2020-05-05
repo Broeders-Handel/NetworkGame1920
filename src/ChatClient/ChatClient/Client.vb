@@ -7,7 +7,6 @@ Public Class Client
     Private _Username As String
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
-
     Private ComunicatieThread As Thread
     Dim islistening As Boolean
 
@@ -71,14 +70,10 @@ Public Class Client
                 response = clientController.Connect(IpAdressTextBox.Text)
             Loop
             If response = TCPClientController.ConnectResponse.CorrectUsername Then
-                'islistening = True
-                ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-                ComunicatieThread.Start()
 
             Else
                 MessageBox.Show("Geannuleerd")
                 Connected = False
-
             End If
 
 
