@@ -57,14 +57,14 @@ Public Class TCPClientController
             Else
                 If TCPClient Is Nothing Then
                     TCPClient = New TcpClient(IpAdress, 64553)
-                End If
+
                 If Not TCPClient Is Nothing Then
                         'islistening = True
                         ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
                         ComunicatieThread.Start()
 
                         'Luister naar antwoord server, als niet ok => DuplicateUsername
-                        Write(Username, True)
+                        Write(Username, COM_COMMAND.USERNAME)
                         While connectResp = ConnectResponse.None
                             Thread.Sleep(200)
                         End While
@@ -178,24 +178,34 @@ Public Class TCPClientController
             Throw New NotSupportedException
         End If
     End Sub
-    Public Sub Write(Message As String, Optional isUsername As Boolean = False, Optional IsDisconnect As Boolean = False)
+    Public Sub Write(Message As String, Command As COM_COMMAND)
+        Dim strWrit As StreamWriter
         Try
-            If isUsername = True And IsDisconnect = False Then
-                Message = fromCommToText(COM_COMMAND.USERNAME) & Message
-            ElseIf isUsername = False And IsDisconnect = False Then
-                Message = fromCommToText(COM_COMMAND.MESSAGE) & Message
-            ElseIf isUsername = False And IsDisconnect = True Then
-                Message = fromCommToText(COM_COMMAND.DISCONNECTED) & Message
-            End If
-            Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
-            strWrit.WriteLine(Message)
+            strWrit = New StreamWriter(TCPClientStream)
+            strWrit.WriteLine(fromCommToText(Command) & Message)
             strWrit.Flush()
         Catch ex As Exception
-            MessageBox.Show("Je bent niet meer verbonden")
+            MessageBox.Show(ex.Message)
         End Try
+        'Public Sub Write(Message As String, Optional isUsername As Boolean = False, Optional IsDisconnect As Boolean = False)
+        'Try
+        '    If isUsername = True And IsDisconnect = False Then
+        '        Message = fromCommToText(COM_COMMAND.USERNAME) & Message
+        '    ElseIf isUsername = False And IsDisconnect = False Then
+        '        Message = fromCommToText(COM_COMMAND.MESSAGE) & Message
+        '    ElseIf isUsername = False And IsDisconnect = True Then
+        '        Message = fromCommToText(COM_COMMAND.DISCONNECTED) & Message
+        '    End If
+        '    Dim strWrit As StreamWriter = New StreamWriter(TCPClientStream)
+        '    strWrit.WriteLine(Message)
+        '    strWrit.Flush()
+        'Catch ex As Exception
+        '    MessageBox.Show("Je bent niet meer verbonden")
+        'End Try
+
     End Sub
     Public Sub DisconnectUser()
-        Write("", False, True)
+        Write("", COM_COMMAND.DISCONNECTED)
         TCPClient = Nothing
     End Sub
 End Class
