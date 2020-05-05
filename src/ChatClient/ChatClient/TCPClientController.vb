@@ -10,7 +10,7 @@ Public Class TCPClientController
 
     Event MessageReceived(message As String)
     Event ConnectedUsers(users As List(Of String))
-
+    Event ServerStopped()
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -39,6 +39,7 @@ Public Class TCPClientController
             Return TCPClient.GetStream()
         End Get
     End Property
+
     Public Sub stopServer()
         TCPClient = Nothing
     End Sub
@@ -88,6 +89,7 @@ Public Class TCPClientController
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        STOPSERVER
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -109,7 +111,10 @@ Public Class TCPClientController
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTED Then
             Return "//CONNECTED//"
+        ElseIf commEnum = COM_COMMAND.STOPSERVER Then
+            Return "//STOP//"
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -124,9 +129,12 @@ Public Class TCPClientController
             Return COM_COMMAND.USERNAME
         ElseIf commStr = "//DUP//" Then
             Return COM_COMMAND.DUPLICATE_USERNAME
+        ElseIf commStr = "//STOP//" Then
+            Return COM_COMMAND.STOPSERVER
         ElseIf commStr = "//CORUS//" Then
             Return COM_COMMAND.CORRECT_USERNAME
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -172,9 +180,12 @@ Public Class TCPClientController
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
         ElseIf command = COM_COMMAND.CORRECT_USERNAME Then
             connectResp = ConnectResponse.CorrectUsername
+        ElseIf command = COM_COMMAND.STOPSERVER Then
+            RaiseEvent ServerStopped()
         ElseIf command = COM_COMMAND.DUPLICATE_USERNAME Then
             connectResp = ConnectResponse.DuplicateUsername
         Else
+
             Throw New NotSupportedException
         End If
     End Sub

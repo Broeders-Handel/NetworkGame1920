@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net.Sockets
 Imports System.Threading
 
 
@@ -86,11 +87,16 @@ Public Class Client
 
     Private Sub updateGUI()
         If Connected Then
+
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
             ConnectButton.Enabled = False
         Else
+            updateBut(ConnectButton)
+            ConnectButton.Enabled = True
+            updateBut(DisconnectButton)
+            DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
             DisconnectButton.Enabled = False
             ConnectButton.Text = "Connect"
@@ -99,6 +105,9 @@ Public Class Client
             ChatRichTextBox.Text = ""
             IpAdressTextBox.Text = ""
         End If
+    End Sub
+    Public Sub ServerStopped() Handles clientController.ServerStopped
+        stopServer()
     End Sub
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     ''Update textbox
@@ -119,7 +128,12 @@ Public Class Client
 
         updateGUI()
     End Sub
-
+    Public Sub stopServer()
+        tcpclient = New TcpClient
+        clientController.DisconnectUser()
+        Connected = False
+        updateGUI()
+    End Sub
     Private Sub ChallengeGame(txt As String)
         If MessageTextBox.Text = "!Challenge @" Then
             Me.Hide()
@@ -152,11 +166,9 @@ Public Class Client
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
-        ElseIf but.enabled = False Then
+        ElseIf but.Enabled = False Then
             but.Text = "Connect"
             but.Enabled = True
-        ElseIf but.Enabled = True Then
-            but.Enabled = False
         End If
     End Sub
 
