@@ -17,36 +17,40 @@ Public Class Server
     Dim tcpClientStream As NetworkStream
     Dim isBusy As Boolean = False
     Dim cc As New TcpControllerServer
-    Dim usr As Users
+
 
 
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
+
         Try
             streamRdr = New StreamReader(client.GetStream)
             Dim username As String = streamRdr.ReadLine
             username = username.Substring(6)
-            UpdateText(ChatRichTextBox, username)
-            Dim User As New Users(username, client)
+
+            Dim usr As New User(username, client)
             'voeg client toe aan dictionairy
-            Do While UsersController.Users.ContainsKey(username)
-                MessageBox.Show("Deze username is al in gebruik")
-                username = InputBox("Geef een gebruikersnaam op.")
-                client = Nothing
-            Loop
-            usr = UsersController.addUser(username, client)
-            'meld alle gebruikers van nieuwe client
-            sendMessageAsServer(username & " JOINED")
-            'Voegt een User aan de lijst toe
-            UpdateClientList(username)
-            'luister naar inkomende berichten
-            AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
-            usr.Listen()
+
+            If Not UsersController.addUser(usr) Then
+                SendToOneClient("", usr, COM_COMMAND.DUPLICATE_USERNAME)
+            Else
+                SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
+                UpdateText(ChatRichTextBox, username)
+                'meld alle gebruikers van nieuwe client
+                'Voegt een User aan de lijst toe
+                UpdateClientList(username)
+                'luister naar inkomende berichten
+                AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
+                usr.Listen()
+            End If
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+    End Sub
+    Private Sub Server_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        StopButton.Enabled = False
     End Sub
     Private Sub ConnectClient()
         Try
@@ -61,15 +65,12 @@ Public Class Server
         Catch ex As SocketException
         End Try
     End Sub
-
-    Public Sub SendToOneClient(message As String, username As String, commando As COM_COMMAND)
-        Dim usr As Users = UsersController.Users.Item(username)
+    Public Sub SendToOneClient(message As String, usr As User, commando As COM_COMMAND)
         If usr Is Nothing Then
             '.....
         Else
             usr.write(message, commando)
         End If
-
         'For Each un As String In UsersController.Users.Keys
         '    If un = username Then
         'Next
@@ -79,10 +80,20 @@ Public Class Server
         '    End If
         'Next
     End Sub
-    Public Sub SendToClients(message As String)
+    Public Sub SendToOneClient(message As String, username As String, commando As COM_COMMAND)
+        Dim usr As User = UsersController.Users.Item(username)
+        SendToOneClient(message, usr, commando)
+
+    End Sub
+
+    Public Sub SendToClients(message As String, comm As COM_COMMAND)
+
         For Each usr In UsersController.Users.Values
-            usr.write(message, COM_COMMAND.MESSAGE)
+            usr.write(message, comm)
         Next
+    End Sub
+    Public Sub SendToClients(message As String)
+        SendToClients(message, COM_COMMAND.MESSAGE)
     End Sub
     Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -96,9 +107,19 @@ Public Class Server
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         sendMessageAsServer(MessageTextBox.Text)
     End Sub
+    Private Sub userConnected(user As User)
 
+        sendMessageAsServer(username & " JOINED")
+
+        Dim allUsers As String = UsersController.getUsers()
+        SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
+
+
+
+    End Sub
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
+
     End Sub
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
@@ -111,25 +132,27 @@ Public Class Server
         ThreadConnectClient = New Thread(AddressOf ConnectClient)
         isBusy = True
         ThreadConnectClient.Start()
-        StartLocalButton.Enabled = False
-    End Sub
-    Private Sub StartLocalButton_Click(sender As Object, e As EventArgs) Handles StartLocalButton.Click
-        TCPListener = New TcpListener(IPAddress.Loopback, 64553)
-        TCPListener.Start()
-        ChatRichTextBox.Text &= "<< SERVER OPEN >>" & Environment.NewLine
-        ThreadConnectClient = New Thread(AddressOf ConnectClient)
-        isBusy = True
-        ThreadConnectClient.Start()
+        StopButton.Enabled = True
         StartButton.Enabled = False
     End Sub
+
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         StopServer = True
         ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
         SendToClients("De server is afgesloten. Kom later terug!")
+        StartButton.Enabled = True
+        StopButton.Enabled = False
         TCPListener.Stop()
         ThreadConnectClient.Abort()
-        usr.stopListen()
-        StartLocalButton.Enabled = True
+
+
+        For Each usr In UsersController.Users.Values
+            UsersController.RemoveUser(usr)
+
+        Next
+
+
+
         StartButton.Enabled = True
         ClientsListBox.Items.Clear()
     End Sub
@@ -187,6 +210,11 @@ Public Class Server
         UpdateText(ChatRichTextBox, message)
         SendToClients(message)
     End Function
+    Private Function HandleStopServer()
+        For Each usr In UsersController.Users.Values
+            usr.write("", COM_COMMAND.STOPSERVER)
+        Next
+    End Function
     Private Function CreatPrivateChatRoom(user1 As String, user2 As String)
         UsersController.PrivateChatRoom = {user1, user2}
     End Function
@@ -220,11 +248,15 @@ Public Class Server
 #Region "COMMAND"
 
     Enum COM_COMMAND
-        USERNAME
-        DISCONNECTED
+        REQUEST_USERNAME  'request username on first connection
+        DUPLICATE_USERNAME 'Duplicate username 
+        CORRECT_USERNAME  'Username valid and available
+        NONE_USERNAME
+        DISCONNECTED ' //DISC// 
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        STOPSERVER
         PRIVATEUSERNAMES
         PRIVATEMESSAGES
     End Enum
@@ -239,15 +271,21 @@ Public Class Server
         Return message
     End Function
 
-    Public Shared Function fromCommToText(commEnum As COM_COMMAND) As String
+    Public Shared Function fromCommToText(commEnum As COM_COMMAND) As String 'uitgaande
         If commEnum = COM_COMMAND.DISCONNECTED Then
             Return "//DISC//"
-        ElseIf commEnum = COM_COMMAND.USERNAME Then
-            Return "//UN//"
         ElseIf commEnum = COM_COMMAND.MESSAGE Then
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTEDUSERS Then
             Return "//USST//"
+        ElseIf commEnum = COM_COMMAND.DUPLICATE_USERNAME Then
+            Return "//DUP//"
+        ElseIf commEnum = COM_COMMAND.STOPSERVER Then
+            Return "//STOP//"
+        ElseIf commEnum = COM_COMMAND.CORRECT_USERNAME Then
+            Return "//CORUS//"
+        ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
+            Return "//NONUS//"
         ElseIf commEnum = COM_COMMAND.PRIVATEUSERNAMES Then
             Return "//PUN//"
         ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
@@ -258,7 +296,7 @@ Public Class Server
             Throw New NotSupportedException
         End If
     End Function
-    Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND
+    Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND 'inkomend
         If commStr = "//DISC//" Then
             Return COM_COMMAND.DISCONNECTED
         ElseIf commStr = "//MS//" Then
@@ -266,6 +304,9 @@ Public Class Server
         ElseIf commStr = "//CONNECTED//" Then
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
+            Return COM_COMMAND.REQUEST_USERNAME
+        ElseIf commStr = "//STOP//" Then
+            Return COM_COMMAND.STOPSERVER
             Return COM_COMMAND.USERNAME
         ElseIf commStr = "//PUN//" Then
             Return COM_COMMAND.PRIVATEUSERNAMES
@@ -289,8 +330,12 @@ Public Class Server
             HandleIncommingPrivateMessage(username, message)
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
+        ElseIf command = COM_COMMAND.STOPSERVER Then
+            HandleStopServer()
             'ElseIf command = COM_COMMAND.USERNAME Then
         End If
     End Function
+
+
 #End Region
 End Class
