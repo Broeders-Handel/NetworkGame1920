@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net.Sockets
 Imports System.Threading
 
 
@@ -7,10 +8,14 @@ Public Class Client
     Private _Username As String
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
-
     Private ComunicatieThread As Thread
     Dim islistening As Boolean
 
+
+    Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Connected = False
+        updateGUI()
+    End Sub
 
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(ChatRichTextBox, message)
@@ -57,36 +62,57 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-
+        Dim connectionSucces As Boolean = True
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-            If Username.Contains(",") Then
-                MessageBox.Show("De username mag geen komma bevatten")
+            clientController.Username = Username
+
+            Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text)
+            Do While response = TCPClientController.ConnectResponse.DuplicateUsername
+                MessageBox.Show("Deze username is al in gebruik.")
                 Username = InputBox("Geef een gebruikersnaam op.")
-            End If
-            Do While Username = ""
-                    MessageBox.Show("Je moet een geldige username ingeven")
-                    Username = InputBox("Geef een gebruikersnaam op.")
-                    ConnectButton.Enabled = True
-                    DisconnectButton.Enabled = False
-                Loop
-
                 clientController.Username = Username
-                clientController.Connect(IpAdressTextBox.Text)
-                '            islistening = True 'WHY??
-                ConnectButton.Text = "Connected"
-                ConnectButton.Enabled = False
-                ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-                ComunicatieThread.Start()
-                IpAdressTextBox.ReadOnly = True
-                DisconnectButton.Enabled = True
+                response = clientController.Connect(IpAdressTextBox.Text)
+            Loop
+            If response = TCPClientController.ConnectResponse.CorrectUsername Then
                 Connected = True
-
             Else
-                MessageBox.Show("Dit Is geen correct IP adres")
+                MessageBox.Show("Geannuleerd")
+                Connected = False
+            End If
+
+
+
+            updateGUI()
+        Else
+            MessageBox.Show("Dit is geen correct IP adres")
         End If
     End Sub
 
+    Private Sub updateGUI()
+        If Connected Then
+
+            IpAdressTextBox.ReadOnly = True
+            DisconnectButton.Enabled = True
+            ConnectButton.Text = "Connected"
+            ConnectButton.Enabled = False
+        Else
+            updateBut(ConnectButton)
+            ConnectButton.Enabled = True
+            updateBut(DisconnectButton)
+            DisconnectButton.Enabled = False
+            IpAdressTextBox.ReadOnly = False
+            DisconnectButton.Enabled = False
+            ConnectButton.Text = "Connect"
+            ConnectButton.Enabled = True
+
+            ChatRichTextBox.Text = ""
+            IpAdressTextBox.Text = ""
+        End If
+    End Sub
+    Public Sub ServerStopped() Handles clientController.ServerStopped
+        stopServer()
+    End Sub
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     ''Update textbox
     'Private Sub UpdateText(RTB As RichTextBox, txt As String)
@@ -101,16 +127,17 @@ Public Class Client
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
-        ConnectButton.Enabled = True
-        DisconnectButton.Enabled = False
-        IpAdressTextBox.Text = ""
-        IpAdressTextBox.ReadOnly = False
-        ChatRichTextBox.Text = ""
         ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
         UsersListBox.DataSource = Nothing
+        updateGUI()
     End Sub
+    Public Sub stopServer()
 
+        clientController.DisconnectUser()
+        Connected = False
+        updateGUI()
+    End Sub
     Private Sub ChallengeGame(txt As String)
         If MessageTextBox.Text = "!Challenge @" Then
             Me.Hide()
@@ -118,7 +145,6 @@ Public Class Client
         End If
 
     End Sub
-    Private Delegate Sub UpdateListBox(ByVal users As List(Of String))
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
@@ -131,12 +157,23 @@ Public Class Client
         End If
     End Sub
 
+    Private Delegate Sub UpdateClientDelegate(ByVal users As List(Of String))
     Private Sub UpdateClientList(users As List(Of String))
         If UsersListBox.InvokeRequired Then
-            UsersListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), users)
+            UsersListBox.Invoke(New UpdateClientDelegate(AddressOf UpdateClientList), users)
         Else
             UsersListBox.DataSource = Nothing
             UsersListBox.DataSource = users
         End If
     End Sub
+    Private Delegate Sub UpdateButDelegate(But As Button)
+    Private Sub updateBut(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
+        ElseIf but.Enabled = False Then
+            but.Text = "Connect"
+            but.Enabled = True
+        End If
+    End Sub
+
 End Class

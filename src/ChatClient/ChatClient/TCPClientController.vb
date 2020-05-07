@@ -2,6 +2,7 @@
 Imports System.Net.Sockets
 Imports System.IO
 Imports System.Net
+Imports System.Threading
 
 Public Class TCPClientController
     Private _TCPClient As TcpClient
@@ -9,6 +10,10 @@ Public Class TCPClientController
 
     Event MessageReceived(message As String)
     Event ConnectedUsers(users As List(Of String))
+    Event ServerStopped()
+    Private connectResp As ConnectResponse = ConnectResponse.None
+
+    Private ComunicatieThread As Thread
 
     Public Property Username As String
         Get
@@ -33,30 +38,60 @@ Public Class TCPClientController
         Get
             Return TCPClient.GetStream()
         End Get
-
-
     End Property
-    Public Function Connect(IpAdress As String) As Boolean
+
+    Public Sub stopServer()
+        TCPClient = Nothing
+    End Sub
+
+    Enum ConnectResponse
+        None = -1
+        NoUsername = 0
+        DuplicateUsername = 1
+        CorrectUsername = 2
+        ServerUnavailable = 3
+    End Enum
+    Public Function Connect(IpAdress As String) As ConnectResponse
         Try
+            connectResp = ConnectResponse.None
             If Username = "" Then
-                Return False
+                Return connectResponse.NoUsername
             Else
-                TCPClient = New TcpClient(IpAdress, 64553)
-                Write(Username, COM_COMMAND.USERNAME)
-                Return True
+                If TCPClient Is Nothing Then
+                    TCPClient = New TcpClient(IpAdress, 64553)
+                End If
+                If Not TCPClient Is Nothing Then
+                    'islistening = True
+                    ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+                    ComunicatieThread.Start()
+
+                    'Luister naar antwoord server, als niet ok => DuplicateUsername
+                    Write(Username, COM_COMMAND.USERNAME)
+                    While connectResp = ConnectResponse.None
+                        Thread.Sleep(200)
+                    End While
+                    If Not connectResp = ConnectResponse.CorrectUsername Then
+                        TCPClient = Nothing
+                    End If
+                    Return connectResp
+                End If
             End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
-            Return False
+            Return connectResponse.ServerUnavailable
         End Try
     End Function
 #Region "COMMAND"
     Enum COM_COMMAND
         USERNAME
+        NONE_USERNAME
+        CORRECT_USERNAME
+        DUPLICATE_USERNAME
         DISCONNECTED
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        STOPSERVER
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -78,7 +113,16 @@ Public Class TCPClientController
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTED Then
             Return "//CONNECTED//"
+        ElseIf commEnum = COM_COMMAND.STOPSERVER Then
+            Return "//STOP//"
+        ElseIf commEnum = COM_COMMAND.CORRECT_USERNAME Then
+            Return "//CORUS//"
+        ElseIf commEnum = COM_COMMAND.DUPLICATE_USERNAME Then
+            Return "//DUP//"
+        ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
+            Return "//NONUS//"
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -91,9 +135,18 @@ Public Class TCPClientController
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//DUP//" Then
+            Return COM_COMMAND.DUPLICATE_USERNAME
         ElseIf commStr = "//USST//" Then
             Return COM_COMMAND.CONNECTEDUSERS
+        ElseIf commStr = "//STOP//" Then
+            Return COM_COMMAND.STOPSERVER
+        ElseIf commStr = "//CORUS//" Then
+            Return COM_COMMAND.CORRECT_USERNAME
+        ElseIf commStr = "//NONUS//" Then
+            Return COM_COMMAND.NONE_USERNAME
         Else
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -123,7 +176,16 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
+        ElseIf command = COM_COMMAND.STOPSERVER Then
+            RaiseEvent ServerStopped()
+        ElseIf command = COM_COMMAND.DUPLICATE_USERNAME Then
+            connectResp = ConnectResponse.DuplicateUsername
+        ElseIf command = COM_COMMAND.CORRECT_USERNAME Then
+            connectResp = ConnectResponse.CorrectUsername
+        ElseIf command = COM_COMMAND.NONE_USERNAME Then
+            connectResp = ConnectResponse.None
         Else
+
             Throw New NotSupportedException
         End If
     End Sub
@@ -155,7 +217,6 @@ Public Class TCPClientController
     End Sub
     Public Sub DisconnectUser()
         Write("", COM_COMMAND.DISCONNECTED)
-        TCPClient = New TcpClient
+        TCPClient = Nothing
     End Sub
 End Class
-
