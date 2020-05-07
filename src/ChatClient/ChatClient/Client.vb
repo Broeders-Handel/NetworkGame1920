@@ -60,27 +60,30 @@ Public Class Client
 
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-
-            Do While Username = ""
-                MessageBox.Show("Je moet een geldige username ingeven")
+            If Username.Contains(",") Then
+                MessageBox.Show("De username mag geen komma bevatten")
                 Username = InputBox("Geef een gebruikersnaam op.")
-                ConnectButton.Enabled = True
-                DisconnectButton.Enabled = False
-            Loop
+            End If
+            Do While Username = ""
+                    MessageBox.Show("Je moet een geldige username ingeven")
+                    Username = InputBox("Geef een gebruikersnaam op.")
+                    ConnectButton.Enabled = True
+                    DisconnectButton.Enabled = False
+                Loop
 
-            clientController.Username = Username
-            clientController.Connect(IpAdressTextBox.Text)
-            '            islistening = True 'WHY??
-            ConnectButton.Text = "Connected"
-            ConnectButton.Enabled = False
-            ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-            ComunicatieThread.Start()
-            IpAdressTextBox.ReadOnly = True
-            DisconnectButton.Enabled = True
-            Connected = True
+                clientController.Username = Username
+                clientController.Connect(IpAdressTextBox.Text)
+                '            islistening = True 'WHY??
+                ConnectButton.Text = "Connected"
+                ConnectButton.Enabled = False
+                ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
+                ComunicatieThread.Start()
+                IpAdressTextBox.ReadOnly = True
+                DisconnectButton.Enabled = True
+                Connected = True
 
-        Else
-            MessageBox.Show("Dit Is geen correct IP adres")
+            Else
+                MessageBox.Show("Dit Is geen correct IP adres")
         End If
     End Sub
 
