@@ -91,11 +91,11 @@ Public Class Client
             ConnectButton.Enabled = False
         Else
             updateBut(ConnectButton)
-            ConnectButton.Enabled = True
             updateBut(DisconnectButton)
+            updatetextBox(IpAdressTextBox)
+            ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
-            DisconnectButton.Enabled = False
             ConnectButton.Text = "Connect"
             ConnectButton.Enabled = True
 
@@ -168,6 +168,15 @@ Public Class Client
             but.Enabled = True
         End If
     End Sub
-
+    Private Delegate Sub updateTextBoxDelegate(tb As TextBox)
+    Private Sub updatetextBox(tb As TextBox)
+        If tb.InvokeRequired Then
+            tb.Invoke(New updateTextBoxDelegate(AddressOf updatetextBox), tb)
+        ElseIf tb.ReadOnly = True Then
+            tb.ReadOnly = False
+        ElseIf tb.readonly = False Then
+            tb.ReadOnly = True
+        End If
+    End Sub
 End Class
 
