@@ -8,6 +8,7 @@ Public Class TCPClientController
     Private _username As String
 
     Event MessageReceived(message As String)
+    Event PrivateMessageRecieved(message As String)
     Event ConnectedUsers(users As List(Of String))
 
     Public Property Username As String
@@ -57,6 +58,8 @@ Public Class TCPClientController
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        PRIVATEMESSAGES
+        PRIVATEUSERNAMES
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -78,6 +81,10 @@ Public Class TCPClientController
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTED Then
             Return "//CONNECTED//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
+            Return "//PMS//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEUSERNAMES Then
+            Return "//PUN//"
         Else
             Throw New NotSupportedException()
         End If
@@ -91,6 +98,10 @@ Public Class TCPClientController
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//PMS//" Then
+            Return COM_COMMAND.PRIVATEMESSAGES
+        ElseIf commStr = "//PUN//" Then
+            Return COM_COMMAND.PRIVATEUSERNAMES
         Else
             Throw New NotSupportedException()
         End If
@@ -135,6 +146,8 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
+        ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
+            RaiseEvent PrivateMessageRecieved(message)
         Else
             Throw New NotSupportedException
         End If

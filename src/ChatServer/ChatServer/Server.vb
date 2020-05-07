@@ -172,6 +172,14 @@ Public Class Server
         UpdateText(ChatRichTextBox, message)
         SendToClients(message)
     End Function
+    Private Function CreatPrivateChatRoom(user1 As String, user2 As String)
+        UsersController.PrivateChatRoom = {user1, user2}
+    End Function
+    Private Function HandleIncommingPrivateMessage(username, message)
+        message = username & " : " & message
+        SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
+        SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
+    End Function
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -202,6 +210,8 @@ Public Class Server
         MESSAGE
         CONNECTED
         CONNECTEDUSERS
+        PRIVATEUSERNAMES
+        PRIVATEMESSAGES
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -223,8 +233,14 @@ Public Class Server
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTEDUSERS Then
             Return "//USST//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEUSERNAMES Then
+            Return "//PUN//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
+            Return "//PMS//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
+        Else
+            Throw New NotSupportedException
         End If
     End Function
     Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND
@@ -236,6 +252,12 @@ Public Class Server
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//PUN//" Then
+            Return COM_COMMAND.PRIVATEUSERNAMES
+        ElseIf commStr = "//PMS//" Then
+            Return COM_COMMAND.PRIVATEMESSAGES
+        Else
+            Throw New NotSupportedException
         End If
     End Function
     Public Function HandleMessageWithCommand(username As String, message As String) As String
@@ -245,6 +267,10 @@ Public Class Server
             HandleDisconnectedClient(username, message)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
+        ElseIf command = COM_COMMAND.PRIVATEUSERNAMES Then
+            CreatPrivateChatRoom(username, getMessage(message))
+        ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
+            HandleIncommingPrivateMessage(username, message)
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
             'ElseIf command = COM_COMMAND.USERNAME Then

@@ -3,6 +3,7 @@ Imports System.IO
 Class UsersController
     Private _Users As New Dictionary(Of String, Users)
     Private _UsersString As String
+    Public PrivateChatRoom(1) As String
     Dim usr As Users
     Public Property UsersString As String
         Get
