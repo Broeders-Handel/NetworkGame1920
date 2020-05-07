@@ -28,7 +28,7 @@ Public Class Server
             streamRdr = New StreamReader(client.GetStream)
             Dim username As String = streamRdr.ReadLine
             username = username.Substring(6)
-            UpdateText(ChatRichTextBox, username)
+
             Dim usr As New User(username, client)
             'voeg client toe aan dictionairy
 
@@ -36,6 +36,7 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.DUPLICATE_USERNAME)
             Else
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
+                UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
@@ -227,6 +228,7 @@ Public Class Server
         REQUEST_USERNAME  'request username on first connection
         DUPLICATE_USERNAME 'Duplicate username 
         CORRECT_USERNAME  'Username valid and available
+        NONE_USERNAME
         DISCONNECTED ' //DISC// 
         MESSAGE
         CONNECTED
@@ -257,6 +259,8 @@ Public Class Server
             Return "//STOP//"
         ElseIf commEnum = COM_COMMAND.CORRECT_USERNAME Then
             Return "//CORUS//"
+        ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
+            Return "//NONUS//"
         End If
     End Function
     Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND 'inkomend

@@ -53,6 +53,7 @@ Public Class TCPClientController
     End Enum
     Public Function Connect(IpAdress As String) As ConnectResponse
         Try
+            connectResp = ConnectResponse.None
             If Username = "" Then
                 Return connectResponse.NoUsername
             Else
@@ -60,20 +61,21 @@ Public Class TCPClientController
                     TCPClient = New TcpClient(IpAdress, 64553)
                 End If
                 If Not TCPClient Is Nothing Then
-                        'islistening = True
-                        ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
-                        ComunicatieThread.Start()
+                    'islistening = True
+                    ComunicatieThread = New Thread(New ThreadStart(AddressOf Listening))
+                    ComunicatieThread.Start()
 
-                        'Luister naar antwoord server, als niet ok => DuplicateUsername
-                        Write(Username, COM_COMMAND.USERNAME)
-                        While connectResp = ConnectResponse.None
-                            Thread.Sleep(200)
-                        End While
-                    'wachten op antwoord
-                    'antwoord?
+                    'Luister naar antwoord server, als niet ok => DuplicateUsername
+                    Write(Username, COM_COMMAND.USERNAME)
+                    While connectResp = ConnectResponse.None
+                        Thread.Sleep(200)
+                    End While
+                    If Not connectResp = ConnectResponse.CorrectUsername Then
+                        TCPClient = Nothing
+                    End If
                     Return connectResp
                 End If
-                End If
+            End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
             Return connectResponse.ServerUnavailable
@@ -82,6 +84,7 @@ Public Class TCPClientController
 #Region "COMMAND"
     Enum COM_COMMAND
         USERNAME
+        NONE_USERNAME
         CORRECT_USERNAME
         DUPLICATE_USERNAME
         DISCONNECTED
@@ -116,6 +119,8 @@ Public Class TCPClientController
             Return "//CORUS//"
         ElseIf commEnum = COM_COMMAND.DUPLICATE_USERNAME Then
             Return "//DUP//"
+        ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
+            Return "//NONUS//"
         Else
 
             Throw New NotSupportedException()
@@ -136,6 +141,8 @@ Public Class TCPClientController
             Return COM_COMMAND.STOPSERVER
         ElseIf commStr = "//CORUS//" Then
             Return COM_COMMAND.CORRECT_USERNAME
+        ElseIf commStr = "//NONUS//" Then
+            Return COM_COMMAND.NONE_USERNAME
         Else
 
             Throw New NotSupportedException()
@@ -187,6 +194,8 @@ Public Class TCPClientController
             connectResp = ConnectResponse.DuplicateUsername
         ElseIf command = COM_COMMAND.CORRECT_USERNAME Then
             connectResp = ConnectResponse.CorrectUsername
+        ElseIf command = COM_COMMAND.NONE_USERNAME Then
+            connectResp = ConnectResponse.None
         Else
 
             Throw New NotSupportedException
