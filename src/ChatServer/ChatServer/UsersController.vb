@@ -50,6 +50,7 @@ Class UsersController
         Throw New NotImplementedException()
     End Function
     Private Function MakeUserstring() As String
+        Dim UsersString As String
         UsersString = ""
         For i As Integer = 0 To Users.Count - 1
             UsersString &= Users.Keys(i) & ","

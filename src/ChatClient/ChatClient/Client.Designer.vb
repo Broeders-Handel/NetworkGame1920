@@ -81,6 +81,7 @@ Partial Class Client
         Me.IpAdressTextBox.Name = "IpAdressTextBox"
         Me.IpAdressTextBox.Size = New System.Drawing.Size(316, 20)
         Me.IpAdressTextBox.TabIndex = 5
+        Me.IpAdressTextBox.Text = "127.0.0.1"
         '
         'Label1
         '
