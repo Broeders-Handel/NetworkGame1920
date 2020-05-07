@@ -216,9 +216,9 @@ Public Class Server
         Next
     End Function
     Private Function CreatPrivateChatRoom(user1 As String, user2 As String)
-        UsersController.PrivateChatRoom = {user1, user2}
+        UsersController.createPrivateChatroom(user1, user2)
     End Function
-    Private Function HandleIncommingPrivateMessage(username, message)
+    Private Function HandleIncommingPrivateMessage(id As Integer, message As String, username As String)
         message = username & " : " & message
         SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
         SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
@@ -307,7 +307,6 @@ Public Class Server
             Return COM_COMMAND.REQUEST_USERNAME
         ElseIf commStr = "//STOP//" Then
             Return COM_COMMAND.STOPSERVER
-            Return COM_COMMAND.USERNAME
         ElseIf commStr = "//PUN//" Then
             Return COM_COMMAND.PRIVATEUSERNAMES
         ElseIf commStr = "//PMS//" Then

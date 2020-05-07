@@ -20,9 +20,6 @@ Public Class Client
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicRichTextBox, message)
     End Function
-    Function UserListRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
-        UpdateClientList(users)
-    End Function
     Function PrivateMessageRecieved(message As String) Handles clientController.PrivateMessageRecieved
         UpdateText(PrivateRichTextBox, message)
     End Function
@@ -71,6 +68,8 @@ Public Class Client
 #End Region
 #Region "Private chatroom"
     Private Sub PrivateMessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles PrivateTextBox.KeyDown
+
+
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             If PrivateTextBox.Text.Length > 0 Then
@@ -138,8 +137,8 @@ Public Class Client
             ConnectButton.Text = "Connect"
             PrivateMessageButton.Enabled = False
             ConnectButton.Enabled = True
-
-            ChatRichTextBox.Text = ""
+            PrivateRichTextBox.Text = ""
+            PublicRichTextBox.Text = ""
             IpAdressTextBox.Text = ""
         End If
     End Sub
