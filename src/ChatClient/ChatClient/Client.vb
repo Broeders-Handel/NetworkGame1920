@@ -20,6 +20,10 @@ Public Class Client
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(ChatRichTextBox, message)
     End Function
+
+    Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
+        UpdateClientList(users)
+    End Function
     Public Property Username As String
         Get
             Return _Username
@@ -125,7 +129,7 @@ Public Class Client
         clientController.DisconnectUser()
         ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-
+        UsersListBox.DataSource = Nothing
         updateGUI()
     End Sub
     Public Sub stopServer()
@@ -173,4 +177,3 @@ Public Class Client
     End Sub
 
 End Class
-

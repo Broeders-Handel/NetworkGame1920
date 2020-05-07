@@ -41,7 +41,6 @@ Class UsersController
             'UsersString = ""
             Return True
         Catch ex As Exception
-            '            MessageBox.Show("User disconnected")
             Console.WriteLine("User disconnected")
         End Try
         Return False
@@ -50,4 +49,12 @@ Class UsersController
     Friend Function getUsers() As String
         Throw New NotImplementedException()
     End Function
+    Private Function MakeUserstring() As String
+        UsersString = ""
+        For i As Integer = 0 To Users.Count - 1
+            UsersString &= Users.Keys(i) & ","
+        Next
+        Return UsersString
+    End Function
+
 End Class

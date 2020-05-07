@@ -137,6 +137,8 @@ Public Class TCPClientController
             Return COM_COMMAND.USERNAME
         ElseIf commStr = "//DUP//" Then
             Return COM_COMMAND.DUPLICATE_USERNAME
+        ElseIf commStr = "//USST//" Then
+            Return COM_COMMAND.CONNECTEDUSERS
         ElseIf commStr = "//STOP//" Then
             Return COM_COMMAND.STOPSERVER
         ElseIf commStr = "//CORUS//" Then
@@ -160,19 +162,6 @@ Public Class TCPClientController
                 Console.WriteLine(ex.Message)
             End Try
         Loop
-        'Do While islistening
-        '    Try
-        '        streamRdr = New StreamReader(clienController.TCPClientStream)
-        '        data = streamRdr.ReadLine
-        '        If data Like "server => " & Username & " JOINED" Then
-        '            UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
-        '        End If
-        '        UpdateText(ChatRichTextBox, data)
-        '    Catch ex As Exception
-        '        Console.WriteLine(ex.Message)
-        '    End Try
-        '    Thread.Sleep(100)
-        'Loop
     End Sub
 #End Region
     Public Sub HandleMessageWithCommand(message As String)
@@ -183,7 +172,6 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< DISCONNECTED FROM SERVER >>")
         ElseIf command = COM_COMMAND.MESSAGE Then
             RaiseEvent MessageReceived(message)
-            RaiseEvent ConnectedUsers(message.Split(",").ToList)
         ElseIf command = COM_COMMAND.CONNECTED Then
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then

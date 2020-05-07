@@ -38,6 +38,8 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
+            'Voegt een User aan de lijst toe
+            UpdateClientList(username)
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
                 usr.Listen()
@@ -152,6 +154,7 @@ Public Class Server
 
 
         StartButton.Enabled = True
+        ClientsListBox.Items.Clear()
     End Sub
 #End Region
 #Region "Textbox"
@@ -170,7 +173,7 @@ Public Class Server
         End If
     End Sub
 
-    'update listbox
+    'AddInListbox
     Private Sub UpdateClientList(ByVal Item As String)
         If ClientsListBox.InvokeRequired Then
             ClientsListBox.Invoke(New UpdateListBox(AddressOf UpdateClientList), Item)
@@ -180,6 +183,18 @@ Public Class Server
             End If
         End If
     End Sub
+
+    'RemoveInListbox
+    Private Sub RemoveClientListItem(ByVal Item As String)
+        If ClientsListBox.InvokeRequired Then
+            ClientsListBox.Invoke(New UpdateListBox(AddressOf RemoveClientListItem), Item)
+        Else
+            If Item IsNot Nothing Then
+                ClientsListBox.Items.Remove(Item)
+            End If
+        End If
+    End Sub
+
 #End Region
 
 #Region "HANDLECOMMANDS"
@@ -281,6 +296,7 @@ Public Class Server
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
             HandleDisconnectedClient(username, message)
+            RemoveClientListItem(username)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
