@@ -101,8 +101,10 @@ Public Class Client
             ConnectButton.Text = "Connect"
             ConnectButton.Enabled = True
 
+            MessageTextBox.Text = ""
             ChatRichTextBox.Text = ""
             IpAdressTextBox.Text = ""
+
         End If
     End Sub
     Public Sub ServerStopped() Handles clientController.ServerStopped
@@ -145,10 +147,8 @@ Public Class Client
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
-        Else
-            If txt IsNot Nothing Then
-                RTB.AppendText(txt & Environment.NewLine)
-            End If
+        ElseIf txt IsNot Nothing Then
+            RTB.AppendText(txt & Environment.NewLine)
         End If
     End Sub
 
@@ -176,8 +176,10 @@ Public Class Client
             tb.Invoke(New updateTextBoxDelegate(AddressOf updatetextBox), tb)
         ElseIf tb.ReadOnly = True Then
             tb.ReadOnly = False
+            tb.Text = ""
         ElseIf tb.readonly = False Then
             tb.ReadOnly = True
+            tb.Text = ""
         End If
     End Sub
 End Class
