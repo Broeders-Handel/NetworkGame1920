@@ -84,7 +84,7 @@ Public Class Client
 
     Private Sub updateGUI()
         If Connected Then
-
+            MessageTextBox.ReadOnly = False
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
@@ -93,9 +93,11 @@ Public Class Client
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
             updatetextBox(IpAdressTextBox)
+            updatetextBox(MessageTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
+            MessageTextBox.ReadOnly = True
             ConnectButton.Text = "Connect"
             ConnectButton.Enabled = True
 
