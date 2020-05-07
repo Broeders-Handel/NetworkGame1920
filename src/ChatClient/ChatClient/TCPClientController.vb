@@ -102,6 +102,8 @@ Public Class TCPClientController
             Return COM_COMMAND.USERNAME
         ElseIf commStr = "//PMS//" Then
             Return COM_COMMAND.PRIVATEMESSAGES
+        ElseIf commStr = "//USST//" Then
+            Return COM_COMMAND.CONNECTEDUSERS
         ElseIf commStr = "//PUN//" Then
             Return COM_COMMAND.PRIVATEUSERNAMES
         Else
@@ -120,19 +122,6 @@ Public Class TCPClientController
                 Console.WriteLine(ex.Message)
             End Try
         Loop
-        'Do While islistening
-        '    Try
-        '        streamRdr = New StreamReader(clienController.TCPClientStream)
-        '        data = streamRdr.ReadLine
-        '        If data Like "server => " & Username & " JOINED" Then
-        '            UpdateText(ChatRichTextBox, "<< CONNECTED TO SERVER >>")
-        '        End If
-        '        UpdateText(ChatRichTextBox, data)
-        '    Catch ex As Exception
-        '        Console.WriteLine(ex.Message)
-        '    End Try
-        '    Thread.Sleep(100)
-        'Loop
     End Sub
 #End Region
     Public Sub HandleMessageWithCommand(message As String)
