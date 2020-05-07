@@ -92,6 +92,8 @@ Public Class TCPClientController
     Private Function fromTextToComm(commStr As String) As COM_COMMAND
         If commStr = "//DISC//" Then
             Return COM_COMMAND.DISCONNECTED
+        ElseIf commStr = "//USST//" Then
+            Return COM_COMMAND.CONNECTEDUSERS
         ElseIf commStr = "//MS//" Then
             Return COM_COMMAND.MESSAGE
         ElseIf commStr = "//CONNECTED//" Then
@@ -141,7 +143,6 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< DISCONNECTED FROM SERVER >>")
         ElseIf command = COM_COMMAND.MESSAGE Then
             RaiseEvent MessageReceived(message)
-            RaiseEvent ConnectedUsers(message.Split(",").ToList)
         ElseIf command = COM_COMMAND.CONNECTED Then
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then

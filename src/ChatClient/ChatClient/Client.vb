@@ -13,6 +13,9 @@ Public Class Client
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicRichTextBox, message)
     End Function
+    Function UserListRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
+        UpdateClientList(users)
+    End Function
     Function PrivateMessageRecieved(message As String) Handles clientController.PrivateMessageRecieved
         UpdateText(PrivateRichTextBox, message)
     End Function
@@ -108,6 +111,7 @@ Public Class Client
     End Sub
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
     End Sub
 
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
@@ -161,6 +165,5 @@ Public Class Client
             UsersListBox.DataSource = users
         End If
     End Sub
-
 End Class
 

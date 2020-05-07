@@ -38,6 +38,7 @@ Public Class Server
             usr = UsersController.addUser(username, client)
             'meld alle gebruikers van nieuwe client
             sendMessageAsServer(username & " JOINED")
+            UpdateClientList(username)
             'luister naar inkomende berichten
             AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
             usr.Listen()
@@ -265,10 +266,11 @@ Public Class Server
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
             HandleDisconnectedClient(username, message)
+            UpdateClientList(username)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
         ElseIf command = COM_COMMAND.PRIVATEUSERNAMES Then
-            CreatPrivateChatRoom(username, getMessage(message))
+            CreatPrivateChatRoom(username, message)
         ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
             HandleIncommingPrivateMessage(username, message)
             'ElseIf command = COM_COMMAND.CONNECTED Then
