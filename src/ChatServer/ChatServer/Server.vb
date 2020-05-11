@@ -48,6 +48,8 @@ Public Class Server
     End Sub
     Private Sub Server_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         StopButton.Enabled = False
+        MessageTextBox.ReadOnly = True
+        SendButton.Enabled = False
     End Sub
     Private Sub ConnectClient()
         Try
@@ -114,6 +116,8 @@ Public Class Server
         ThreadConnectClient.Start()
         StopButton.Enabled = True
         StartButton.Enabled = False
+        MessageTextBox.ReadOnly = False
+        SendButton.Enabled = True
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
@@ -133,7 +137,8 @@ Public Class Server
         Catch ex As Exception
             UsersController.RemoveUser(usr.Username)
         End Try
-
+        MessageTextBox.ReadOnly = True
+        SendButton.Enabled = False
         StartButton.Enabled = True
     End Sub
 #End Region
