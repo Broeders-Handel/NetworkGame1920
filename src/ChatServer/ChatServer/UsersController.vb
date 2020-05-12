@@ -4,7 +4,6 @@ Imports ChatServer.Server
 
 Class UsersController
     Private _Users As New Dictionary(Of String, User)
-
     Public PrivateChatRooms As Dictionary(Of Integer, PrivateChatroom)
     Public Function createPrivateChatroom(user1 As User, user2 As User) As Integer
         Try

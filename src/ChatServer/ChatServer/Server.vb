@@ -216,12 +216,16 @@ Public Class Server
         Next
     End Function
     Private Function CreatPrivateChatRoom(user1 As String, user2 As String)
-        UsersController.createPrivateChatroom(user1, user2)
+        UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+
     End Function
     Private Function HandleIncommingPrivateMessage(id As Integer, message As String, username As String)
         message = username & " : " & message
         SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
         SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
+    End Function
+    Private Function FindChatRoomID(sender As String)
+
     End Function
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
@@ -259,6 +263,7 @@ Public Class Server
         STOPSERVER
         PRIVATEUSERNAMES
         PRIVATEMESSAGES
+
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -290,6 +295,7 @@ Public Class Server
             Return "//PUN//"
         ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
             Return "//PMS//"
+
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
@@ -316,6 +322,7 @@ Public Class Server
         End If
     End Function
     Public Function HandleMessageWithCommand(username As String, message As String) As String
+
         Dim command As COM_COMMAND = getCommand(message)
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then

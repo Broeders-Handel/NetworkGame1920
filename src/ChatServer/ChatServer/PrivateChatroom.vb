@@ -9,7 +9,6 @@
 
         ID = latestID
     End Sub
-
     Property users As List(Of User)
     Private _id As Integer
     Property ID As Integer
@@ -23,6 +22,9 @@
     Private Shared latestID As Integer
 
     Public Sub Chat(message As String, sender As String)
-
+        message = sender & " : " & message
+        For Each usr In users
+            usr.write(message, Server.COM_COMMAND.PRIVATEMESSAGES)
+        Next
     End Sub
 End Class
