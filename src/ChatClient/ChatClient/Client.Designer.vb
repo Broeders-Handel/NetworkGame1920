@@ -29,7 +29,6 @@ Partial Class Client
         Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckButton = New System.Windows.Forms.Button()
         Me.UsersListBox = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
@@ -82,6 +81,7 @@ Partial Class Client
         Me.IpAdressTextBox.Name = "IpAdressTextBox"
         Me.IpAdressTextBox.Size = New System.Drawing.Size(316, 20)
         Me.IpAdressTextBox.TabIndex = 5
+        Me.IpAdressTextBox.Text = "127.0.0.1"
         '
         'Label1
         '
@@ -92,15 +92,6 @@ Partial Class Client
         Me.Label1.Size = New System.Drawing.Size(28, 15)
         Me.Label1.TabIndex = 6
         Me.Label1.Text = ": IP"
-        '
-        'CheckButton
-        '
-        Me.CheckButton.Location = New System.Drawing.Point(248, 12)
-        Me.CheckButton.Name = "CheckButton"
-        Me.CheckButton.Size = New System.Drawing.Size(112, 28)
-        Me.CheckButton.TabIndex = 7
-        Me.CheckButton.Text = "Check"
-        Me.CheckButton.UseVisualStyleBackColor = True
         '
         'UsersListBox
         '
@@ -116,7 +107,6 @@ Partial Class Client
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(475, 372)
         Me.Controls.Add(Me.UsersListBox)
-        Me.Controls.Add(Me.CheckButton)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.IpAdressTextBox)
         Me.Controls.Add(Me.ChatRichTextBox)
@@ -138,6 +128,5 @@ Partial Class Client
     Friend WithEvents ChatRichTextBox As RichTextBox
     Friend WithEvents IpAdressTextBox As TextBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents CheckButton As Button
     Friend WithEvents UsersListBox As ListBox
 End Class
