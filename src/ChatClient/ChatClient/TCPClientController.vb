@@ -54,7 +54,7 @@ Public Class TCPClientController
     Public Function Connect(IpAdress As String) As ConnectResponse
         Try
             connectResp = ConnectResponse.None
-            If Username = String.Empty Or Username.Contains(",") Then
+            If Username = "" Or Username.Contains(",") Then
                 Return ConnectResponse.NoUsername
             Else
                 If TCPClient Is Nothing Then
