@@ -8,7 +8,6 @@ Public Class Client
     Private _Username As String
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
-    Dim tcpclient As TcpClient
     Private ComunicatieThread As Thread
     Dim islistening As Boolean
 
@@ -20,6 +19,10 @@ Public Class Client
 
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(ChatRichTextBox, message)
+    End Function
+
+    Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
+        UpdateClientList(users)
     End Function
     Public Property Username As String
         Get
@@ -59,26 +62,30 @@ Public Class Client
         End Try
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
-
+        Dim connectionSucces As Boolean = True
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-
-            Do While Username = ""
-                MessageBox.Show("Je moet een geldige username ingeven")
-                Username = InputBox("Geef een gebruikersnaam op.")
-                ConnectButton.Enabled = True
-                DisconnectButton.Enabled = False
-            Loop
-
             clientController.Username = Username
-            Connected = clientController.Connect(IpAdressTextBox.Text)
 
-            ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-            ComunicatieThread.Start()
+            Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text)
+            Do While response = TCPClientController.ConnectResponse.DuplicateUsername
+                MessageBox.Show("Deze username is al in gebruik.")
+                Username = InputBox("Geef een gebruikersnaam op.")
+                clientController.Username = Username
+                response = clientController.Connect(IpAdressTextBox.Text)
+            Loop
+            If response = TCPClientController.ConnectResponse.CorrectUsername Then
+                Connected = True
+            Else
+                MessageBox.Show("Geannuleerd")
+                Connected = False
+            End If
+
+
 
             updateGUI()
         Else
-            MessageBox.Show("Dit Is geen correct IP adres")
+            MessageBox.Show("Dit is geen correct IP adres")
         End If
     End Sub
 
@@ -126,11 +133,11 @@ Public Class Client
         clientController.DisconnectUser()
         ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-
+        UsersListBox.DataSource = Nothing
         updateGUI()
     End Sub
     Public Sub stopServer()
-        tcpclient = New TcpClient
+
         clientController.DisconnectUser()
         Connected = False
         updateGUI()
@@ -183,4 +190,3 @@ Public Class Client
         End If
     End Sub
 End Class
-
