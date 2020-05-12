@@ -143,8 +143,7 @@ Public Class Client
         updateGUI()
     End Sub
     Private Sub ChallengeGame(txt As String)
-        If MessageTextBox.Text = "!Challenge @" Then
-            Me.Hide()
+        If MessageTextBox.Text = "!Challenge @" & UsersListBox.SelectedItem Then
             Readyform.Show()
         End If
 
