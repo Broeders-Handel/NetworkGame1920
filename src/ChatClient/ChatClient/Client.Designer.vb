@@ -29,13 +29,13 @@ Partial Class Client
         Me.UsersListBox = New System.Windows.Forms.ListBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.PublicTabPage = New System.Windows.Forms.TabPage()
+        Me.PublicChatTextBox = New System.Windows.Forms.TextBox()
         Me.PublicTextBox = New System.Windows.Forms.TextBox()
         Me.PublicSendButton = New System.Windows.Forms.Button()
-        Me.PublicRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.PrivateTabPage = New System.Windows.Forms.TabPage()
+        Me.PrivateChatTextBox = New System.Windows.Forms.TextBox()
         Me.PrivateSendButton = New System.Windows.Forms.Button()
         Me.PrivateTextBox = New System.Windows.Forms.TextBox()
-        Me.PrivateRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.PrivateMessageButton = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.PublicTabPage.SuspendLayout()
@@ -98,9 +98,9 @@ Partial Class Client
         '
         'PublicTabPage
         '
+        Me.PublicTabPage.Controls.Add(Me.PublicChatTextBox)
         Me.PublicTabPage.Controls.Add(Me.PublicTextBox)
         Me.PublicTabPage.Controls.Add(Me.PublicSendButton)
-        Me.PublicTabPage.Controls.Add(Me.PublicRichTextBox)
         Me.PublicTabPage.Location = New System.Drawing.Point(4, 22)
         Me.PublicTabPage.Name = "PublicTabPage"
         Me.PublicTabPage.Padding = New System.Windows.Forms.Padding(3)
@@ -108,6 +108,14 @@ Partial Class Client
         Me.PublicTabPage.TabIndex = 0
         Me.PublicTabPage.Text = "Public Chatroom"
         Me.PublicTabPage.UseVisualStyleBackColor = True
+        '
+        'PublicChatTextBox
+        '
+        Me.PublicChatTextBox.Location = New System.Drawing.Point(6, 6)
+        Me.PublicChatTextBox.Multiline = True
+        Me.PublicChatTextBox.Name = "PublicChatTextBox"
+        Me.PublicChatTextBox.Size = New System.Drawing.Size(331, 186)
+        Me.PublicChatTextBox.TabIndex = 3
         '
         'PublicTextBox
         '
@@ -125,19 +133,11 @@ Partial Class Client
         Me.PublicSendButton.Text = "Send"
         Me.PublicSendButton.UseVisualStyleBackColor = True
         '
-        'PublicRichTextBox
-        '
-        Me.PublicRichTextBox.Location = New System.Drawing.Point(6, 6)
-        Me.PublicRichTextBox.Name = "PublicRichTextBox"
-        Me.PublicRichTextBox.Size = New System.Drawing.Size(330, 182)
-        Me.PublicRichTextBox.TabIndex = 0
-        Me.PublicRichTextBox.Text = ""
-        '
         'PrivateTabPage
         '
+        Me.PrivateTabPage.Controls.Add(Me.PrivateChatTextBox)
         Me.PrivateTabPage.Controls.Add(Me.PrivateSendButton)
         Me.PrivateTabPage.Controls.Add(Me.PrivateTextBox)
-        Me.PrivateTabPage.Controls.Add(Me.PrivateRichTextBox)
         Me.PrivateTabPage.Location = New System.Drawing.Point(4, 22)
         Me.PrivateTabPage.Name = "PrivateTabPage"
         Me.PrivateTabPage.Padding = New System.Windows.Forms.Padding(3)
@@ -145,6 +145,14 @@ Partial Class Client
         Me.PrivateTabPage.TabIndex = 1
         Me.PrivateTabPage.Text = "Private Chatroom"
         Me.PrivateTabPage.UseVisualStyleBackColor = True
+        '
+        'PrivateChatTextBox
+        '
+        Me.PrivateChatTextBox.Location = New System.Drawing.Point(6, 6)
+        Me.PrivateChatTextBox.Multiline = True
+        Me.PrivateChatTextBox.Name = "PrivateChatTextBox"
+        Me.PrivateChatTextBox.Size = New System.Drawing.Size(330, 183)
+        Me.PrivateChatTextBox.TabIndex = 5
         '
         'PrivateSendButton
         '
@@ -161,14 +169,6 @@ Partial Class Client
         Me.PrivateTextBox.Name = "PrivateTextBox"
         Me.PrivateTextBox.Size = New System.Drawing.Size(249, 20)
         Me.PrivateTextBox.TabIndex = 3
-        '
-        'PrivateRichTextBox
-        '
-        Me.PrivateRichTextBox.Location = New System.Drawing.Point(6, 6)
-        Me.PrivateRichTextBox.Name = "PrivateRichTextBox"
-        Me.PrivateRichTextBox.Size = New System.Drawing.Size(330, 182)
-        Me.PrivateRichTextBox.TabIndex = 1
-        Me.PrivateRichTextBox.Text = ""
         '
         'PrivateMessageButton
         '
@@ -214,9 +214,9 @@ Partial Class Client
     Friend WithEvents PrivateMessageButton As Button
     Friend WithEvents PublicTextBox As TextBox
     Friend WithEvents PublicSendButton As Button
-    Friend WithEvents PublicRichTextBox As RichTextBox
     Friend WithEvents PrivateTabPage As TabPage
     Friend WithEvents PrivateSendButton As Button
     Friend WithEvents PrivateTextBox As TextBox
-    Friend WithEvents PrivateRichTextBox As RichTextBox
+    Friend WithEvents PublicChatTextBox As TextBox
+    Friend WithEvents PrivateChatTextBox As TextBox
 End Class

@@ -18,10 +18,10 @@ Public Class Client
     End Sub
 
     Function MessageReceived(message As String) Handles clientController.MessageReceived
-        UpdateText(PublicRichTextBox, message)
+        UpdateText(PublicChatTextBox, message)
     End Function
     Function PrivateMessageRecieved(message As String) Handles clientController.PrivateMessageRecieved
-        UpdateText(PrivateRichTextBox, message)
+        UpdateText(PrivateChatTextBox, message)
     End Function
 
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
@@ -121,7 +121,7 @@ Public Class Client
 
     Private Sub updateGUI()
         If Connected Then
-            MessageTextBox.ReadOnly = False
+            PublicChatTextBox.ReadOnly = False
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
@@ -131,16 +131,16 @@ Public Class Client
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
             updatetextBox(IpAdressTextBox)
-            updatetextBox(MessageTextBox)
+            updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
-            MessageTextBox.ReadOnly = True
+            PublicTextBox.ReadOnly = True
             ConnectButton.Text = "Connect"
             PrivateMessageButton.Enabled = False
             ConnectButton.Enabled = True
-            PrivateRichTextBox.Text = ""
-            PublicRichTextBox.Text = ""
+            PrivateChatTextBox.Text = ""
+            PublicChatTextBox.Text = ""
             IpAdressTextBox.Text = ""
 
         End If
@@ -185,9 +185,9 @@ Public Class Client
         End If
 
     End Sub
-    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    Private Delegate Sub UpdateTextDelegate(RTB As TextBox, txt As String)
     'Update textbox
-    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+    Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
@@ -220,9 +220,10 @@ Public Class Client
         ElseIf tb.ReadOnly = True Then
             tb.ReadOnly = False
             tb.Text = ""
-        ElseIf tb.readonly = False Then
+        ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
         End If
     End Sub
+
 End Class
