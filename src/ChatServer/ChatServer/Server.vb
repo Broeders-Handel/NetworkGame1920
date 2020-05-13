@@ -38,8 +38,9 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
-            'Voegt een User aan de lijst toe
-            UpdateClientList(username)
+                userConnected(usr)
+                'Voegt een User aan de lijst toe
+                UpdateClientList(username)
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
                 usr.Listen()
@@ -111,13 +112,9 @@ Public Class Server
     End Sub
     Private Sub userConnected(user As User)
 
-        sendMessageAsServer(username & " JOINED")
-
+        sendMessageAsServer(user.Username & " JOINED")
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
-
-
-
     End Sub
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
