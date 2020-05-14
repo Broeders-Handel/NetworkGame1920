@@ -6,6 +6,8 @@
         users.Add(user2)
         latestID += 1
         ID = latestID
+        user1.PrivateChatbox = ID
+        user2.PrivateChatbox = ID
     End Sub
     Property users As List(Of User)
     Private _id As Integer

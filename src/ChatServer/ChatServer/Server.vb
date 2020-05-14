@@ -217,18 +217,17 @@ Public Class Server
             usr.write("", COM_COMMAND.STOPSERVER)
         Next
     End Function
-    Private Function CreatPrivateChatRoom(user1 As String, user2 As String)
+    Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
         UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
-
+    End Sub
+    Private Function getRoomID(username As String) As Integer
+        Dim roomID As Integer = UsersController.Users(username).PrivateChatbox
+        Return roomID
     End Function
-    Private Function HandleIncommingPrivateMessage(id As Integer, message As String, username As String)
+    Private Sub HandleIncommingPrivateMessage(message As String, username As String)
         message = username & " : " & message
-        ' SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
-        '  SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
-    End Function
-    Private Function FindChatRoomID(sender As String)
-
-    End Function
+        UsersController.PrivateChatRooms(getRoomID(username)).Chat(message, username)
+    End Sub
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -335,15 +334,13 @@ Public Class Server
         ElseIf command = COM_COMMAND.PRIVATEUSERNAMES Then
             CreatPrivateChatRoom(username, message)
         ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
-            ' HandleIncommingPrivateMessage(username, message)
-            'ElseIf command = COM_COMMAND.CONNECTED Then
-            '    Return username & " JOINED"
+            HandleIncommingPrivateMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             HandleStopServer()
             'ElseIf command = COM_COMMAND.USERNAME Then
+            'ElseIf command = COM_COMMAND.CONNECTED Then
+            '    Return username & " JOINED"
         End If
     End Function
-
-
 #End Region
 End Class
