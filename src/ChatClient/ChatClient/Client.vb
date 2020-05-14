@@ -112,7 +112,7 @@ Public Class Client
             End If
 
 
-
+            Me.Text = Username
             updateGUI()
         Else
             MessageBox.Show("Dit is geen correct IP adres")
@@ -135,7 +135,6 @@ Public Class Client
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
-            PublicTextBox.ReadOnly = True
             ConnectButton.Text = "Connect"
             PrivateMessageButton.Enabled = False
             ConnectButton.Enabled = True

@@ -14,7 +14,7 @@ Public Class User
         Me.Username = username
         Me.Client = client
     End Sub
-    Public Property PrivateChatbox As Integer
+    Public Property PrivateChatroomId As Integer
         Get
             Return _PrivateChatbox
         End Get
@@ -84,7 +84,9 @@ Public Class User
                 Dim invoer As String = ClientData.ReadLine
                 RaiseEvent MessageRecieved(Username, invoer)
             Loop
+
         Catch ex As Exception
+
         End Try
     End Sub
 End Class

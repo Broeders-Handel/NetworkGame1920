@@ -4,17 +4,25 @@ Imports ChatServer.Server
 
 Class UsersController
     Private _Users As New Dictionary(Of String, User)
-    Public PrivateChatRooms As Dictionary(Of Integer, PrivateChatroom)
+    Private _PrivateChatRooms As New Dictionary(Of Integer, PrivateChatroom)
     Public Function createPrivateChatroom(user1 As User, user2 As User) As Integer
         Try
             Dim chtrm As PrivateChatroom = New PrivateChatroom(user1, user2)
             PrivateChatRooms.Add(chtrm.ID, chtrm)
             Return chtrm.ID
-        Catch
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
             Return -1
         End Try
     End Function
-
+    Public Property PrivateChatrooms As Dictionary(Of Integer, PrivateChatroom)
+        Get
+            Return _PrivateChatRooms
+        End Get
+        Set(value As Dictionary(Of Integer, PrivateChatroom))
+            _PrivateChatRooms = value
+        End Set
+    End Property
     Public Property Users As Dictionary(Of String, User)
         Get
             Return _Users

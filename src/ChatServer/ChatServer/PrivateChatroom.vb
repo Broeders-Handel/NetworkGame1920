@@ -6,8 +6,8 @@
         users.Add(user2)
         latestID += 1
         ID = latestID
-        user1.PrivateChatbox = ID
-        user2.PrivateChatbox = ID
+        user1.PrivateChatroomId = ID
+        user2.PrivateChatroomId = ID
     End Sub
     Property users As List(Of User)
     Private _id As Integer
@@ -22,7 +22,6 @@
     Private Shared latestID As Integer
 
     Public Sub Chat(message As String, sender As String)
-        message = sender & " : " & message
         For Each usr In users
             usr.write(message, Server.COM_COMMAND.PRIVATEMESSAGES)
         Next

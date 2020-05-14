@@ -221,12 +221,14 @@ Public Class Server
         UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
     End Sub
     Private Function getRoomID(username As String) As Integer
-        Dim roomID As Integer = UsersController.Users(username).PrivateChatbox
+        Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
         Return roomID
     End Function
-    Private Sub HandleIncommingPrivateMessage(message As String, username As String)
+    Private Sub HandleIncommingPrivateMessage(username As String, message As String)
         message = username & " : " & message
-        UsersController.PrivateChatRooms(getRoomID(username)).Chat(message, username)
+        Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
+        chatroom.Chat(message, username)
     End Sub
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
@@ -323,7 +325,7 @@ Public Class Server
         End If
     End Function
     Public Function HandleMessageWithCommand(username As String, message As String) As String
-
+        Console.WriteLine(username & "  " & message)
         Dim command As COM_COMMAND = getCommand(message)
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
