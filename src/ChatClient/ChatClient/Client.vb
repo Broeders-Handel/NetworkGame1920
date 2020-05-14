@@ -177,7 +177,7 @@ Public Class Client
         ElseIf tb.ReadOnly = True Then
             tb.ReadOnly = False
             tb.Text = ""
-        ElseIf tb.readonly = False Then
+        ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
         End If
