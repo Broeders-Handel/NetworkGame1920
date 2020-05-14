@@ -92,6 +92,7 @@ Public Class TCPClientController
         CONNECTED
         CONNECTEDUSERS
         STOPSERVER
+        GAME
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -184,8 +185,9 @@ Public Class TCPClientController
             connectResp = ConnectResponse.CorrectUsername
         ElseIf command = COM_COMMAND.NONE_USERNAME Then
             connectResp = ConnectResponse.None
-        Else
+        ElseIf command = COM_COMMAND.GAME Then
 
+        Else
             Throw New NotSupportedException
         End If
     End Sub

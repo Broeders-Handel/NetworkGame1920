@@ -149,6 +149,10 @@ Public Class Client
         End If
 
     End Sub
+
+    Private Sub ButtonClicked()
+
+    End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As RichTextBox, txt As String)
