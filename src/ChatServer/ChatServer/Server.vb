@@ -111,13 +111,9 @@ Public Class Server
     End Sub
     Private Sub userConnected(user As User)
 
-        sendMessageAsServer(username & " JOINED")
-
+        sendMessageAsServer(user.Username & " JOINED")
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
-
-
-
     End Sub
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
@@ -226,8 +222,8 @@ Public Class Server
     End Function
     Private Function HandleIncommingPrivateMessage(id As Integer, message As String, username As String)
         message = username & " : " & message
-        SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
-        SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
+        ' SendToOneClient(message, UsersController.PrivateChatRoom(0), COM_COMMAND.PRIVATEMESSAGES)
+        '  SendToOneClient(message, UsersController.PrivateChatRoom(1), COM_COMMAND.PRIVATEMESSAGES)
     End Function
     Private Function FindChatRoomID(sender As String)
 
@@ -338,7 +334,7 @@ Public Class Server
         ElseIf command = COM_COMMAND.PRIVATEUSERNAMES Then
             CreatPrivateChatRoom(username, message)
         ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
-            HandleIncommingPrivateMessage(username, message)
+            ' HandleIncommingPrivateMessage(username, message)
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
         ElseIf command = COM_COMMAND.STOPSERVER Then

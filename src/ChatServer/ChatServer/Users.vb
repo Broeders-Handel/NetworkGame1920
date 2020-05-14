@@ -7,13 +7,21 @@ Public Class User
     Dim usercontroller As New UsersController
     Private _username As String
     Private _client As TcpClient
+    Private _PrivateChatbox As Integer
     Dim Islistening As Boolean = True
 
     Public Sub New(username As String, client As TcpClient)
         Me.Username = username
         Me.Client = client
     End Sub
-
+    Public Property PrivateChatbox As Integer
+        Get
+            Return _PrivateChatbox
+        End Get
+        Set(value As Integer)
+            _PrivateChatbox = value
+        End Set
+    End Property
     Public Property Username As String
         Get
             Return _username

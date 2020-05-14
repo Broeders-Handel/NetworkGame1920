@@ -4,9 +4,7 @@
         users = New List(Of User)
         users.Add(user1)
         users.Add(user2)
-
         latestID += 1
-
         ID = latestID
     End Sub
     Property users As List(Of User)
