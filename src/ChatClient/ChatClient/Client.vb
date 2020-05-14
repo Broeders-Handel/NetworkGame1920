@@ -63,36 +63,34 @@ Public Class Client
     End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Dim connectionSucces As Boolean = True
-        Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text)
         If IpAdressTextBox.Text Like "*.*.*.*" Then
             Username = InputBox("Geef een gebruikersnaam op.")
-            If response = clientController.ConnectResponse.NoUsername Then
+            Dim response As TCPClientController.ConnectResponse = clientController.Connect(IpAdressTextBox.Text, Username)
+            Do While response = TCPClientController.ConnectResponse.NoUsername
                 MessageBox.Show("Geef een geldige Username op")
                 Username = InputBox("Geef een gebruikersnaam op.")
-            Else
                 clientController.Username = Username
-            End If
-            clientController.Username = Username
+                response = clientController.Connect(IpAdressTextBox.Text, Username)
+            Loop
 
-
-                Do While response = TCPClientController.ConnectResponse.DuplicateUsername
-                    MessageBox.Show("Deze username is al in gebruik.")
-                    Username = InputBox("Geef een gebruikersnaam op.")
-                    clientController.Username = Username
-                    response = clientController.Connect(IpAdressTextBox.Text)
-                Loop
-                If response = TCPClientController.ConnectResponse.CorrectUsername Then
-                    Connected = True
-                Else
-                    MessageBox.Show("Geannuleerd")
-                    Connected = False
-                End If
-
-
-
-                updateGUI()
+            Do While response = TCPClientController.ConnectResponse.DuplicateUsername
+                MessageBox.Show("Deze username is al in gebruik.")
+                Username = InputBox("Geef een gebruikersnaam op.")
+                clientController.Username = Username
+                response = clientController.Connect(IpAdressTextBox.Text, Username)
+            Loop
+            If response = TCPClientController.ConnectResponse.CorrectUsername Then
+                Connected = True
             Else
-                MessageBox.Show("Dit is geen correct IP adres")
+                MessageBox.Show("Geannuleerd")
+                Connected = False
+            End If
+
+
+
+            updateGUI()
+        Else
+            MessageBox.Show("Dit is geen correct IP adres")
         End If
     End Sub
 

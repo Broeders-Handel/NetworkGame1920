@@ -51,10 +51,10 @@ Public Class TCPClientController
         CorrectUsername = 2
         ServerUnavailable = 3
     End Enum
-    Public Function Connect(IpAdress As String) As ConnectResponse
+    Public Function Connect(IpAdress As String, username As String) As ConnectResponse
         Try
             connectResp = ConnectResponse.None
-            If Username = "" Or Username.Contains(",") Then
+            If username = "" Or username.Contains(",") Then
                 Return ConnectResponse.NoUsername
             Else
                 If TCPClient Is Nothing Then
@@ -66,7 +66,7 @@ Public Class TCPClientController
                     ComunicatieThread.Start()
 
                     'Luister naar antwoord server, als niet ok => DuplicateUsername
-                    Write(Username, COM_COMMAND.USERNAME)
+                    Write(username, COM_COMMAND.USERNAME)
                     While connectResp = ConnectResponse.None
                         Thread.Sleep(200)
                     End While
@@ -78,7 +78,7 @@ Public Class TCPClientController
             End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
-            Return connectResponse.ServerUnavailable
+            Return ConnectResponse.ServerUnavailable
         End Try
     End Function
 #Region "COMMAND"
