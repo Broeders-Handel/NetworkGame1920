@@ -55,7 +55,7 @@ Public Class TCPClientController
         Try
             connectResp = ConnectResponse.None
             If Username = "" Then
-                Return connectResponse.NoUsername
+                Return ConnectResponse.NoUsername
             Else
                 If TCPClient Is Nothing Then
                     TCPClient = New TcpClient(IpAdress, 64553)
@@ -78,7 +78,7 @@ Public Class TCPClientController
             End If
         Catch ex As Exception
             Console.WriteLine(ex.Message)
-            Return connectResponse.ServerUnavailable
+            Return ConnectResponse.ServerUnavailable
         End Try
     End Function
 #Region "COMMAND"

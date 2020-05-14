@@ -151,7 +151,17 @@ Public Class Client
     End Sub
 
     Private Sub ButtonClicked()
+        Dim buttons() As Button
 
+        buttons = Nothing
+        For Each b As Button In Me.Controls
+            If buttons Is Nothing Then
+                ReDim buttons(0)
+            Else
+                ReDim Preserve buttons(buttons.Length)
+            End If
+            buttons(UBound(buttons)) = b
+        Next
     End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     'Update textbox
@@ -188,7 +198,7 @@ Public Class Client
         ElseIf tb.ReadOnly = True Then
             tb.ReadOnly = False
             tb.Text = ""
-        ElseIf tb.readonly = False Then
+        ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
         End If
