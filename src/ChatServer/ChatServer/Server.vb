@@ -38,8 +38,8 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
-            'Voegt een User aan de lijst toe
-            UpdateClientList(username)
+                'Voegt een User aan de lijst toe
+                UpdateClientList(username)
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
                 usr.Listen()
@@ -141,25 +141,30 @@ Public Class Server
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
-        StopServer = True
-        ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
-        SendToClients("De server is afgesloten. Kom later terug!")
-        StartButton.Enabled = True
-        StopButton.Enabled = False
-        TCPListener.Stop()
-        ThreadConnectClient.Abort()
+        Try
 
 
-        For Each usr In UsersController.Users.Values
-            UsersController.RemoveUser(usr)
+            StopServer = True
+            ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
+            SendToClients("De server is afgesloten. Kom later terug!")
+            StartButton.Enabled = True
+            StopButton.Enabled = False
+            SendButton.Enabled = False
+            TCPListener.Stop()
+            ThreadConnectClient.Abort()
+            MessageTextBox.ReadOnly = True
+            SendButton.Enabled = False
+            StartButton.Enabled = True
+            ClientsListBox.Items.Clear()
 
-        Next
+            For Each usr In UsersController.Users.Values
+                UsersController.RemoveUser(usr)
 
+            Next
+        Catch ex As Exception
 
-        MessageTextBox.ReadOnly = True
-        SendButton.Enabled = False
-        StartButton.Enabled = True
-        ClientsListBox.Items.Clear()
+        End Try
+
     End Sub
 #End Region
 #Region "Textbox"

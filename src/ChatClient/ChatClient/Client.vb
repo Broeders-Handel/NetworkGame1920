@@ -96,12 +96,15 @@ Public Class Client
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
             ConnectButton.Enabled = False
+            SendButton.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
             updatetextBox(IpAdressTextBox)
             updatetextBox(MessageTextBox)
+            updateBut(SendButton)
             ConnectButton.Enabled = True
+
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
             MessageTextBox.ReadOnly = True
@@ -111,7 +114,7 @@ Public Class Client
             MessageTextBox.Text = ""
             ChatRichTextBox.Text = ""
             IpAdressTextBox.Text = ""
-
+            SendButton.Enabled = False
         End If
     End Sub
     Public Sub ServerStopped() Handles clientController.ServerStopped
@@ -173,7 +176,6 @@ Public Class Client
         If but.InvokeRequired Then
             but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
         ElseIf but.Enabled = False Then
-            but.Text = "Connect"
             but.Enabled = True
         End If
     End Sub
