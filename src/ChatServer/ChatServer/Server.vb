@@ -38,8 +38,9 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
-            'Voegt een User aan de lijst toe
-            UpdateClientList(username)
+                userConnected(usr)
+                'Voegt een User aan de lijst toe
+                UpdateClientList(username)
                 'luister naar inkomende berichten
                 AddHandler usr.MessageRecieved, AddressOf HandleMessageWithCommand
                 usr.Listen()
@@ -51,6 +52,8 @@ Public Class Server
     End Sub
     Private Sub Server_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         StopButton.Enabled = False
+        MessageTextBox.ReadOnly = True
+        SendButton.Enabled = False
     End Sub
     Private Sub ConnectClient()
         Try
@@ -109,13 +112,9 @@ Public Class Server
     End Sub
     Private Sub userConnected(user As User)
 
-        sendMessageAsServer(username & " JOINED")
-
+        sendMessageAsServer(user.Username & " JOINED")
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
-
-
-
     End Sub
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
@@ -134,6 +133,8 @@ Public Class Server
         ThreadConnectClient.Start()
         StopButton.Enabled = True
         StartButton.Enabled = False
+        MessageTextBox.ReadOnly = False
+        SendButton.Enabled = True
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
@@ -152,7 +153,8 @@ Public Class Server
         Next
 
 
-
+        MessageTextBox.ReadOnly = True
+        SendButton.Enabled = False
         StartButton.Enabled = True
         ClientsListBox.Items.Clear()
     End Sub

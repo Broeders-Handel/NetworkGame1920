@@ -47,7 +47,7 @@ Class UsersController
     End Function
 
     Friend Function getUsers() As String
-        Throw New NotImplementedException()
+        Return MakeUserstring()
     End Function
     Private Function MakeUserstring() As String
         Dim UsersString As String
