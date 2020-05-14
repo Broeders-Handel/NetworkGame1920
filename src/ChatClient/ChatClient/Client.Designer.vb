@@ -144,7 +144,7 @@ Partial Class Client
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(80, 72)
         Me.Button1.TabIndex = 9
-        Me.Button1.Text = "Button1"
+        Me.Button1.Text = "4OpEenRij!"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
@@ -153,7 +153,7 @@ Partial Class Client
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 72)
         Me.Button2.TabIndex = 10
-        Me.Button2.Text = "Button2"
+        Me.Button2.Text = "4OpEenRij!"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button3
@@ -162,7 +162,7 @@ Partial Class Client
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(80, 72)
         Me.Button3.TabIndex = 11
-        Me.Button3.Text = "Button3"
+        Me.Button3.Text = "4OpEenRij!"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Button4
@@ -171,7 +171,7 @@ Partial Class Client
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(80, 72)
         Me.Button4.TabIndex = 14
-        Me.Button4.Text = "Button4"
+        Me.Button4.Text = "4OpEenRij!"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Button5
@@ -180,7 +180,7 @@ Partial Class Client
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(80, 72)
         Me.Button5.TabIndex = 13
-        Me.Button5.Text = "Button5"
+        Me.Button5.Text = "4OpEenRij!"
         Me.Button5.UseVisualStyleBackColor = True
         '
         'Button6
@@ -189,7 +189,7 @@ Partial Class Client
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(80, 72)
         Me.Button6.TabIndex = 12
-        Me.Button6.Text = "Button6"
+        Me.Button6.Text = "4OpEenRij!"
         Me.Button6.UseVisualStyleBackColor = True
         '
         'Button7
@@ -198,7 +198,7 @@ Partial Class Client
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(80, 72)
         Me.Button7.TabIndex = 17
-        Me.Button7.Text = "Button7"
+        Me.Button7.Text = "4OpEenRij!"
         Me.Button7.UseVisualStyleBackColor = True
         '
         'Button8
@@ -207,7 +207,7 @@ Partial Class Client
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(80, 72)
         Me.Button8.TabIndex = 16
-        Me.Button8.Text = "Button8"
+        Me.Button8.Text = "4OpEenRij!"
         Me.Button8.UseVisualStyleBackColor = True
         '
         'Button9
@@ -216,260 +216,260 @@ Partial Class Client
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(80, 72)
         Me.Button9.TabIndex = 15
-        Me.Button9.Text = "Button9"
+        Me.Button9.Text = "4OpEenRij!"
         Me.Button9.UseVisualStyleBackColor = True
         '
         'Button10
         '
-        Me.Button10.Location = New System.Drawing.Point(184, 244)
+        Me.Button10.Location = New System.Drawing.Point(184, 246)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(80, 72)
         Me.Button10.TabIndex = 20
-        Me.Button10.Text = "Button10"
+        Me.Button10.Text = "4OpEenRij!"
         Me.Button10.UseVisualStyleBackColor = True
         '
         'Button11
         '
-        Me.Button11.Location = New System.Drawing.Point(98, 244)
+        Me.Button11.Location = New System.Drawing.Point(98, 246)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(80, 72)
         Me.Button11.TabIndex = 19
-        Me.Button11.Text = "Button11"
+        Me.Button11.Text = "4OpEenRij!"
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button12
         '
-        Me.Button12.Location = New System.Drawing.Point(12, 244)
+        Me.Button12.Location = New System.Drawing.Point(12, 246)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(80, 72)
         Me.Button12.TabIndex = 18
-        Me.Button12.Text = "Button12"
+        Me.Button12.Text = "4OpEenRij!"
         Me.Button12.UseVisualStyleBackColor = True
         '
         'Button13
         '
-        Me.Button13.Location = New System.Drawing.Point(187, 323)
+        Me.Button13.Location = New System.Drawing.Point(184, 324)
         Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(77, 72)
+        Me.Button13.Size = New System.Drawing.Size(80, 72)
         Me.Button13.TabIndex = 23
-        Me.Button13.Text = "Button13"
+        Me.Button13.Text = "4OpEenRij!"
         Me.Button13.UseVisualStyleBackColor = True
         '
         'Button14
         '
-        Me.Button14.Location = New System.Drawing.Point(101, 323)
+        Me.Button14.Location = New System.Drawing.Point(98, 324)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(77, 72)
+        Me.Button14.Size = New System.Drawing.Size(80, 72)
         Me.Button14.TabIndex = 22
-        Me.Button14.Text = "Button14"
+        Me.Button14.Text = "4OpEenRij!"
         Me.Button14.UseVisualStyleBackColor = True
         '
         'Button15
         '
-        Me.Button15.Location = New System.Drawing.Point(15, 323)
+        Me.Button15.Location = New System.Drawing.Point(12, 324)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(77, 72)
+        Me.Button15.Size = New System.Drawing.Size(80, 72)
         Me.Button15.TabIndex = 21
-        Me.Button15.Text = "Button15"
+        Me.Button15.Text = "4OpEenRij!"
         Me.Button15.UseVisualStyleBackColor = True
         '
         'Button16
         '
-        Me.Button16.Location = New System.Drawing.Point(184, 401)
+        Me.Button16.Location = New System.Drawing.Point(184, 398)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(80, 72)
         Me.Button16.TabIndex = 26
-        Me.Button16.Text = "Button16"
+        Me.Button16.Text = "4OpEenRij!"
         Me.Button16.UseVisualStyleBackColor = True
         '
         'Button17
         '
-        Me.Button17.Location = New System.Drawing.Point(98, 401)
+        Me.Button17.Location = New System.Drawing.Point(98, 398)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(80, 72)
         Me.Button17.TabIndex = 25
-        Me.Button17.Text = "Button17"
+        Me.Button17.Text = "4OpEenRij!"
         Me.Button17.UseVisualStyleBackColor = True
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(12, 401)
+        Me.Button18.Location = New System.Drawing.Point(12, 398)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(80, 72)
         Me.Button18.TabIndex = 24
-        Me.Button18.Text = "Button18"
+        Me.Button18.Text = "4OpEenRij!"
         Me.Button18.UseVisualStyleBackColor = True
         '
         'Button19
         '
-        Me.Button19.Location = New System.Drawing.Point(442, 401)
+        Me.Button19.Location = New System.Drawing.Point(439, 398)
         Me.Button19.Name = "Button19"
         Me.Button19.Size = New System.Drawing.Size(80, 72)
         Me.Button19.TabIndex = 44
-        Me.Button19.Text = "Button19"
+        Me.Button19.Text = "4OpEenRij!"
         Me.Button19.UseVisualStyleBackColor = True
         '
         'Button20
         '
-        Me.Button20.Location = New System.Drawing.Point(356, 401)
+        Me.Button20.Location = New System.Drawing.Point(353, 398)
         Me.Button20.Name = "Button20"
         Me.Button20.Size = New System.Drawing.Size(80, 72)
         Me.Button20.TabIndex = 43
-        Me.Button20.Text = "Button20"
+        Me.Button20.Text = "4OpEenRij!"
         Me.Button20.UseVisualStyleBackColor = True
         '
         'Button21
         '
-        Me.Button21.Location = New System.Drawing.Point(270, 401)
+        Me.Button21.Location = New System.Drawing.Point(267, 398)
         Me.Button21.Name = "Button21"
         Me.Button21.Size = New System.Drawing.Size(80, 72)
         Me.Button21.TabIndex = 42
-        Me.Button21.Text = "Button21"
+        Me.Button21.Text = "4OpEenRij!"
         Me.Button21.UseVisualStyleBackColor = True
         '
         'Button22
         '
-        Me.Button22.Location = New System.Drawing.Point(445, 323)
+        Me.Button22.Location = New System.Drawing.Point(439, 324)
         Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(77, 72)
+        Me.Button22.Size = New System.Drawing.Size(80, 72)
         Me.Button22.TabIndex = 41
-        Me.Button22.Text = "Button22"
+        Me.Button22.Text = "4OpEenRij!"
         Me.Button22.UseVisualStyleBackColor = True
         '
         'Button23
         '
-        Me.Button23.Location = New System.Drawing.Point(359, 323)
+        Me.Button23.Location = New System.Drawing.Point(353, 324)
         Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(77, 72)
+        Me.Button23.Size = New System.Drawing.Size(80, 72)
         Me.Button23.TabIndex = 40
-        Me.Button23.Text = "Button23"
+        Me.Button23.Text = "4OpEenRij!"
         Me.Button23.UseVisualStyleBackColor = True
         '
         'Button24
         '
-        Me.Button24.Location = New System.Drawing.Point(273, 323)
+        Me.Button24.Location = New System.Drawing.Point(267, 324)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(77, 72)
+        Me.Button24.Size = New System.Drawing.Size(80, 72)
         Me.Button24.TabIndex = 39
-        Me.Button24.Text = "Button24"
+        Me.Button24.Text = "4OpEenRij!"
         Me.Button24.UseVisualStyleBackColor = True
         '
         'Button25
         '
-        Me.Button25.Location = New System.Drawing.Point(442, 244)
+        Me.Button25.Location = New System.Drawing.Point(439, 246)
         Me.Button25.Name = "Button25"
         Me.Button25.Size = New System.Drawing.Size(80, 72)
         Me.Button25.TabIndex = 38
-        Me.Button25.Text = "Button25"
+        Me.Button25.Text = "4OpEenRij!"
         Me.Button25.UseVisualStyleBackColor = True
         '
         'Button26
         '
-        Me.Button26.Location = New System.Drawing.Point(356, 244)
+        Me.Button26.Location = New System.Drawing.Point(353, 246)
         Me.Button26.Name = "Button26"
         Me.Button26.Size = New System.Drawing.Size(80, 72)
         Me.Button26.TabIndex = 37
-        Me.Button26.Text = "Button26"
+        Me.Button26.Text = "4OpEenRij!"
         Me.Button26.UseVisualStyleBackColor = True
         '
         'Button27
         '
-        Me.Button27.Location = New System.Drawing.Point(270, 244)
+        Me.Button27.Location = New System.Drawing.Point(267, 246)
         Me.Button27.Name = "Button27"
         Me.Button27.Size = New System.Drawing.Size(80, 72)
         Me.Button27.TabIndex = 36
-        Me.Button27.Text = "Button27"
+        Me.Button27.Text = "4OpEenRij!"
         Me.Button27.UseVisualStyleBackColor = True
         '
         'Button28
         '
-        Me.Button28.Location = New System.Drawing.Point(442, 168)
+        Me.Button28.Location = New System.Drawing.Point(439, 168)
         Me.Button28.Name = "Button28"
         Me.Button28.Size = New System.Drawing.Size(80, 72)
         Me.Button28.TabIndex = 35
-        Me.Button28.Text = "Button28"
+        Me.Button28.Text = "4OpEenRij!"
         Me.Button28.UseVisualStyleBackColor = True
         '
         'Button29
         '
-        Me.Button29.Location = New System.Drawing.Point(356, 168)
+        Me.Button29.Location = New System.Drawing.Point(353, 168)
         Me.Button29.Name = "Button29"
         Me.Button29.Size = New System.Drawing.Size(80, 72)
         Me.Button29.TabIndex = 34
-        Me.Button29.Text = "Button29"
+        Me.Button29.Text = "4OpEenRij!"
         Me.Button29.UseVisualStyleBackColor = True
         '
         'Button30
         '
-        Me.Button30.Location = New System.Drawing.Point(270, 168)
+        Me.Button30.Location = New System.Drawing.Point(267, 168)
         Me.Button30.Name = "Button30"
         Me.Button30.Size = New System.Drawing.Size(80, 72)
         Me.Button30.TabIndex = 33
-        Me.Button30.Text = "Button30"
+        Me.Button30.Text = "4OpEenRij!"
         Me.Button30.UseVisualStyleBackColor = True
         '
         'Button31
         '
-        Me.Button31.Location = New System.Drawing.Point(442, 90)
+        Me.Button31.Location = New System.Drawing.Point(439, 90)
         Me.Button31.Name = "Button31"
         Me.Button31.Size = New System.Drawing.Size(80, 72)
         Me.Button31.TabIndex = 32
-        Me.Button31.Text = "Button31"
+        Me.Button31.Text = "4OpEenRij!"
         Me.Button31.UseVisualStyleBackColor = True
         '
         'Button32
         '
-        Me.Button32.Location = New System.Drawing.Point(356, 90)
+        Me.Button32.Location = New System.Drawing.Point(353, 90)
         Me.Button32.Name = "Button32"
         Me.Button32.Size = New System.Drawing.Size(80, 72)
         Me.Button32.TabIndex = 31
-        Me.Button32.Text = "Button32"
+        Me.Button32.Text = "4OpEenRij!"
         Me.Button32.UseVisualStyleBackColor = True
         '
         'Button33
         '
-        Me.Button33.Location = New System.Drawing.Point(270, 90)
+        Me.Button33.Location = New System.Drawing.Point(267, 90)
         Me.Button33.Name = "Button33"
         Me.Button33.Size = New System.Drawing.Size(80, 72)
         Me.Button33.TabIndex = 30
-        Me.Button33.Text = "Button33"
+        Me.Button33.Text = "4OpEenRij!"
         Me.Button33.UseVisualStyleBackColor = True
         '
         'Button34
         '
-        Me.Button34.Location = New System.Drawing.Point(442, 12)
+        Me.Button34.Location = New System.Drawing.Point(439, 12)
         Me.Button34.Name = "Button34"
         Me.Button34.Size = New System.Drawing.Size(80, 72)
         Me.Button34.TabIndex = 29
-        Me.Button34.Text = "Button34"
+        Me.Button34.Text = "4OpEenRij!"
         Me.Button34.UseVisualStyleBackColor = True
         '
         'Button35
         '
-        Me.Button35.Location = New System.Drawing.Point(356, 12)
+        Me.Button35.Location = New System.Drawing.Point(353, 12)
         Me.Button35.Name = "Button35"
         Me.Button35.Size = New System.Drawing.Size(80, 72)
         Me.Button35.TabIndex = 28
-        Me.Button35.Text = "Button35"
+        Me.Button35.Text = "4OpEenRij!"
         Me.Button35.UseVisualStyleBackColor = True
         '
         'Button36
         '
-        Me.Button36.Location = New System.Drawing.Point(270, 12)
+        Me.Button36.Location = New System.Drawing.Point(267, 12)
         Me.Button36.Name = "Button36"
         Me.Button36.Size = New System.Drawing.Size(80, 72)
         Me.Button36.TabIndex = 27
-        Me.Button36.Text = "Button36"
+        Me.Button36.Text = "4OpEenRij!"
         Me.Button36.UseVisualStyleBackColor = True
         '
         'BeurtLabel
         '
         Me.BeurtLabel.AutoSize = True
-        Me.BeurtLabel.Location = New System.Drawing.Point(528, 13)
+        Me.BeurtLabel.Location = New System.Drawing.Point(526, 19)
         Me.BeurtLabel.Name = "BeurtLabel"
-        Me.BeurtLabel.Size = New System.Drawing.Size(32, 13)
+        Me.BeurtLabel.Size = New System.Drawing.Size(31, 13)
         Me.BeurtLabel.TabIndex = 45
-        Me.BeurtLabel.Text = "Beurt"
+        Me.BeurtLabel.Text = "beurt"
         '
         'Client
         '
