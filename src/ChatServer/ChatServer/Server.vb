@@ -38,6 +38,7 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
+                userConnected(usr)
                 'Voegt een User aan de lijst toe
                 UpdateClientList(username)
                 'luister naar inkomende berichten
