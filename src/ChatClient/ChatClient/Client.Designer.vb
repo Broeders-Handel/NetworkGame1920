@@ -30,42 +30,42 @@ Partial Class Client
         Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.UsersListBox = New System.Windows.Forms.ListBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button8 = New System.Windows.Forms.Button()
-        Me.Button9 = New System.Windows.Forms.Button()
-        Me.Button10 = New System.Windows.Forms.Button()
-        Me.Button11 = New System.Windows.Forms.Button()
-        Me.Button12 = New System.Windows.Forms.Button()
-        Me.Button13 = New System.Windows.Forms.Button()
-        Me.Button14 = New System.Windows.Forms.Button()
-        Me.Button15 = New System.Windows.Forms.Button()
-        Me.Button16 = New System.Windows.Forms.Button()
-        Me.Button17 = New System.Windows.Forms.Button()
-        Me.Button18 = New System.Windows.Forms.Button()
-        Me.Button19 = New System.Windows.Forms.Button()
-        Me.Button20 = New System.Windows.Forms.Button()
-        Me.Button21 = New System.Windows.Forms.Button()
-        Me.Button22 = New System.Windows.Forms.Button()
-        Me.Button23 = New System.Windows.Forms.Button()
-        Me.Button24 = New System.Windows.Forms.Button()
-        Me.Button25 = New System.Windows.Forms.Button()
-        Me.Button26 = New System.Windows.Forms.Button()
-        Me.Button27 = New System.Windows.Forms.Button()
-        Me.Button28 = New System.Windows.Forms.Button()
-        Me.Button29 = New System.Windows.Forms.Button()
-        Me.Button30 = New System.Windows.Forms.Button()
-        Me.Button31 = New System.Windows.Forms.Button()
-        Me.Button32 = New System.Windows.Forms.Button()
-        Me.Button33 = New System.Windows.Forms.Button()
-        Me.Button34 = New System.Windows.Forms.Button()
-        Me.Button35 = New System.Windows.Forms.Button()
-        Me.Button36 = New System.Windows.Forms.Button()
+        Me.R1K1 = New System.Windows.Forms.Button()
+        Me.R1K2 = New System.Windows.Forms.Button()
+        Me.R1K3 = New System.Windows.Forms.Button()
+        Me.R2K3 = New System.Windows.Forms.Button()
+        Me.R2K2 = New System.Windows.Forms.Button()
+        Me.R2K1 = New System.Windows.Forms.Button()
+        Me.R3K3 = New System.Windows.Forms.Button()
+        Me.R3K2 = New System.Windows.Forms.Button()
+        Me.R3K1 = New System.Windows.Forms.Button()
+        Me.R4K3 = New System.Windows.Forms.Button()
+        Me.R4K2 = New System.Windows.Forms.Button()
+        Me.R4K1 = New System.Windows.Forms.Button()
+        Me.R5K3 = New System.Windows.Forms.Button()
+        Me.R5K2 = New System.Windows.Forms.Button()
+        Me.R5K1 = New System.Windows.Forms.Button()
+        Me.R6K3 = New System.Windows.Forms.Button()
+        Me.R6K2 = New System.Windows.Forms.Button()
+        Me.R6K1 = New System.Windows.Forms.Button()
+        Me.R6K6 = New System.Windows.Forms.Button()
+        Me.R6K5 = New System.Windows.Forms.Button()
+        Me.R6K4 = New System.Windows.Forms.Button()
+        Me.R5K6 = New System.Windows.Forms.Button()
+        Me.R5K5 = New System.Windows.Forms.Button()
+        Me.R5K4 = New System.Windows.Forms.Button()
+        Me.R4K6 = New System.Windows.Forms.Button()
+        Me.R4K5 = New System.Windows.Forms.Button()
+        Me.R4K4 = New System.Windows.Forms.Button()
+        Me.R3K6 = New System.Windows.Forms.Button()
+        Me.R3K5 = New System.Windows.Forms.Button()
+        Me.R3K4 = New System.Windows.Forms.Button()
+        Me.R2K6 = New System.Windows.Forms.Button()
+        Me.R2K5 = New System.Windows.Forms.Button()
+        Me.R2K4 = New System.Windows.Forms.Button()
+        Me.R1K6 = New System.Windows.Forms.Button()
+        Me.R1K5 = New System.Windows.Forms.Button()
+        Me.R1K4 = New System.Windows.Forms.Button()
         Me.BeurtLabel = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
@@ -138,329 +138,329 @@ Partial Class Client
         Me.UsersListBox.Size = New System.Drawing.Size(139, 368)
         Me.UsersListBox.TabIndex = 8
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(12, 12)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 72)
-        Me.Button1.TabIndex = 9
-        Me.Button1.Text = "4OpEenRij!"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(98, 12)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(80, 72)
-        Me.Button2.TabIndex = 10
-        Me.Button2.Text = "4OpEenRij!"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Button3
-        '
-        Me.Button3.Location = New System.Drawing.Point(184, 12)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(80, 72)
-        Me.Button3.TabIndex = 11
-        Me.Button3.Text = "4OpEenRij!"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'Button4
-        '
-        Me.Button4.Location = New System.Drawing.Point(184, 90)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(80, 72)
-        Me.Button4.TabIndex = 14
-        Me.Button4.Text = "4OpEenRij!"
-        Me.Button4.UseVisualStyleBackColor = True
-        '
-        'Button5
-        '
-        Me.Button5.Location = New System.Drawing.Point(98, 90)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(80, 72)
-        Me.Button5.TabIndex = 13
-        Me.Button5.Text = "4OpEenRij!"
-        Me.Button5.UseVisualStyleBackColor = True
-        '
-        'Button6
-        '
-        Me.Button6.Location = New System.Drawing.Point(12, 90)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(80, 72)
-        Me.Button6.TabIndex = 12
-        Me.Button6.Text = "4OpEenRij!"
-        Me.Button6.UseVisualStyleBackColor = True
-        '
-        'Button7
-        '
-        Me.Button7.Location = New System.Drawing.Point(184, 168)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(80, 72)
-        Me.Button7.TabIndex = 17
-        Me.Button7.Text = "4OpEenRij!"
-        Me.Button7.UseVisualStyleBackColor = True
-        '
-        'Button8
-        '
-        Me.Button8.Location = New System.Drawing.Point(98, 168)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(80, 72)
-        Me.Button8.TabIndex = 16
-        Me.Button8.Text = "4OpEenRij!"
-        Me.Button8.UseVisualStyleBackColor = True
-        '
-        'Button9
-        '
-        Me.Button9.Location = New System.Drawing.Point(12, 168)
-        Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(80, 72)
-        Me.Button9.TabIndex = 15
-        Me.Button9.Text = "4OpEenRij!"
-        Me.Button9.UseVisualStyleBackColor = True
-        '
-        'Button10
-        '
-        Me.Button10.Location = New System.Drawing.Point(184, 246)
-        Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(80, 72)
-        Me.Button10.TabIndex = 20
-        Me.Button10.Text = "4OpEenRij!"
-        Me.Button10.UseVisualStyleBackColor = True
-        '
-        'Button11
-        '
-        Me.Button11.Location = New System.Drawing.Point(98, 246)
-        Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(80, 72)
-        Me.Button11.TabIndex = 19
-        Me.Button11.Text = "4OpEenRij!"
-        Me.Button11.UseVisualStyleBackColor = True
-        '
-        'Button12
-        '
-        Me.Button12.Location = New System.Drawing.Point(12, 246)
-        Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(80, 72)
-        Me.Button12.TabIndex = 18
-        Me.Button12.Text = "4OpEenRij!"
-        Me.Button12.UseVisualStyleBackColor = True
-        '
-        'Button13
-        '
-        Me.Button13.Location = New System.Drawing.Point(184, 324)
-        Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(80, 72)
-        Me.Button13.TabIndex = 23
-        Me.Button13.Text = "4OpEenRij!"
-        Me.Button13.UseVisualStyleBackColor = True
-        '
-        'Button14
-        '
-        Me.Button14.Location = New System.Drawing.Point(98, 324)
-        Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(80, 72)
-        Me.Button14.TabIndex = 22
-        Me.Button14.Text = "4OpEenRij!"
-        Me.Button14.UseVisualStyleBackColor = True
-        '
-        'Button15
-        '
-        Me.Button15.Location = New System.Drawing.Point(12, 324)
-        Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(80, 72)
-        Me.Button15.TabIndex = 21
-        Me.Button15.Text = "4OpEenRij!"
-        Me.Button15.UseVisualStyleBackColor = True
-        '
-        'Button16
-        '
-        Me.Button16.Location = New System.Drawing.Point(184, 398)
-        Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(80, 72)
-        Me.Button16.TabIndex = 26
-        Me.Button16.Text = "4OpEenRij!"
-        Me.Button16.UseVisualStyleBackColor = True
-        '
-        'Button17
-        '
-        Me.Button17.Location = New System.Drawing.Point(98, 398)
-        Me.Button17.Name = "Button17"
-        Me.Button17.Size = New System.Drawing.Size(80, 72)
-        Me.Button17.TabIndex = 25
-        Me.Button17.Text = "4OpEenRij!"
-        Me.Button17.UseVisualStyleBackColor = True
-        '
-        'Button18
-        '
-        Me.Button18.Location = New System.Drawing.Point(12, 398)
-        Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(80, 72)
-        Me.Button18.TabIndex = 24
-        Me.Button18.Text = "4OpEenRij!"
-        Me.Button18.UseVisualStyleBackColor = True
-        '
-        'Button19
-        '
-        Me.Button19.Location = New System.Drawing.Point(439, 398)
-        Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(80, 72)
-        Me.Button19.TabIndex = 44
-        Me.Button19.Text = "4OpEenRij!"
-        Me.Button19.UseVisualStyleBackColor = True
-        '
-        'Button20
-        '
-        Me.Button20.Location = New System.Drawing.Point(353, 398)
-        Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(80, 72)
-        Me.Button20.TabIndex = 43
-        Me.Button20.Text = "4OpEenRij!"
-        Me.Button20.UseVisualStyleBackColor = True
-        '
-        'Button21
-        '
-        Me.Button21.Location = New System.Drawing.Point(267, 398)
-        Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(80, 72)
-        Me.Button21.TabIndex = 42
-        Me.Button21.Text = "4OpEenRij!"
-        Me.Button21.UseVisualStyleBackColor = True
-        '
-        'Button22
-        '
-        Me.Button22.Location = New System.Drawing.Point(439, 324)
-        Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(80, 72)
-        Me.Button22.TabIndex = 41
-        Me.Button22.Text = "4OpEenRij!"
-        Me.Button22.UseVisualStyleBackColor = True
-        '
-        'Button23
-        '
-        Me.Button23.Location = New System.Drawing.Point(353, 324)
-        Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(80, 72)
-        Me.Button23.TabIndex = 40
-        Me.Button23.Text = "4OpEenRij!"
-        Me.Button23.UseVisualStyleBackColor = True
-        '
-        'Button24
-        '
-        Me.Button24.Location = New System.Drawing.Point(267, 324)
-        Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(80, 72)
-        Me.Button24.TabIndex = 39
-        Me.Button24.Text = "4OpEenRij!"
-        Me.Button24.UseVisualStyleBackColor = True
-        '
-        'Button25
-        '
-        Me.Button25.Location = New System.Drawing.Point(439, 246)
-        Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(80, 72)
-        Me.Button25.TabIndex = 38
-        Me.Button25.Text = "4OpEenRij!"
-        Me.Button25.UseVisualStyleBackColor = True
-        '
-        'Button26
-        '
-        Me.Button26.Location = New System.Drawing.Point(353, 246)
-        Me.Button26.Name = "Button26"
-        Me.Button26.Size = New System.Drawing.Size(80, 72)
-        Me.Button26.TabIndex = 37
-        Me.Button26.Text = "4OpEenRij!"
-        Me.Button26.UseVisualStyleBackColor = True
-        '
-        'Button27
-        '
-        Me.Button27.Location = New System.Drawing.Point(267, 246)
-        Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(80, 72)
-        Me.Button27.TabIndex = 36
-        Me.Button27.Text = "4OpEenRij!"
-        Me.Button27.UseVisualStyleBackColor = True
-        '
-        'Button28
-        '
-        Me.Button28.Location = New System.Drawing.Point(439, 168)
-        Me.Button28.Name = "Button28"
-        Me.Button28.Size = New System.Drawing.Size(80, 72)
-        Me.Button28.TabIndex = 35
-        Me.Button28.Text = "4OpEenRij!"
-        Me.Button28.UseVisualStyleBackColor = True
-        '
-        'Button29
-        '
-        Me.Button29.Location = New System.Drawing.Point(353, 168)
-        Me.Button29.Name = "Button29"
-        Me.Button29.Size = New System.Drawing.Size(80, 72)
-        Me.Button29.TabIndex = 34
-        Me.Button29.Text = "4OpEenRij!"
-        Me.Button29.UseVisualStyleBackColor = True
-        '
-        'Button30
-        '
-        Me.Button30.Location = New System.Drawing.Point(267, 168)
-        Me.Button30.Name = "Button30"
-        Me.Button30.Size = New System.Drawing.Size(80, 72)
-        Me.Button30.TabIndex = 33
-        Me.Button30.Text = "4OpEenRij!"
-        Me.Button30.UseVisualStyleBackColor = True
-        '
-        'Button31
-        '
-        Me.Button31.Location = New System.Drawing.Point(439, 90)
-        Me.Button31.Name = "Button31"
-        Me.Button31.Size = New System.Drawing.Size(80, 72)
-        Me.Button31.TabIndex = 32
-        Me.Button31.Text = "4OpEenRij!"
-        Me.Button31.UseVisualStyleBackColor = True
-        '
-        'Button32
-        '
-        Me.Button32.Location = New System.Drawing.Point(353, 90)
-        Me.Button32.Name = "Button32"
-        Me.Button32.Size = New System.Drawing.Size(80, 72)
-        Me.Button32.TabIndex = 31
-        Me.Button32.Text = "4OpEenRij!"
-        Me.Button32.UseVisualStyleBackColor = True
-        '
-        'Button33
-        '
-        Me.Button33.Location = New System.Drawing.Point(267, 90)
-        Me.Button33.Name = "Button33"
-        Me.Button33.Size = New System.Drawing.Size(80, 72)
-        Me.Button33.TabIndex = 30
-        Me.Button33.Text = "4OpEenRij!"
-        Me.Button33.UseVisualStyleBackColor = True
-        '
-        'Button34
-        '
-        Me.Button34.Location = New System.Drawing.Point(439, 12)
-        Me.Button34.Name = "Button34"
-        Me.Button34.Size = New System.Drawing.Size(80, 72)
-        Me.Button34.TabIndex = 29
-        Me.Button34.Text = "4OpEenRij!"
-        Me.Button34.UseVisualStyleBackColor = True
-        '
-        'Button35
-        '
-        Me.Button35.Location = New System.Drawing.Point(353, 12)
-        Me.Button35.Name = "Button35"
-        Me.Button35.Size = New System.Drawing.Size(80, 72)
-        Me.Button35.TabIndex = 28
-        Me.Button35.Text = "4OpEenRij!"
-        Me.Button35.UseVisualStyleBackColor = True
-        '
-        'Button36
-        '
-        Me.Button36.Location = New System.Drawing.Point(267, 12)
-        Me.Button36.Name = "Button36"
-        Me.Button36.Size = New System.Drawing.Size(80, 72)
-        Me.Button36.TabIndex = 27
-        Me.Button36.Text = "4OpEenRij!"
-        Me.Button36.UseVisualStyleBackColor = True
+        'R1K1
+        '
+        Me.R1K1.Location = New System.Drawing.Point(12, 12)
+        Me.R1K1.Name = "R1K1"
+        Me.R1K1.Size = New System.Drawing.Size(80, 72)
+        Me.R1K1.TabIndex = 9
+        Me.R1K1.Text = "4OpEenRij!"
+        Me.R1K1.UseVisualStyleBackColor = True
+        '
+        'R1K2
+        '
+        Me.R1K2.Location = New System.Drawing.Point(98, 12)
+        Me.R1K2.Name = "R1K2"
+        Me.R1K2.Size = New System.Drawing.Size(80, 72)
+        Me.R1K2.TabIndex = 10
+        Me.R1K2.Text = "4OpEenRij!"
+        Me.R1K2.UseVisualStyleBackColor = True
+        '
+        'R1K3
+        '
+        Me.R1K3.Location = New System.Drawing.Point(184, 12)
+        Me.R1K3.Name = "R1K3"
+        Me.R1K3.Size = New System.Drawing.Size(80, 72)
+        Me.R1K3.TabIndex = 11
+        Me.R1K3.Text = "4OpEenRij!"
+        Me.R1K3.UseVisualStyleBackColor = True
+        '
+        'R2K3
+        '
+        Me.R2K3.Location = New System.Drawing.Point(184, 90)
+        Me.R2K3.Name = "R2K3"
+        Me.R2K3.Size = New System.Drawing.Size(80, 72)
+        Me.R2K3.TabIndex = 14
+        Me.R2K3.Text = "4OpEenRij!"
+        Me.R2K3.UseVisualStyleBackColor = True
+        '
+        'R2K2
+        '
+        Me.R2K2.Location = New System.Drawing.Point(98, 90)
+        Me.R2K2.Name = "R2K2"
+        Me.R2K2.Size = New System.Drawing.Size(80, 72)
+        Me.R2K2.TabIndex = 13
+        Me.R2K2.Text = "4OpEenRij!"
+        Me.R2K2.UseVisualStyleBackColor = True
+        '
+        'R2K1
+        '
+        Me.R2K1.Location = New System.Drawing.Point(12, 90)
+        Me.R2K1.Name = "R2K1"
+        Me.R2K1.Size = New System.Drawing.Size(80, 72)
+        Me.R2K1.TabIndex = 12
+        Me.R2K1.Text = "4OpEenRij!"
+        Me.R2K1.UseVisualStyleBackColor = True
+        '
+        'R3K3
+        '
+        Me.R3K3.Location = New System.Drawing.Point(184, 168)
+        Me.R3K3.Name = "R3K3"
+        Me.R3K3.Size = New System.Drawing.Size(80, 72)
+        Me.R3K3.TabIndex = 17
+        Me.R3K3.Text = "4OpEenRij!"
+        Me.R3K3.UseVisualStyleBackColor = True
+        '
+        'R3K2
+        '
+        Me.R3K2.Location = New System.Drawing.Point(98, 168)
+        Me.R3K2.Name = "R3K2"
+        Me.R3K2.Size = New System.Drawing.Size(80, 72)
+        Me.R3K2.TabIndex = 16
+        Me.R3K2.Text = "4OpEenRij!"
+        Me.R3K2.UseVisualStyleBackColor = True
+        '
+        'R3K1
+        '
+        Me.R3K1.Location = New System.Drawing.Point(12, 168)
+        Me.R3K1.Name = "R3K1"
+        Me.R3K1.Size = New System.Drawing.Size(80, 72)
+        Me.R3K1.TabIndex = 15
+        Me.R3K1.Text = "4OpEenRij!"
+        Me.R3K1.UseVisualStyleBackColor = True
+        '
+        'R4K3
+        '
+        Me.R4K3.Location = New System.Drawing.Point(184, 246)
+        Me.R4K3.Name = "R4K3"
+        Me.R4K3.Size = New System.Drawing.Size(80, 72)
+        Me.R4K3.TabIndex = 20
+        Me.R4K3.Text = "4OpEenRij!"
+        Me.R4K3.UseVisualStyleBackColor = True
+        '
+        'R4K2
+        '
+        Me.R4K2.Location = New System.Drawing.Point(98, 246)
+        Me.R4K2.Name = "R4K2"
+        Me.R4K2.Size = New System.Drawing.Size(80, 72)
+        Me.R4K2.TabIndex = 19
+        Me.R4K2.Text = "4OpEenRij!"
+        Me.R4K2.UseVisualStyleBackColor = True
+        '
+        'R4K1
+        '
+        Me.R4K1.Location = New System.Drawing.Point(12, 246)
+        Me.R4K1.Name = "R4K1"
+        Me.R4K1.Size = New System.Drawing.Size(80, 72)
+        Me.R4K1.TabIndex = 18
+        Me.R4K1.Text = "4OpEenRij!"
+        Me.R4K1.UseVisualStyleBackColor = True
+        '
+        'R5K3
+        '
+        Me.R5K3.Location = New System.Drawing.Point(184, 324)
+        Me.R5K3.Name = "R5K3"
+        Me.R5K3.Size = New System.Drawing.Size(80, 72)
+        Me.R5K3.TabIndex = 23
+        Me.R5K3.Text = "4OpEenRij!"
+        Me.R5K3.UseVisualStyleBackColor = True
+        '
+        'R5K2
+        '
+        Me.R5K2.Location = New System.Drawing.Point(98, 324)
+        Me.R5K2.Name = "R5K2"
+        Me.R5K2.Size = New System.Drawing.Size(80, 72)
+        Me.R5K2.TabIndex = 22
+        Me.R5K2.Text = "4OpEenRij!"
+        Me.R5K2.UseVisualStyleBackColor = True
+        '
+        'R5K1
+        '
+        Me.R5K1.Location = New System.Drawing.Point(12, 324)
+        Me.R5K1.Name = "R5K1"
+        Me.R5K1.Size = New System.Drawing.Size(80, 72)
+        Me.R5K1.TabIndex = 21
+        Me.R5K1.Text = "4OpEenRij!"
+        Me.R5K1.UseVisualStyleBackColor = True
+        '
+        'R6K3
+        '
+        Me.R6K3.Location = New System.Drawing.Point(184, 398)
+        Me.R6K3.Name = "R6K3"
+        Me.R6K3.Size = New System.Drawing.Size(80, 72)
+        Me.R6K3.TabIndex = 26
+        Me.R6K3.Text = "4OpEenRij!"
+        Me.R6K3.UseVisualStyleBackColor = True
+        '
+        'R6K2
+        '
+        Me.R6K2.Location = New System.Drawing.Point(98, 398)
+        Me.R6K2.Name = "R6K2"
+        Me.R6K2.Size = New System.Drawing.Size(80, 72)
+        Me.R6K2.TabIndex = 25
+        Me.R6K2.Text = "4OpEenRij!"
+        Me.R6K2.UseVisualStyleBackColor = True
+        '
+        'R6K1
+        '
+        Me.R6K1.Location = New System.Drawing.Point(12, 398)
+        Me.R6K1.Name = "R6K1"
+        Me.R6K1.Size = New System.Drawing.Size(80, 72)
+        Me.R6K1.TabIndex = 24
+        Me.R6K1.Text = "4OpEenRij!"
+        Me.R6K1.UseVisualStyleBackColor = True
+        '
+        'R6K6
+        '
+        Me.R6K6.Location = New System.Drawing.Point(439, 398)
+        Me.R6K6.Name = "R6K6"
+        Me.R6K6.Size = New System.Drawing.Size(80, 72)
+        Me.R6K6.TabIndex = 44
+        Me.R6K6.Text = "4OpEenRij!"
+        Me.R6K6.UseVisualStyleBackColor = True
+        '
+        'R6K5
+        '
+        Me.R6K5.Location = New System.Drawing.Point(353, 398)
+        Me.R6K5.Name = "R6K5"
+        Me.R6K5.Size = New System.Drawing.Size(80, 72)
+        Me.R6K5.TabIndex = 43
+        Me.R6K5.Text = "4OpEenRij!"
+        Me.R6K5.UseVisualStyleBackColor = True
+        '
+        'R6K4
+        '
+        Me.R6K4.Location = New System.Drawing.Point(267, 398)
+        Me.R6K4.Name = "R6K4"
+        Me.R6K4.Size = New System.Drawing.Size(80, 72)
+        Me.R6K4.TabIndex = 42
+        Me.R6K4.Text = "4OpEenRij!"
+        Me.R6K4.UseVisualStyleBackColor = True
+        '
+        'R5K6
+        '
+        Me.R5K6.Location = New System.Drawing.Point(439, 324)
+        Me.R5K6.Name = "R5K6"
+        Me.R5K6.Size = New System.Drawing.Size(80, 72)
+        Me.R5K6.TabIndex = 41
+        Me.R5K6.Text = "4OpEenRij!"
+        Me.R5K6.UseVisualStyleBackColor = True
+        '
+        'R5K5
+        '
+        Me.R5K5.Location = New System.Drawing.Point(353, 324)
+        Me.R5K5.Name = "R5K5"
+        Me.R5K5.Size = New System.Drawing.Size(80, 72)
+        Me.R5K5.TabIndex = 40
+        Me.R5K5.Text = "4OpEenRij!"
+        Me.R5K5.UseVisualStyleBackColor = True
+        '
+        'R5K4
+        '
+        Me.R5K4.Location = New System.Drawing.Point(267, 324)
+        Me.R5K4.Name = "R5K4"
+        Me.R5K4.Size = New System.Drawing.Size(80, 72)
+        Me.R5K4.TabIndex = 39
+        Me.R5K4.Text = "4OpEenRij!"
+        Me.R5K4.UseVisualStyleBackColor = True
+        '
+        'R4K6
+        '
+        Me.R4K6.Location = New System.Drawing.Point(439, 246)
+        Me.R4K6.Name = "R4K6"
+        Me.R4K6.Size = New System.Drawing.Size(80, 72)
+        Me.R4K6.TabIndex = 38
+        Me.R4K6.Text = "4OpEenRij!"
+        Me.R4K6.UseVisualStyleBackColor = True
+        '
+        'R4K5
+        '
+        Me.R4K5.Location = New System.Drawing.Point(353, 246)
+        Me.R4K5.Name = "R4K5"
+        Me.R4K5.Size = New System.Drawing.Size(80, 72)
+        Me.R4K5.TabIndex = 37
+        Me.R4K5.Text = "4OpEenRij!"
+        Me.R4K5.UseVisualStyleBackColor = True
+        '
+        'R4K4
+        '
+        Me.R4K4.Location = New System.Drawing.Point(267, 246)
+        Me.R4K4.Name = "R4K4"
+        Me.R4K4.Size = New System.Drawing.Size(80, 72)
+        Me.R4K4.TabIndex = 36
+        Me.R4K4.Text = "4OpEenRij!"
+        Me.R4K4.UseVisualStyleBackColor = True
+        '
+        'R3K6
+        '
+        Me.R3K6.Location = New System.Drawing.Point(439, 168)
+        Me.R3K6.Name = "R3K6"
+        Me.R3K6.Size = New System.Drawing.Size(80, 72)
+        Me.R3K6.TabIndex = 35
+        Me.R3K6.Text = "4OpEenRij!"
+        Me.R3K6.UseVisualStyleBackColor = True
+        '
+        'R3K5
+        '
+        Me.R3K5.Location = New System.Drawing.Point(353, 168)
+        Me.R3K5.Name = "R3K5"
+        Me.R3K5.Size = New System.Drawing.Size(80, 72)
+        Me.R3K5.TabIndex = 34
+        Me.R3K5.Text = "4OpEenRij!"
+        Me.R3K5.UseVisualStyleBackColor = True
+        '
+        'R3K4
+        '
+        Me.R3K4.Location = New System.Drawing.Point(267, 168)
+        Me.R3K4.Name = "R3K4"
+        Me.R3K4.Size = New System.Drawing.Size(80, 72)
+        Me.R3K4.TabIndex = 33
+        Me.R3K4.Text = "4OpEenRij!"
+        Me.R3K4.UseVisualStyleBackColor = True
+        '
+        'R2K6
+        '
+        Me.R2K6.Location = New System.Drawing.Point(439, 90)
+        Me.R2K6.Name = "R2K6"
+        Me.R2K6.Size = New System.Drawing.Size(80, 72)
+        Me.R2K6.TabIndex = 32
+        Me.R2K6.Text = "4OpEenRij!"
+        Me.R2K6.UseVisualStyleBackColor = True
+        '
+        'R2K5
+        '
+        Me.R2K5.Location = New System.Drawing.Point(353, 90)
+        Me.R2K5.Name = "R2K5"
+        Me.R2K5.Size = New System.Drawing.Size(80, 72)
+        Me.R2K5.TabIndex = 31
+        Me.R2K5.Text = "4OpEenRij!"
+        Me.R2K5.UseVisualStyleBackColor = True
+        '
+        'R2K4
+        '
+        Me.R2K4.Location = New System.Drawing.Point(267, 90)
+        Me.R2K4.Name = "R2K4"
+        Me.R2K4.Size = New System.Drawing.Size(80, 72)
+        Me.R2K4.TabIndex = 30
+        Me.R2K4.Text = "4OpEenRij!"
+        Me.R2K4.UseVisualStyleBackColor = True
+        '
+        'R1K6
+        '
+        Me.R1K6.Location = New System.Drawing.Point(439, 12)
+        Me.R1K6.Name = "R1K6"
+        Me.R1K6.Size = New System.Drawing.Size(80, 72)
+        Me.R1K6.TabIndex = 29
+        Me.R1K6.Text = "4OpEenRij!"
+        Me.R1K6.UseVisualStyleBackColor = True
+        '
+        'R1K5
+        '
+        Me.R1K5.Location = New System.Drawing.Point(353, 12)
+        Me.R1K5.Name = "R1K5"
+        Me.R1K5.Size = New System.Drawing.Size(80, 72)
+        Me.R1K5.TabIndex = 28
+        Me.R1K5.Text = "4OpEenRij!"
+        Me.R1K5.UseVisualStyleBackColor = True
+        '
+        'R1K4
+        '
+        Me.R1K4.Location = New System.Drawing.Point(267, 12)
+        Me.R1K4.Name = "R1K4"
+        Me.R1K4.Size = New System.Drawing.Size(80, 72)
+        Me.R1K4.TabIndex = 27
+        Me.R1K4.Text = "4OpEenRij!"
+        Me.R1K4.UseVisualStyleBackColor = True
         '
         'BeurtLabel
         '
@@ -477,42 +477,42 @@ Partial Class Client
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1116, 488)
         Me.Controls.Add(Me.BeurtLabel)
-        Me.Controls.Add(Me.Button19)
-        Me.Controls.Add(Me.Button20)
-        Me.Controls.Add(Me.Button21)
-        Me.Controls.Add(Me.Button22)
-        Me.Controls.Add(Me.Button23)
-        Me.Controls.Add(Me.Button24)
-        Me.Controls.Add(Me.Button25)
-        Me.Controls.Add(Me.Button26)
-        Me.Controls.Add(Me.Button27)
-        Me.Controls.Add(Me.Button28)
-        Me.Controls.Add(Me.Button29)
-        Me.Controls.Add(Me.Button30)
-        Me.Controls.Add(Me.Button31)
-        Me.Controls.Add(Me.Button32)
-        Me.Controls.Add(Me.Button33)
-        Me.Controls.Add(Me.Button34)
-        Me.Controls.Add(Me.Button35)
-        Me.Controls.Add(Me.Button36)
-        Me.Controls.Add(Me.Button16)
-        Me.Controls.Add(Me.Button17)
-        Me.Controls.Add(Me.Button18)
-        Me.Controls.Add(Me.Button13)
-        Me.Controls.Add(Me.Button14)
-        Me.Controls.Add(Me.Button15)
-        Me.Controls.Add(Me.Button10)
-        Me.Controls.Add(Me.Button11)
-        Me.Controls.Add(Me.Button12)
-        Me.Controls.Add(Me.Button7)
-        Me.Controls.Add(Me.Button8)
-        Me.Controls.Add(Me.Button9)
-        Me.Controls.Add(Me.Button4)
-        Me.Controls.Add(Me.Button5)
-        Me.Controls.Add(Me.Button6)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.R6K6)
+        Me.Controls.Add(Me.R6K5)
+        Me.Controls.Add(Me.R6K4)
+        Me.Controls.Add(Me.R5K6)
+        Me.Controls.Add(Me.R5K5)
+        Me.Controls.Add(Me.R5K4)
+        Me.Controls.Add(Me.R4K6)
+        Me.Controls.Add(Me.R4K5)
+        Me.Controls.Add(Me.R4K4)
+        Me.Controls.Add(Me.R3K6)
+        Me.Controls.Add(Me.R3K5)
+        Me.Controls.Add(Me.R3K4)
+        Me.Controls.Add(Me.R2K6)
+        Me.Controls.Add(Me.R2K5)
+        Me.Controls.Add(Me.R2K4)
+        Me.Controls.Add(Me.R1K6)
+        Me.Controls.Add(Me.R1K5)
+        Me.Controls.Add(Me.R1K4)
+        Me.Controls.Add(Me.R6K3)
+        Me.Controls.Add(Me.R6K2)
+        Me.Controls.Add(Me.R6K1)
+        Me.Controls.Add(Me.R5K3)
+        Me.Controls.Add(Me.R5K2)
+        Me.Controls.Add(Me.R5K1)
+        Me.Controls.Add(Me.R4K3)
+        Me.Controls.Add(Me.R4K2)
+        Me.Controls.Add(Me.R4K1)
+        Me.Controls.Add(Me.R3K3)
+        Me.Controls.Add(Me.R3K2)
+        Me.Controls.Add(Me.R3K1)
+        Me.Controls.Add(Me.R2K3)
+        Me.Controls.Add(Me.R2K2)
+        Me.Controls.Add(Me.R2K1)
+        Me.Controls.Add(Me.R1K3)
+        Me.Controls.Add(Me.R1K2)
+        Me.Controls.Add(Me.R1K1)
         Me.Controls.Add(Me.UsersListBox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.IpAdressTextBox)
@@ -536,41 +536,41 @@ Partial Class Client
     Friend WithEvents IpAdressTextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents UsersListBox As ListBox
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button5 As Button
-    Friend WithEvents Button6 As Button
-    Friend WithEvents Button7 As Button
-    Friend WithEvents Button8 As Button
-    Friend WithEvents Button9 As Button
-    Friend WithEvents Button10 As Button
-    Friend WithEvents Button11 As Button
-    Friend WithEvents Button12 As Button
-    Friend WithEvents Button13 As Button
-    Friend WithEvents Button14 As Button
-    Friend WithEvents Button15 As Button
-    Friend WithEvents Button16 As Button
-    Friend WithEvents Button17 As Button
-    Friend WithEvents Button18 As Button
-    Friend WithEvents Button19 As Button
-    Friend WithEvents Button20 As Button
-    Friend WithEvents Button21 As Button
-    Friend WithEvents Button22 As Button
-    Friend WithEvents Button23 As Button
-    Friend WithEvents Button24 As Button
-    Friend WithEvents Button25 As Button
-    Friend WithEvents Button26 As Button
-    Friend WithEvents Button27 As Button
-    Friend WithEvents Button28 As Button
-    Friend WithEvents Button29 As Button
-    Friend WithEvents Button30 As Button
-    Friend WithEvents Button31 As Button
-    Friend WithEvents Button32 As Button
-    Friend WithEvents Button33 As Button
-    Friend WithEvents Button34 As Button
-    Friend WithEvents Button35 As Button
-    Friend WithEvents Button36 As Button
+    Friend WithEvents R1K1 As Button
+    Friend WithEvents R1K2 As Button
+    Friend WithEvents R1K3 As Button
+    Friend WithEvents R2K3 As Button
+    Friend WithEvents R2K2 As Button
+    Friend WithEvents R2K1 As Button
+    Friend WithEvents R3K3 As Button
+    Friend WithEvents R3K2 As Button
+    Friend WithEvents R3K1 As Button
+    Friend WithEvents R4K3 As Button
+    Friend WithEvents R4K2 As Button
+    Friend WithEvents R4K1 As Button
+    Friend WithEvents R5K3 As Button
+    Friend WithEvents R5K2 As Button
+    Friend WithEvents R5K1 As Button
+    Friend WithEvents R6K3 As Button
+    Friend WithEvents R6K2 As Button
+    Friend WithEvents R6K1 As Button
+    Friend WithEvents R6K6 As Button
+    Friend WithEvents R6K5 As Button
+    Friend WithEvents R6K4 As Button
+    Friend WithEvents R5K6 As Button
+    Friend WithEvents R5K5 As Button
+    Friend WithEvents R5K4 As Button
+    Friend WithEvents R4K6 As Button
+    Friend WithEvents R4K5 As Button
+    Friend WithEvents R4K4 As Button
+    Friend WithEvents R3K6 As Button
+    Friend WithEvents R3K5 As Button
+    Friend WithEvents R3K4 As Button
+    Friend WithEvents R2K6 As Button
+    Friend WithEvents R2K5 As Button
+    Friend WithEvents R2K4 As Button
+    Friend WithEvents R1K6 As Button
+    Friend WithEvents R1K5 As Button
+    Friend WithEvents R1K4 As Button
     Friend WithEvents BeurtLabel As Label
 End Class
