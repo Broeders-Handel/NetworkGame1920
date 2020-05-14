@@ -2,8 +2,8 @@
 Imports System.Net.Sockets
 Imports System.Threading
 
-Public Class Users
-    Private Shared instance As Users
+Public Class User
+    Private Shared instance As User
     Dim usercontroller As New UsersController
     Private _username As String
     Private _client As TcpClient
