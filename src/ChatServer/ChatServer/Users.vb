@@ -7,13 +7,30 @@ Public Class User
     Dim usercontroller As New UsersController
     Private _username As String
     Private _client As TcpClient
+    Private _PrivateChatbox As Integer
+    Private _IsBusy As Boolean = False
     Dim Islistening As Boolean = True
 
     Public Sub New(username As String, client As TcpClient)
         Me.Username = username
         Me.Client = client
     End Sub
-
+    Public Property IsBusy As Boolean
+        Get
+            Return _IsBusy
+        End Get
+        Set(value As Boolean)
+            _IsBusy = value
+        End Set
+    End Property
+    Public Property PrivateChatroomId As Integer
+        Get
+            Return _PrivateChatbox
+        End Get
+        Set(value As Integer)
+            _PrivateChatbox = value
+        End Set
+    End Property
     Public Property Username As String
         Get
             Return _username
@@ -76,7 +93,9 @@ Public Class User
                 Dim invoer As String = ClientData.ReadLine
                 RaiseEvent MessageRecieved(Username, invoer)
             Loop
+
         Catch ex As Exception
+
         End Try
     End Sub
 End Class

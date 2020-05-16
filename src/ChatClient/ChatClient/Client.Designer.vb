@@ -23,13 +23,23 @@ Partial Class Client
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ConnectButton = New System.Windows.Forms.Button()
-        Me.SendButton = New System.Windows.Forms.Button()
-        Me.MessageTextBox = New System.Windows.Forms.TextBox()
         Me.DisconnectButton = New System.Windows.Forms.Button()
-        Me.ChatRichTextBox = New System.Windows.Forms.RichTextBox()
         Me.IpAdressTextBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.UsersListBox = New System.Windows.Forms.ListBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.PublicTabPage = New System.Windows.Forms.TabPage()
+        Me.PublicChatTextBox = New System.Windows.Forms.TextBox()
+        Me.PublicTextBox = New System.Windows.Forms.TextBox()
+        Me.PublicSendButton = New System.Windows.Forms.Button()
+        Me.PrivateTabPage = New System.Windows.Forms.TabPage()
+        Me.PrivateChatTextBox = New System.Windows.Forms.TextBox()
+        Me.PrivateSendButton = New System.Windows.Forms.Button()
+        Me.PrivateTextBox = New System.Windows.Forms.TextBox()
+        Me.PrivateMessageButton = New System.Windows.Forms.Button()
+        Me.TabControl1.SuspendLayout()
+        Me.PublicTabPage.SuspendLayout()
+        Me.PrivateTabPage.SuspendLayout()
         Me.SuspendLayout()
         '
         'ConnectButton
@@ -41,22 +51,6 @@ Partial Class Client
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
         '
-        'SendButton
-        '
-        Me.SendButton.Location = New System.Drawing.Point(334, 304)
-        Me.SendButton.Name = "SendButton"
-        Me.SendButton.Size = New System.Drawing.Size(75, 20)
-        Me.SendButton.TabIndex = 1
-        Me.SendButton.Text = "Send"
-        Me.SendButton.UseVisualStyleBackColor = True
-        '
-        'MessageTextBox
-        '
-        Me.MessageTextBox.Location = New System.Drawing.Point(12, 305)
-        Me.MessageTextBox.Name = "MessageTextBox"
-        Me.MessageTextBox.Size = New System.Drawing.Size(316, 20)
-        Me.MessageTextBox.TabIndex = 2
-        '
         'DisconnectButton
         '
         Me.DisconnectButton.Location = New System.Drawing.Point(130, 12)
@@ -65,15 +59,6 @@ Partial Class Client
         Me.DisconnectButton.TabIndex = 3
         Me.DisconnectButton.Text = "Disconnect"
         Me.DisconnectButton.UseVisualStyleBackColor = True
-        '
-        'ChatRichTextBox
-        '
-        Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 46)
-        Me.ChatRichTextBox.Name = "ChatRichTextBox"
-        Me.ChatRichTextBox.ReadOnly = True
-        Me.ChatRichTextBox.Size = New System.Drawing.Size(305, 253)
-        Me.ChatRichTextBox.TabIndex = 4
-        Me.ChatRichTextBox.Text = ""
         '
         'IpAdressTextBox
         '
@@ -96,37 +81,142 @@ Partial Class Client
         'UsersListBox
         '
         Me.UsersListBox.FormattingEnabled = True
-        Me.UsersListBox.Location = New System.Drawing.Point(324, 47)
+        Me.UsersListBox.Location = New System.Drawing.Point(369, 47)
         Me.UsersListBox.Name = "UsersListBox"
         Me.UsersListBox.Size = New System.Drawing.Size(139, 251)
         Me.UsersListBox.TabIndex = 8
+        '
+        'TabControl1
+        '
+        Me.TabControl1.Controls.Add(Me.PublicTabPage)
+        Me.TabControl1.Controls.Add(Me.PrivateTabPage)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 45)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(351, 253)
+        Me.TabControl1.TabIndex = 9
+        '
+        'PublicTabPage
+        '
+        Me.PublicTabPage.Controls.Add(Me.PublicChatTextBox)
+        Me.PublicTabPage.Controls.Add(Me.PublicTextBox)
+        Me.PublicTabPage.Controls.Add(Me.PublicSendButton)
+        Me.PublicTabPage.Location = New System.Drawing.Point(4, 22)
+        Me.PublicTabPage.Name = "PublicTabPage"
+        Me.PublicTabPage.Padding = New System.Windows.Forms.Padding(3)
+        Me.PublicTabPage.Size = New System.Drawing.Size(343, 227)
+        Me.PublicTabPage.TabIndex = 0
+        Me.PublicTabPage.Text = "Public Chatroom"
+        Me.PublicTabPage.UseVisualStyleBackColor = True
+        '
+        'PublicChatTextBox
+        '
+        Me.PublicChatTextBox.Location = New System.Drawing.Point(6, 6)
+        Me.PublicChatTextBox.Multiline = True
+        Me.PublicChatTextBox.Name = "PublicChatTextBox"
+        Me.PublicChatTextBox.Size = New System.Drawing.Size(331, 186)
+        Me.PublicChatTextBox.TabIndex = 3
+        '
+        'PublicTextBox
+        '
+        Me.PublicTextBox.Location = New System.Drawing.Point(7, 198)
+        Me.PublicTextBox.Name = "PublicTextBox"
+        Me.PublicTextBox.Size = New System.Drawing.Size(249, 20)
+        Me.PublicTextBox.TabIndex = 2
+        '
+        'PublicSendButton
+        '
+        Me.PublicSendButton.Location = New System.Drawing.Point(262, 196)
+        Me.PublicSendButton.Name = "PublicSendButton"
+        Me.PublicSendButton.Size = New System.Drawing.Size(75, 23)
+        Me.PublicSendButton.TabIndex = 1
+        Me.PublicSendButton.Text = "Send"
+        Me.PublicSendButton.UseVisualStyleBackColor = True
+        '
+        'PrivateTabPage
+        '
+        Me.PrivateTabPage.Controls.Add(Me.PrivateChatTextBox)
+        Me.PrivateTabPage.Controls.Add(Me.PrivateSendButton)
+        Me.PrivateTabPage.Controls.Add(Me.PrivateTextBox)
+        Me.PrivateTabPage.Location = New System.Drawing.Point(4, 22)
+        Me.PrivateTabPage.Name = "PrivateTabPage"
+        Me.PrivateTabPage.Padding = New System.Windows.Forms.Padding(3)
+        Me.PrivateTabPage.Size = New System.Drawing.Size(343, 227)
+        Me.PrivateTabPage.TabIndex = 1
+        Me.PrivateTabPage.Text = "Private Chatroom"
+        Me.PrivateTabPage.UseVisualStyleBackColor = True
+        '
+        'PrivateChatTextBox
+        '
+        Me.PrivateChatTextBox.Location = New System.Drawing.Point(6, 6)
+        Me.PrivateChatTextBox.Multiline = True
+        Me.PrivateChatTextBox.Name = "PrivateChatTextBox"
+        Me.PrivateChatTextBox.Size = New System.Drawing.Size(330, 183)
+        Me.PrivateChatTextBox.TabIndex = 5
+        '
+        'PrivateSendButton
+        '
+        Me.PrivateSendButton.Location = New System.Drawing.Point(261, 195)
+        Me.PrivateSendButton.Name = "PrivateSendButton"
+        Me.PrivateSendButton.Size = New System.Drawing.Size(75, 23)
+        Me.PrivateSendButton.TabIndex = 4
+        Me.PrivateSendButton.Text = "Send"
+        Me.PrivateSendButton.UseVisualStyleBackColor = True
+        '
+        'PrivateTextBox
+        '
+        Me.PrivateTextBox.Location = New System.Drawing.Point(6, 197)
+        Me.PrivateTextBox.Name = "PrivateTextBox"
+        Me.PrivateTextBox.Size = New System.Drawing.Size(249, 20)
+        Me.PrivateTextBox.TabIndex = 3
+        '
+        'PrivateMessageButton
+        '
+        Me.PrivateMessageButton.Enabled = False
+        Me.PrivateMessageButton.Location = New System.Drawing.Point(12, 304)
+        Me.PrivateMessageButton.Name = "PrivateMessageButton"
+        Me.PrivateMessageButton.Size = New System.Drawing.Size(143, 23)
+        Me.PrivateMessageButton.TabIndex = 0
+        Me.PrivateMessageButton.Text = "PrivateMessage"
+        Me.PrivateMessageButton.UseVisualStyleBackColor = True
         '
         'Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(475, 372)
+        Me.ClientSize = New System.Drawing.Size(541, 375)
+        Me.Controls.Add(Me.PrivateMessageButton)
+        Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.UsersListBox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.IpAdressTextBox)
-        Me.Controls.Add(Me.ChatRichTextBox)
         Me.Controls.Add(Me.DisconnectButton)
-        Me.Controls.Add(Me.MessageTextBox)
-        Me.Controls.Add(Me.SendButton)
         Me.Controls.Add(Me.ConnectButton)
         Me.Name = "Client"
         Me.Text = "Client"
+        Me.TabControl1.ResumeLayout(False)
+        Me.PublicTabPage.ResumeLayout(False)
+        Me.PublicTabPage.PerformLayout()
+        Me.PrivateTabPage.ResumeLayout(False)
+        Me.PrivateTabPage.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents ConnectButton As Button
-    Friend WithEvents SendButton As Button
-    Friend WithEvents MessageTextBox As TextBox
     Friend WithEvents DisconnectButton As Button
-    Friend WithEvents ChatRichTextBox As RichTextBox
     Friend WithEvents IpAdressTextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents UsersListBox As ListBox
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents PublicTabPage As TabPage
+    Friend WithEvents PrivateMessageButton As Button
+    Friend WithEvents PublicTextBox As TextBox
+    Friend WithEvents PublicSendButton As Button
+    Friend WithEvents PrivateTabPage As TabPage
+    Friend WithEvents PrivateSendButton As Button
+    Friend WithEvents PrivateTextBox As TextBox
+    Friend WithEvents PublicChatTextBox As TextBox
+    Friend WithEvents PrivateChatTextBox As TextBox
 End Class

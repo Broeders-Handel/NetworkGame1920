@@ -19,7 +19,14 @@ Public Class Client
     End Sub
 
     Function MessageReceived(message As String) Handles clientController.MessageReceived
-        UpdateText(ChatRichTextBox, message)
+        UpdateText(PublicChatTextBox, message)
+    End Function
+    Function PrivateMessageRecieved(message As String) Handles clientController.PrivateMessageRecieved
+        UpdateText(PrivateChatTextBox, message)
+    End Function
+
+    Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
+        UpdateClientList(users)
     End Function
     Public Property Username As String
         Get
@@ -37,20 +44,21 @@ Public Class Client
             _Users = value
         End Set
     End Property
-    Private Sub MessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MessageTextBox.KeyDown
+#Region "Public Chatroom"
+    Private Sub PublicMessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles PublicTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If MessageTextBox.Text.Length > 0 Then
-                clientController.Write(MessageTextBox.Text, clientController.COM_COMMAND.MESSAGE)
-                MessageTextBox.Clear()
+            If PublicTextBox.Text.Length > 0 Then
+                clientController.Write(PublicTextBox.Text, clientController.COM_COMMAND.MESSAGE)
+                PublicTextBox.Clear()
             End If
         End If
     End Sub
-    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
+    Private Sub PublicSendButton_Click(sender As Object, e As EventArgs) Handles PublicSendButton.Click
         Try
             If Connected = True Then
-                clientController.Write(MessageTextBox.Text, clientController.COM_COMMAND.MESSAGE)
-                MessageTextBox.Clear()
+                clientController.Write(PublicTextBox.Text, clientController.COM_COMMAND.MESSAGE)
+                PublicTextBox.Clear()
             Else
                 MessageBox.Show("Je bent niet verbonden met de server")
             End If
@@ -58,6 +66,32 @@ Public Class Client
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+#End Region
+#Region "Private chatroom"
+    Private Sub PrivateMessageTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles PrivateTextBox.KeyDown
+
+
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If PrivateTextBox.Text.Length > 0 Then
+                clientController.Write(PrivateTextBox.Text, clientController.COM_COMMAND.PRIVATEMESSAGES)
+                PrivateTextBox.Clear()
+            End If
+        End If
+    End Sub
+    Private Sub PrivateSendButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
+        Try
+            If Connected = True Then
+                clientController.Write(PrivateTextBox.Text, clientController.COM_COMMAND.PRIVATEMESSAGES)
+                PrivateTextBox.Clear()
+            Else
+                MessageBox.Show("Je bent niet verbonden met de server")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+#End Region
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
 
         If IpAdressTextBox.Text Like "*.*.*.*" Then
@@ -76,6 +110,7 @@ Public Class Client
             ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
             ComunicatieThread.Start()
 
+            Me.Text = Username
             updateGUI()
         Else
             MessageBox.Show("Dit Is geen correct IP adres")
@@ -84,31 +119,34 @@ Public Class Client
 
     Private Sub updateGUI()
         If Connected Then
-            MessageTextBox.ReadOnly = False
+            PublicChatTextBox.ReadOnly = False
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
             ConnectButton.Enabled = False
-            SendButton.Enabled = True
+            PrivateMessageButton.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
             updatetextBox(IpAdressTextBox)
-            updatetextBox(MessageTextBox)
-            SendButton.Enabled = False
+            updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
-            MessageTextBox.ReadOnly = True
             ConnectButton.Text = "Connect"
+            PrivateMessageButton.Enabled = False
             ConnectButton.Enabled = True
-
-            MessageTextBox.Text = ""
-            ChatRichTextBox.Text = ""
+            PrivateChatTextBox.Text = ""
+            PublicChatTextBox.Text = ""
             IpAdressTextBox.Text = ""
 
         End If
     End Sub
+    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
+        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
+    End Sub
+
     Public Sub ServerStopped() Handles clientController.ServerStopped
         stopServer()
     End Sub
@@ -138,15 +176,15 @@ Public Class Client
         updateGUI()
     End Sub
     Private Sub ChallengeGame(txt As String)
-        If MessageTextBox.Text = "!Challenge @" Then
+        If PublicTextBox.Text = "!Challenge @" Then
             Me.Hide()
             Readyform.Show()
         End If
 
     End Sub
-    Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
+    Private Delegate Sub UpdateTextDelegate(RTB As TextBox, txt As String)
     'Update textbox
-    Private Sub UpdateText(RTB As RichTextBox, txt As String)
+    Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
             RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
@@ -186,5 +224,6 @@ Public Class Client
             tb.Text = ""
         End If
     End Sub
+
 End Class
 

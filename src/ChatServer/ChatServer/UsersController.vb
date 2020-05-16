@@ -4,8 +4,27 @@ Imports ChatServer.Server
 
 Class UsersController
     Private _Users As New Dictionary(Of String, User)
-
-
+    Private _PrivateChatRooms As New Dictionary(Of Integer, PrivateChatroom)
+    Public Function createPrivateChatroom(user1 As User, user2 As User) As Integer
+        Try
+            Dim chtrm As PrivateChatroom = New PrivateChatroom(user1, user2)
+            PrivateChatrooms.Add(chtrm.ID, chtrm)
+            user1.IsBusy = True
+            user2.IsBusy = True
+            Return chtrm.ID
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            Return -1
+        End Try
+    End Function
+    Public Property PrivateChatrooms As Dictionary(Of Integer, PrivateChatroom)
+        Get
+            Return _PrivateChatRooms
+        End Get
+        Set(value As Dictionary(Of Integer, PrivateChatroom))
+            _PrivateChatRooms = value
+        End Set
+    End Property
     Public Property Users As Dictionary(Of String, User)
         Get
             Return _Users
@@ -47,7 +66,7 @@ Class UsersController
     End Function
 
     Friend Function getUsers() As String
-        Throw New NotImplementedException()
+        Return MakeUserstring()
     End Function
     Private Function MakeUserstring() As String
         Dim UsersString As String
