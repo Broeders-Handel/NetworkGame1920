@@ -130,6 +130,7 @@ Public Class Client
             updateBut(DisconnectButton)
             updatetextBox(IpAdressTextBox)
             updatetextBox(PublicChatTextBox)
+            UsersListBox.Items.Clear()
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
