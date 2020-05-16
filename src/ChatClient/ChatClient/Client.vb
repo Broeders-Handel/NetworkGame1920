@@ -126,7 +126,7 @@ Public Class Client
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
             ConnectButton.Enabled = False
-            PrivateMessageButton.Enabled = True
+            ChallengeButton.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
@@ -136,7 +136,7 @@ Public Class Client
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
             ConnectButton.Text = "Connect"
-            PrivateMessageButton.Enabled = False
+            ChallengeButton.Enabled = False
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
@@ -144,7 +144,7 @@ Public Class Client
 
         End If
     End Sub
-    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
+    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
     End Sub
