@@ -217,6 +217,30 @@ Public Class Server
             usr.write("", COM_COMMAND.STOPSERVER)
         Next
     End Function
+    Private Function CheckPrivateChatroomPossible(user1 As String, user2 As String) As Boolean
+        If UsersController.Users(user2).IsBusy = True Or user1 = user2 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+    Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
+        If CheckPrivateChatroomPossible(user1, user2) = True Then
+            UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+        Else
+            UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
+        End If
+    End Sub
+    Private Function getRoomID(username As String) As Integer
+        Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
+        Return roomID
+    End Function
+    Private Sub HandleIncommingPrivateMessage(username As String, message As String)
+        message = username & " : " & message
+        Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
+        chatroom.Chat(message, username)
+    End Sub
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -251,6 +275,10 @@ Public Class Server
         CONNECTED
         CONNECTEDUSERS
         STOPSERVER
+        PRIVATEUSERNAMES
+        PRIVATECHATROOMFAILED
+        PRIVATEMESSAGES
+
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -278,6 +306,17 @@ Public Class Server
             Return "//CORUS//"
         ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
             Return "//NONUS//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEUSERNAMES Then
+            Return "//PUN//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
+            Return "//PMS//"
+        ElseIf commEnum = COM_COMMAND.PRIVATECHATROOMFAILED Then
+            Return "//PCHATF//"
+
+            'ElseIf commEnum = "//CONNECTED//" Then
+            '    Return COM_COMMAND.CONNECTED
+        Else
+            Throw New NotSupportedException
         End If
     End Function
     Public Shared Function fromTextToComm(commStr As String) As COM_COMMAND 'inkomend
@@ -291,9 +330,16 @@ Public Class Server
             Return COM_COMMAND.REQUEST_USERNAME
         ElseIf commStr = "//STOP//" Then
             Return COM_COMMAND.STOPSERVER
+        ElseIf commStr = "//PUN//" Then
+            Return COM_COMMAND.PRIVATEUSERNAMES
+        ElseIf commStr = "//PMS//" Then
+            Return COM_COMMAND.PRIVATEMESSAGES
+        Else
+            Throw New NotSupportedException
         End If
     End Function
     Public Function HandleMessageWithCommand(username As String, message As String) As String
+        Console.WriteLine(username & "  " & message)
         Dim command As COM_COMMAND = getCommand(message)
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
@@ -301,12 +347,16 @@ Public Class Server
             RemoveClientListItem(username)
         ElseIf command = COM_COMMAND.MESSAGE Then
             HandleIncommingMessage(username, message)
+        ElseIf command = COM_COMMAND.PRIVATEUSERNAMES Then
+            CreatPrivateChatRoom(username, message)
+        ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
+            HandleIncommingPrivateMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             HandleStopServer()
             'ElseIf command = COM_COMMAND.USERNAME Then
+            'ElseIf command = COM_COMMAND.CONNECTED Then
+            '    Return username & " JOINED"
         End If
     End Function
-
-
 #End Region
 End Class

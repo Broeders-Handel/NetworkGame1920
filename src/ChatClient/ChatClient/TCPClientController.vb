@@ -9,6 +9,7 @@ Public Class TCPClientController
     Private _username As String
 
     Event MessageReceived(message As String)
+    Event PrivateMessageRecieved(message As String)
     Event ConnectedUsers(users As List(Of String))
     Event ServerStopped()
     Private connectResp As ConnectResponse = ConnectResponse.None
@@ -92,7 +93,9 @@ Public Class TCPClientController
         CONNECTED
         CONNECTEDUSERS
         STOPSERVER
-        GAME
+        PRIVATEMESSAGES
+        PRIVATEUSERNAMES
+        PRIVATECHATROOMFAILED
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -114,6 +117,10 @@ Public Class TCPClientController
             Return "//MS//"
         ElseIf commEnum = COM_COMMAND.CONNECTED Then
             Return "//CONNECTED//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
+            Return "//PMS//"
+        ElseIf commEnum = COM_COMMAND.PRIVATEUSERNAMES Then
+            Return "//PUN//"
         ElseIf commEnum = COM_COMMAND.STOPSERVER Then
             Return "//STOP//"
         ElseIf commEnum = COM_COMMAND.CORRECT_USERNAME Then
@@ -130,12 +137,16 @@ Public Class TCPClientController
     Private Function fromTextToComm(commStr As String) As COM_COMMAND
         If commStr = "//DISC//" Then
             Return COM_COMMAND.DISCONNECTED
+        ElseIf commStr = "//USST//" Then
+            Return COM_COMMAND.CONNECTEDUSERS
         ElseIf commStr = "//MS//" Then
             Return COM_COMMAND.MESSAGE
         ElseIf commStr = "//CONNECTED//" Then
             Return COM_COMMAND.CONNECTED
         ElseIf commStr = "//UN//" Then
             Return COM_COMMAND.USERNAME
+        ElseIf commStr = "//PMS//" Then
+            Return COM_COMMAND.PRIVATEMESSAGES
         ElseIf commStr = "//DUP//" Then
             Return COM_COMMAND.DUPLICATE_USERNAME
         ElseIf commStr = "//USST//" Then
@@ -146,6 +157,10 @@ Public Class TCPClientController
             Return COM_COMMAND.CORRECT_USERNAME
         ElseIf commStr = "//NONUS//" Then
             Return COM_COMMAND.NONE_USERNAME
+        ElseIf commStr = "//PUN//" Then
+            Return COM_COMMAND.PRIVATEUSERNAMES
+        ElseIf commStr = "//PCHATF//" Then
+            Return COM_COMMAND.PRIVATECHATROOMFAILED
         Else
 
             Throw New NotSupportedException()
@@ -177,6 +192,8 @@ Public Class TCPClientController
             RaiseEvent MessageReceived("<< CONNECTED TO SERVER >>")
         ElseIf command = COM_COMMAND.CONNECTEDUSERS Then
             RaiseEvent ConnectedUsers(message.Split(",").ToList)
+        ElseIf command = COM_COMMAND.PRIVATEMESSAGES Then
+            RaiseEvent PrivateMessageRecieved(message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             RaiseEvent ServerStopped()
         ElseIf command = COM_COMMAND.DUPLICATE_USERNAME Then
@@ -185,8 +202,8 @@ Public Class TCPClientController
             connectResp = ConnectResponse.CorrectUsername
         ElseIf command = COM_COMMAND.NONE_USERNAME Then
             connectResp = ConnectResponse.None
-        ElseIf command = COM_COMMAND.GAME Then
-
+        ElseIf command = COM_COMMAND.PRIVATECHATROOMFAILED Then
+            MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
         Else
             Throw New NotSupportedException
         End If
