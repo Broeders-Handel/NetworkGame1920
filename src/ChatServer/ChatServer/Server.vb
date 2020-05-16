@@ -231,6 +231,16 @@ Public Class Server
             UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
         End If
     End Sub
+    Private Sub HandleLeaveGame(username As String)
+        Dim roomID As Integer = getRoomID(username)
+        Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
+        users(0).IsBusy = False
+        users(1).IsBusy = False
+        UsersController.PrivateChatrooms.Remove(roomID)
+        For Each usr In users
+            usr.write("", COM_COMMAND.LEAVEGAME)
+        Next
+    End Sub
     Private Function getRoomID(username As String) As Integer
         Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
         Return roomID
@@ -278,6 +288,7 @@ Public Class Server
         PRIVATEUSERNAMES
         PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
+        LEAVEGAME
 
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
@@ -312,6 +323,8 @@ Public Class Server
             Return "//PMS//"
         ElseIf commEnum = COM_COMMAND.PRIVATECHATROOMFAILED Then
             Return "//PCHATF//"
+        ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
+            Return "//LEAVEGAME//"
 
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
@@ -334,6 +347,8 @@ Public Class Server
             Return COM_COMMAND.PRIVATEUSERNAMES
         ElseIf commStr = "//PMS//" Then
             Return COM_COMMAND.PRIVATEMESSAGES
+        ElseIf commStr = "//LEAVEGAME//" Then
+            Return COM_COMMAND.LEAVEGAME
         Else
             Throw New NotSupportedException
         End If
@@ -353,6 +368,8 @@ Public Class Server
             HandleIncommingPrivateMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             HandleStopServer()
+        ElseIf command = COM_COMMAND.LEAVEGAME Then
+            HandleLeaveGame(username)
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
