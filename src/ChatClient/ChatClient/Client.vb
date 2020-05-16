@@ -123,14 +123,27 @@ Public Class Client
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
+            PrivateSendButton.Enabled = True
+            PublicSendButton.Enabled = True
             ConnectButton.Enabled = False
             PrivateMessageButton.Enabled = True
+            PrivateTextBox.ReadOnly = False
+            PublicTextBox.ReadOnly = False
+            TabControl1.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
+            updateBut(PublicSendButton)
+            updateBut(PrivateSendButton)
+            updateBut(PrivateMessageButton)
             updatetextBox(IpAdressTextBox)
+            updatetextBox(PublicTextBox)
+            updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
-            UsersListBox.Items.Clear()
+
+
+            PublicTextBox.ReadOnly = True
+            PrivateTextBox.ReadOnly = True
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
@@ -140,7 +153,9 @@ Public Class Client
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
             IpAdressTextBox.Text = ""
-
+            PublicSendButton.Enabled = False
+            PrivateSendButton.Enabled = False
+            TabControl1.Enabled = False
         End If
     End Sub
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
@@ -207,10 +222,15 @@ Public Class Client
         If but.InvokeRequired Then
             but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
         ElseIf but.Enabled = False Then
-            but.Text = "Connect"
             but.Enabled = True
+            If but.Text = "Connected" Then
+                but.Text = "Connect"
+            End If
         Else
             but.Enabled = False
+            If but.Text = "Connect" Then
+                but.Text = "Connected"
+            End If
         End If
     End Sub
     Private Delegate Sub updateTextBoxDelegate(tb As TextBox)
