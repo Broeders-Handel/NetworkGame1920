@@ -95,6 +95,7 @@ Public Class TCPClientController
         STOPSERVER
         PRIVATEMESSAGES
         PRIVATEUSERNAMES
+        PRIVATECHATROOMFAILED
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -158,6 +159,8 @@ Public Class TCPClientController
             Return COM_COMMAND.NONE_USERNAME
         ElseIf commStr = "//PUN//" Then
             Return COM_COMMAND.PRIVATEUSERNAMES
+        ElseIf commStr = "//PCHATF//" Then
+            Return COM_COMMAND.PRIVATECHATROOMFAILED
         Else
 
             Throw New NotSupportedException()
@@ -199,8 +202,9 @@ Public Class TCPClientController
             connectResp = ConnectResponse.CorrectUsername
         ElseIf command = COM_COMMAND.NONE_USERNAME Then
             connectResp = ConnectResponse.None
+        ElseIf command = COM_COMMAND.PRIVATECHATROOMFAILED Then
+            MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
         Else
-
             Throw New NotSupportedException
         End If
     End Sub

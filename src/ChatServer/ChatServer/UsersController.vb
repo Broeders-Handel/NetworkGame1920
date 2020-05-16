@@ -8,7 +8,9 @@ Class UsersController
     Public Function createPrivateChatroom(user1 As User, user2 As User) As Integer
         Try
             Dim chtrm As PrivateChatroom = New PrivateChatroom(user1, user2)
-            PrivateChatRooms.Add(chtrm.ID, chtrm)
+            PrivateChatrooms.Add(chtrm.ID, chtrm)
+            user1.IsBusy = True
+            user2.IsBusy = True
             Return chtrm.ID
         Catch ex As Exception
             MessageBox.Show(ex.Message)

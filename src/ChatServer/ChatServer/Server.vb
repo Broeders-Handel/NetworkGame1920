@@ -217,8 +217,19 @@ Public Class Server
             usr.write("", COM_COMMAND.STOPSERVER)
         Next
     End Function
+    Private Function CheckPrivateChatroomPossible(user1 As String, user2 As String) As Boolean
+        If UsersController.Users(user2).IsBusy = True Or user1 = user2 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
     Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
-        UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+        If CheckPrivateChatroomPossible(user1, user2) = True Then
+            UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+        Else
+            UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
+        End If
     End Sub
     Private Function getRoomID(username As String) As Integer
         Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
@@ -265,6 +276,7 @@ Public Class Server
         CONNECTEDUSERS
         STOPSERVER
         PRIVATEUSERNAMES
+        PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
 
     End Enum
@@ -298,6 +310,8 @@ Public Class Server
             Return "//PUN//"
         ElseIf commEnum = COM_COMMAND.PRIVATEMESSAGES Then
             Return "//PMS//"
+        ElseIf commEnum = COM_COMMAND.PRIVATECHATROOMFAILED Then
+            Return "//PCHATF//"
 
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
