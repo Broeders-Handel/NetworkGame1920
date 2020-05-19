@@ -161,7 +161,15 @@ Public Class Client
         Index += 1
         Me.Controls.Add(btn)
         _ButtonList.Add(btn)
-        'AddHandler btn.Click, AddressOf Button_Click
+        AddHandler btn.Click, AddressOf Button_Click
+    End Sub
+
+    Private Sub Button_Click(sender As Object, e As EventArgs)
+        Dim btnClick As Button = sender
+        Dim index As Integer = _ButtonList.IndexOf(btnClick)
+        Dim rij As Integer = index Mod 6
+        Dim kol As Integer = index \ 6
+        MessageBox.Show("rij: " & rij & " - kol: " & kol)
     End Sub
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click

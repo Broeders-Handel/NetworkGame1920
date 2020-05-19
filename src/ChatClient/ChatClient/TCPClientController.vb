@@ -96,6 +96,7 @@ Public Class TCPClientController
         PRIVATEMESSAGES
         PRIVATEUSERNAMES
         PRIVATECHATROOMFAILED
+        GAME
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -204,6 +205,7 @@ Public Class TCPClientController
             connectResp = ConnectResponse.None
         ElseIf command = COM_COMMAND.PRIVATECHATROOMFAILED Then
             MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
+        ElseIf command = COM_COMMAND.GAME Then
         Else
             Throw New NotSupportedException
         End If
