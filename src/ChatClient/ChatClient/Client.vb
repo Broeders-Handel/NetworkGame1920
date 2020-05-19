@@ -9,10 +9,14 @@ Public Class Client
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
     Private ComunicatieThread As Thread
+    Private _ButtonList As New List(Of Button)
+    Private Index As Integer = 0
     Dim islistening As Boolean
 
-
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        For i As Integer = 0 To 36 - 1
+            addButton("Button")
+        Next
         Connected = False
         updateGUI()
     End Sub
@@ -144,6 +148,22 @@ Public Class Client
 
         End If
     End Sub
+
+    Private Sub addButton(text As String)
+        Dim btn As New Button()
+        btn.Text = text
+
+        Dim rij As Integer = Index Mod 6
+        Dim kol As Integer = Index \ 6
+
+        btn.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
+        btn.Size = New Size(60, 60)
+        Index += 1
+        Me.Controls.Add(btn)
+        _ButtonList.Add(btn)
+        'AddHandler btn.Click, AddressOf Button_Click
+    End Sub
+
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)

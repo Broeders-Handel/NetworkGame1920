@@ -44,7 +44,7 @@ Partial Class Client
         '
         'ConnectButton
         '
-        Me.ConnectButton.Location = New System.Drawing.Point(12, 12)
+        Me.ConnectButton.Location = New System.Drawing.Point(670, 12)
         Me.ConnectButton.Name = "ConnectButton"
         Me.ConnectButton.Size = New System.Drawing.Size(112, 28)
         Me.ConnectButton.TabIndex = 0
@@ -53,7 +53,7 @@ Partial Class Client
         '
         'DisconnectButton
         '
-        Me.DisconnectButton.Location = New System.Drawing.Point(130, 12)
+        Me.DisconnectButton.Location = New System.Drawing.Point(788, 12)
         Me.DisconnectButton.Name = "DisconnectButton"
         Me.DisconnectButton.Size = New System.Drawing.Size(112, 28)
         Me.DisconnectButton.TabIndex = 3
@@ -62,7 +62,7 @@ Partial Class Client
         '
         'IpAdressTextBox
         '
-        Me.IpAdressTextBox.Location = New System.Drawing.Point(12, 331)
+        Me.IpAdressTextBox.Location = New System.Drawing.Point(670, 331)
         Me.IpAdressTextBox.Name = "IpAdressTextBox"
         Me.IpAdressTextBox.Size = New System.Drawing.Size(316, 20)
         Me.IpAdressTextBox.TabIndex = 5
@@ -72,7 +72,7 @@ Partial Class Client
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(331, 332)
+        Me.Label1.Location = New System.Drawing.Point(989, 332)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(28, 15)
         Me.Label1.TabIndex = 6
@@ -81,7 +81,7 @@ Partial Class Client
         'UsersListBox
         '
         Me.UsersListBox.FormattingEnabled = True
-        Me.UsersListBox.Location = New System.Drawing.Point(369, 47)
+        Me.UsersListBox.Location = New System.Drawing.Point(1027, 47)
         Me.UsersListBox.Name = "UsersListBox"
         Me.UsersListBox.Size = New System.Drawing.Size(139, 251)
         Me.UsersListBox.TabIndex = 8
@@ -90,7 +90,7 @@ Partial Class Client
         '
         Me.TabControl1.Controls.Add(Me.PublicTabPage)
         Me.TabControl1.Controls.Add(Me.PrivateTabPage)
-        Me.TabControl1.Location = New System.Drawing.Point(12, 45)
+        Me.TabControl1.Location = New System.Drawing.Point(670, 45)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(351, 253)
@@ -173,7 +173,7 @@ Partial Class Client
         'PrivateMessageButton
         '
         Me.PrivateMessageButton.Enabled = False
-        Me.PrivateMessageButton.Location = New System.Drawing.Point(12, 304)
+        Me.PrivateMessageButton.Location = New System.Drawing.Point(670, 304)
         Me.PrivateMessageButton.Name = "PrivateMessageButton"
         Me.PrivateMessageButton.Size = New System.Drawing.Size(143, 23)
         Me.PrivateMessageButton.TabIndex = 0
@@ -184,7 +184,7 @@ Partial Class Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(541, 375)
+        Me.ClientSize = New System.Drawing.Size(1187, 375)
         Me.Controls.Add(Me.PrivateMessageButton)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.UsersListBox)
