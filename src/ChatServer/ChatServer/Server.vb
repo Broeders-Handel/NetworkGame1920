@@ -138,12 +138,12 @@ Public Class Server
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+
         Try
 
 
             StopServer = True
             ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
-            SendToClients("De server is afgesloten. Kom later terug!")
             StartButton.Enabled = True
             StopButton.Enabled = False
             SendButton.Enabled = False
@@ -154,10 +154,12 @@ Public Class Server
             StartButton.Enabled = True
             ClientsListBox.Items.Clear()
 
-            For Each usr In UsersController.Users.Values
-                UsersController.RemoveUser(usr)
 
+
+            For i As Integer = UsersController.Users.Keys.Count - 1 To 0 Step -1
+                UsersController.RemoveUser(i)
             Next
+
         Catch ex As Exception
 
         End Try

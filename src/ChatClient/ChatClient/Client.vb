@@ -140,7 +140,7 @@ Public Class Client
             updatetextBox(PublicTextBox)
             updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
-
+            updateTabcontrol(TabControl1)
 
             PublicTextBox.ReadOnly = True
             PrivateTextBox.ReadOnly = True
@@ -156,6 +156,7 @@ Public Class Client
             PublicSendButton.Enabled = False
             PrivateSendButton.Enabled = False
             TabControl1.Enabled = False
+
         End If
     End Sub
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
@@ -186,6 +187,7 @@ Public Class Client
         updateGUI()
     End Sub
     Public Sub stopServer()
+
         tcpclient = New TcpClient
         clientController.DisconnectUser()
         Connected = False
@@ -243,6 +245,18 @@ Public Class Client
         ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
+        End If
+    End Sub
+    Private Delegate Sub updateTabControlDelegate(tc As TabControl)
+    Private Sub updateTabcontrol(tc As TabControl)
+        If tc.InvokeRequired Then
+            tc.Invoke(New updateTabControlDelegate(AddressOf updateTabcontrol), tc)
+        Else
+            If tc.Enabled = True Then
+                tc.Enabled = False
+            Else
+                tc.Enabled = True
+            End If
         End If
     End Sub
 
