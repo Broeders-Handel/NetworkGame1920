@@ -166,9 +166,9 @@ Public Class Client
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
-        ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
         UsersListBox.DataSource = Nothing
+        Connected = False
         updateGUI()
     End Sub
     Public Sub stopServer()
