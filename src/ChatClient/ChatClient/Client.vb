@@ -141,7 +141,7 @@ Public Class Client
             updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
             updateTabcontrol(TabControl1)
-
+            updateListBox(UsersListBox)
 
             PublicTextBox.ReadOnly = True
             PrivateTextBox.ReadOnly = True
@@ -157,6 +157,7 @@ Public Class Client
             PublicSendButton.Enabled = False
             PrivateSendButton.Enabled = False
             TabControl1.Enabled = False
+            UsersListBox.Items.Clear()
 
 
         End If
@@ -263,7 +264,14 @@ Public Class Client
         End If
     End Sub
 
-    Private delegat
+    Private Delegate Sub updateListBoxDelegate(lb As ListBox)
+    Private Sub updateListBox(lb As ListBox)
+        If lb.InvokeRequired Then
+            lb.Invoke(New updateListBoxDelegate(AddressOf updateListBox), lb)
+        Else
+            lb.DataSource = Nothing
+        End If
+    End Sub
 
 End Class
 
