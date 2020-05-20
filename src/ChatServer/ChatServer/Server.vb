@@ -246,7 +246,7 @@ Public Class Server
     Private Sub HandleIncommingPrivateMessage(username As String, message As String)
         message = username & " : " & message
         Dim roomID As Integer = getRoomID(username)
-        Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.Chat(message, username)
 
     End Sub
@@ -337,7 +337,6 @@ Public Class Server
             Return "//PCHATF//"
         ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
             Return "//LEAVEGAME//"
-
         ElseIf commEnum = COM_COMMAND.GAME Then
             Return "//GAME//"
             'ElseIf commEnum = "//CONNECTED//" Then
@@ -363,8 +362,8 @@ Public Class Server
             Return COM_COMMAND.PRIVATEMESSAGES
         ElseIf commStr = "//LEAVEGAME//" Then
             Return COM_COMMAND.LEAVEGAME
-        ElseIf commStr = COM_COMMAND.GAME Then
-            Return commStr = "//GAME//"
+        ElseIf commStr = "//GAME//" Then
+            Return commStr = COM_COMMAND.GAME
         Else
             Throw New NotSupportedException
         End If
@@ -386,9 +385,11 @@ Public Class Server
             HandleStopServer()
         ElseIf command = COM_COMMAND.GAME Then
             HandleIncomingGameMessage(username, message)
-        Else
-            ElseIf command = COM_COMMAND.LEAVEGAME Then
+        ElseIf command = COM_COMMAND.LEAVEGAME Then
             HandleLeaveGame(username)
+        ElseIf command = COM_COMMAND.GAME Then
+            HandleIncomingGameMessage(username, message)
+        Else
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"

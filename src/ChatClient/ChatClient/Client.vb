@@ -175,7 +175,7 @@ Public Class Client
         clientController.Write(CStr(KolRij), clientController.COM_COMMAND.GAME)
     End Sub
 
-    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
+    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
     End Sub

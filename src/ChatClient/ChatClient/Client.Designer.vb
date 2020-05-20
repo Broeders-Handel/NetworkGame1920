@@ -174,7 +174,7 @@ Partial Class Client
         'ChallengeButton
         '
         Me.ChallengeButton.Enabled = False
-        Me.ChallengeButton.Location = New System.Drawing.Point(12, 304)
+        Me.ChallengeButton.Location = New System.Drawing.Point(670, 302)
         Me.ChallengeButton.Name = "ChallengeButton"
         Me.ChallengeButton.Size = New System.Drawing.Size(91, 23)
         Me.ChallengeButton.TabIndex = 0
@@ -183,7 +183,7 @@ Partial Class Client
         '
         'LeaveButton
         '
-        Me.LeaveButton.Location = New System.Drawing.Point(109, 304)
+        Me.LeaveButton.Location = New System.Drawing.Point(767, 302)
         Me.LeaveButton.Name = "LeaveButton"
         Me.LeaveButton.Size = New System.Drawing.Size(91, 23)
         Me.LeaveButton.TabIndex = 10
@@ -194,7 +194,7 @@ Partial Class Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(541, 375)
+        Me.ClientSize = New System.Drawing.Size(1182, 375)
         Me.Controls.Add(Me.LeaveButton)
         Me.Controls.Add(Me.ChallengeButton)
         Me.Controls.Add(Me.TabControl1)
