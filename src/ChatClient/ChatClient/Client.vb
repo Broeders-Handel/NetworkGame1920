@@ -131,7 +131,7 @@ Public Class Client
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
-            updatetextBox(IpAdressTextBox)
+
             updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
@@ -141,7 +141,6 @@ Public Class Client
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
-            IpAdressTextBox.Text = ""
 
         End If
     End Sub

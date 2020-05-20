@@ -39,6 +39,7 @@ Public Class Server
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
                 userConnected(usr)
+                userConnected(usr)
                 'Voegt een User aan de lijst toe
                 UpdateClientList(username)
                 'luister naar inkomende berichten
@@ -111,14 +112,12 @@ Public Class Server
         sendMessageAsServer(MessageTextBox.Text)
     End Sub
     Private Sub userConnected(user As User)
-
         sendMessageAsServer(user.Username & " JOINED")
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
     End Sub
     Private Sub sendMessageAsServer(message As String)
         SendToClients("server => " & message)
-
     End Sub
 #Region "Buttons"
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
