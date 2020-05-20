@@ -142,6 +142,7 @@ Public Class Client
             updatetextBox(PublicChatTextBox)
             updateTabcontrol(TabControl1)
 
+
             PublicTextBox.ReadOnly = True
             PrivateTextBox.ReadOnly = True
             ConnectButton.Enabled = True
@@ -156,6 +157,7 @@ Public Class Client
             PublicSendButton.Enabled = False
             PrivateSendButton.Enabled = False
             TabControl1.Enabled = False
+
 
         End If
     End Sub
@@ -217,6 +219,7 @@ Public Class Client
         Else
             UsersListBox.DataSource = Nothing
             UsersListBox.DataSource = users
+
         End If
     End Sub
     Private Delegate Sub UpdateButDelegate(But As Button)
@@ -259,6 +262,8 @@ Public Class Client
             End If
         End If
     End Sub
+
+    Private delegat
 
 End Class
 
