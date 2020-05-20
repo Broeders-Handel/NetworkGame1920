@@ -12,6 +12,7 @@ Public Class TCPClientController
     Event PrivateMessageRecieved(message As String)
     Event ConnectedUsers(users As List(Of String))
     Event ServerStopped()
+    Event LeftGame()
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -96,6 +97,7 @@ Public Class TCPClientController
         PRIVATEMESSAGES
         PRIVATEUSERNAMES
         PRIVATECHATROOMFAILED
+        LEAVEGAME
         GAME
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
@@ -130,6 +132,8 @@ Public Class TCPClientController
             Return "//DUP//"
         ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
             Return "//NONUS//"
+        ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
+            Return "//LEAVEGAME//"
         ElseIf commEnum = COM_COMMAND.GAME Then
             Return "//GAME//"
         Else
@@ -164,6 +168,8 @@ Public Class TCPClientController
             Return COM_COMMAND.PRIVATEUSERNAMES
         ElseIf commStr = "//PCHATF//" Then
             Return COM_COMMAND.PRIVATECHATROOMFAILED
+        ElseIf commStr = "//LEAVEGAME//" Then
+            Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
             Return COM_COMMAND.GAME
         Else
@@ -209,6 +215,8 @@ Public Class TCPClientController
             connectResp = ConnectResponse.None
         ElseIf command = COM_COMMAND.PRIVATECHATROOMFAILED Then
             MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
+        ElseIf command = COM_COMMAND.LEAVEGAME Then
+            RaiseEvent LeftGame()
         ElseIf command = COM_COMMAND.GAME Then
 
         Else
