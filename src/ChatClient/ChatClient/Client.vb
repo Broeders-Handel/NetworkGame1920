@@ -170,6 +170,7 @@ Public Class Client
         Dim rij As Integer = index Mod 6
         Dim kol As Integer = index \ 6
         MessageBox.Show("rij: " & rij & " - kol: " & kol)
+        Write(index, clientController.COM_COMMAND.GAME)
     End Sub
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
@@ -200,18 +201,11 @@ Public Class Client
         updateGUI()
     End Sub
     Public Sub stopServer()
-
         clientController.DisconnectUser()
         Connected = False
         updateGUI()
     End Sub
-    Private Sub ChallengeGame(txt As String)
-        If PublicTextBox.Text = "!Challenge @" Then
-            Me.Hide()
-            Readyform.Show()
-        End If
 
-    End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As TextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As TextBox, txt As String)

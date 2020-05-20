@@ -278,7 +278,7 @@ Public Class Server
         PRIVATEUSERNAMES
         PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
-
+        GAME
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -312,7 +312,8 @@ Public Class Server
             Return "//PMS//"
         ElseIf commEnum = COM_COMMAND.PRIVATECHATROOMFAILED Then
             Return "//PCHATF//"
-
+        ElseIf commEnum = COM_COMMAND.GAME Then
+            Return "//GAME//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
@@ -334,6 +335,8 @@ Public Class Server
             Return COM_COMMAND.PRIVATEUSERNAMES
         ElseIf commStr = "//PMS//" Then
             Return COM_COMMAND.PRIVATEMESSAGES
+        ElseIf commStr = COM_COMMAND.GAME Then
+            Return commStr = "//GAME//"
         Else
             Throw New NotSupportedException
         End If

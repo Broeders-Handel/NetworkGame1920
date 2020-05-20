@@ -130,6 +130,8 @@ Public Class TCPClientController
             Return "//DUP//"
         ElseIf commEnum = COM_COMMAND.NONE_USERNAME Then
             Return "//NONUS//"
+        ElseIf commEnum = COM_COMMAND.GAME Then
+            Return "//GAME//"
         Else
 
             Throw New NotSupportedException()
@@ -162,6 +164,8 @@ Public Class TCPClientController
             Return COM_COMMAND.PRIVATEUSERNAMES
         ElseIf commStr = "//PCHATF//" Then
             Return COM_COMMAND.PRIVATECHATROOMFAILED
+        ElseIf commStr = "//GAME//" Then
+            Return COM_COMMAND.GAME
         Else
 
             Throw New NotSupportedException()
@@ -206,6 +210,7 @@ Public Class TCPClientController
         ElseIf command = COM_COMMAND.PRIVATECHATROOMFAILED Then
             MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
         ElseIf command = COM_COMMAND.GAME Then
+
         Else
             Throw New NotSupportedException
         End If
