@@ -19,7 +19,6 @@ Public Class Server
     Dim cc As New TcpControllerServer
 
 
-
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
@@ -240,7 +239,20 @@ Public Class Server
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
         chatroom.Chat(message, username)
+
     End Sub
+
+    Private Sub HandleIncomingGameMessage(username As String, message As String)
+        Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
+        Dim Rij As Integer
+        Dim kolom As Integer
+        Rij = message.Substring(0, 1)
+        kolom = message.Substring(2, 1)
+        chatroom.RecieveCoordinaat(Rij, kolom)
+    End Sub
+
+
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -356,6 +368,9 @@ Public Class Server
             HandleIncommingPrivateMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             HandleStopServer()
+        ElseIf command = COM_COMMAND.GAME Then
+            HandleIncomingGameMessage(username, message)
+        Else
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"

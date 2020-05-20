@@ -1,4 +1,6 @@
-﻿Public Class PrivateChatroom
+﻿Imports Microsoft.VisualBasic.CompilerServices
+
+Public Class PrivateChatroom
 
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
@@ -26,4 +28,12 @@
             usr.write(message, Server.COM_COMMAND.PRIVATEMESSAGES)
         Next
     End Sub
+
+    Public Sub RecieveCoordinaat(rij As Integer, kolom As Integer)
+        MessageBox.Show(rij & " " & kolom)
+    End Sub
+
+    'Public Function ColorButton(sender As Object) As Color
+    '    Return sender.
+    'End Function
 End Class

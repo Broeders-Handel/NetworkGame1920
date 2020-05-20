@@ -150,27 +150,28 @@ Public Class Client
     End Sub
 
     Private Sub addButton(text As String)
-        Dim btn As New Button()
-        btn.Text = text
+        Dim Button As New Button()
+        Button.Text = text
 
         Dim rij As Integer = Index Mod 6
         Dim kol As Integer = Index \ 6
 
-        btn.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
-        btn.Size = New Size(60, 60)
+        Button.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
+        Button.Size = New Size(60, 60)
         Index += 1
-        Me.Controls.Add(btn)
-        _ButtonList.Add(btn)
-        AddHandler btn.Click, AddressOf Button_Click
+        Me.Controls.Add(Button)
+        _ButtonList.Add(Button)
+        AddHandler Button.Click, AddressOf Button_Click
     End Sub
 
     Private Sub Button_Click(sender As Object, e As EventArgs)
-        Dim btnClick As Button = sender
-        Dim index As Integer = _ButtonList.IndexOf(btnClick)
-        Dim rij As Integer = index Mod 6
-        Dim kol As Integer = index \ 6
-        MessageBox.Show("rij: " & rij & " - kol: " & kol)
-        Write(index, clientController.COM_COMMAND.GAME)
+        Dim ButtonClick As Button = CType(sender, Button)
+        Dim Index As Integer = _ButtonList.IndexOf(ButtonClick)
+        Dim Kolom As Integer = Index \ 6
+        Dim Rij As Integer = Index Mod 6
+        Dim KolRij As Integer = Rij & "," & Kolom
+        MessageBox.Show("rij: " & Rij & " - kol: " & Kolom)
+        clientController.Write(CStr(KolRij), clientController.COM_COMMAND.GAME)
     End Sub
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
