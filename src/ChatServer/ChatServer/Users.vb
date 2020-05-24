@@ -10,7 +10,8 @@ Public Class User
     Private _PrivateChatbox As Integer
     Private _IsBusy As Boolean = False
     Dim Islistening As Boolean = True
-
+    Public gewonnen As Boolean = False
+    Public verloren As Boolean = False
     Public Sub New(username As String, client As TcpClient)
         Me.Username = username
         Me.Client = client

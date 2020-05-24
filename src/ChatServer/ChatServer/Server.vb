@@ -247,8 +247,24 @@ Public Class Server
     Private Sub HandleIncommingPrivateMessage(username As String, message As String)
         message = username & " : " & message
         Dim roomID As Integer = getRoomID(username)
-        Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.Chat(message, username)
+    End Sub
+    Public Sub HandleGameWonOrLost(username As String)
+        Dim roomID As Integer = getRoomID(username)
+        Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
+
+        If users(0).gewonnen = True And users(1).verloren = True Then
+            users(0).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
+            users(1).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
+
+        ElseIf users(0).gewonnen = False And users(1).verloren = False Then
+            users(0).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
+            users(1).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
+        End If
+        For Each usr In users
+            usr.write("", COM_COMMAND.LEAVEGAME)
+        Next
     End Sub
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
@@ -288,7 +304,7 @@ Public Class Server
         PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
         LEAVEGAME
-
+        GAMEWON
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -324,7 +340,8 @@ Public Class Server
             Return "//PCHATF//"
         ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
             Return "//LEAVEGAME//"
-
+        ElseIf commEnum = COM_COMMAND.GAMEWON Then
+            Return "//WIN//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
@@ -348,6 +365,8 @@ Public Class Server
             Return COM_COMMAND.PRIVATEMESSAGES
         ElseIf commStr = "//LEAVEGAME//" Then
             Return COM_COMMAND.LEAVEGAME
+        ElseIf commStr = "//WIN//" Then
+            Return COM_COMMAND.GAMEWON
         Else
             Throw New NotSupportedException
         End If
@@ -369,6 +388,8 @@ Public Class Server
             HandleStopServer()
         ElseIf command = COM_COMMAND.LEAVEGAME Then
             HandleLeaveGame(username)
+        ElseIf command = COM_COMMAND.GAMEWON Then
+            HandleGameWonOrLost(username)
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
