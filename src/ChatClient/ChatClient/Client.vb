@@ -128,7 +128,7 @@ Public Class Client
             PublicSendButton.Enabled = True
             ConnectButton.Enabled = False
             ChallengeButton.Enabled = True
-            PrivateMessageButton.Enabled = True
+            'PrivateMessageButton.Enabled = True
             PrivateTextBox.ReadOnly = False
             PublicTextBox.ReadOnly = False
             TabControl1.Enabled = True
@@ -138,7 +138,7 @@ Public Class Client
 
             updateBut(PublicSendButton)
             updateBut(PrivateSendButton)
-            updateBut(PrivateMessageButton)
+            'updateBut(PrivateMessageButton)
             updatetextBox(IpAdressTextBox)
             updatetextBox(PublicTextBox)
             updatetextBox(PrivateTextBox)
@@ -188,7 +188,6 @@ Public Class Client
     '        End If
     '    End If
     'End Sub
-
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
         ComunicatieThread.Abort()

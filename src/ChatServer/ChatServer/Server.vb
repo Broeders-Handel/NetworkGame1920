@@ -254,7 +254,7 @@ Public Class Server
     Private Sub HandleIncommingPrivateMessage(username As String, message As String)
         message = username & " : " & message
         Dim roomID As Integer = getRoomID(username)
-        Dim chatroom As PrivateChatroom = UsersController.PrivateChatRooms(roomID)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.Chat(message, username)
     End Sub
     'Public Sub IncomingMessage(username As String, data As String)
