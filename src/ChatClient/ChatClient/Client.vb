@@ -192,7 +192,7 @@ Public Class Client
     'Update textbox
     Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+            RTB.BeginInvoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
             RTB.AppendText(txt & Environment.NewLine)
         End If
