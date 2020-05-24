@@ -36,7 +36,8 @@ Partial Class Client
         Me.PrivateChatTextBox = New System.Windows.Forms.TextBox()
         Me.PrivateSendButton = New System.Windows.Forms.Button()
         Me.PrivateTextBox = New System.Windows.Forms.TextBox()
-        Me.PrivateMessageButton = New System.Windows.Forms.Button()
+        Me.ChallengeButton = New System.Windows.Forms.Button()
+        Me.LeaveButton = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.PublicTabPage.SuspendLayout()
         Me.PrivateTabPage.SuspendLayout()
@@ -170,22 +171,32 @@ Partial Class Client
         Me.PrivateTextBox.Size = New System.Drawing.Size(249, 20)
         Me.PrivateTextBox.TabIndex = 3
         '
-        'PrivateMessageButton
+        'ChallengeButton
         '
-        Me.PrivateMessageButton.Enabled = False
-        Me.PrivateMessageButton.Location = New System.Drawing.Point(12, 304)
-        Me.PrivateMessageButton.Name = "PrivateMessageButton"
-        Me.PrivateMessageButton.Size = New System.Drawing.Size(143, 23)
-        Me.PrivateMessageButton.TabIndex = 0
-        Me.PrivateMessageButton.Text = "PrivateMessage"
-        Me.PrivateMessageButton.UseVisualStyleBackColor = True
+        Me.ChallengeButton.Enabled = False
+        Me.ChallengeButton.Location = New System.Drawing.Point(12, 304)
+        Me.ChallengeButton.Name = "ChallengeButton"
+        Me.ChallengeButton.Size = New System.Drawing.Size(91, 23)
+        Me.ChallengeButton.TabIndex = 0
+        Me.ChallengeButton.Text = "Challenge"
+        Me.ChallengeButton.UseVisualStyleBackColor = True
+        '
+        'LeaveButton
+        '
+        Me.LeaveButton.Location = New System.Drawing.Point(109, 304)
+        Me.LeaveButton.Name = "LeaveButton"
+        Me.LeaveButton.Size = New System.Drawing.Size(91, 23)
+        Me.LeaveButton.TabIndex = 10
+        Me.LeaveButton.Text = "Leave"
+        Me.LeaveButton.UseVisualStyleBackColor = True
         '
         'Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(541, 375)
-        Me.Controls.Add(Me.PrivateMessageButton)
+        Me.Controls.Add(Me.LeaveButton)
+        Me.Controls.Add(Me.ChallengeButton)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.UsersListBox)
         Me.Controls.Add(Me.Label1)
@@ -211,7 +222,7 @@ Partial Class Client
     Friend WithEvents UsersListBox As ListBox
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents PublicTabPage As TabPage
-    Friend WithEvents PrivateMessageButton As Button
+    Friend WithEvents ChallengeButton As Button
     Friend WithEvents PublicTextBox As TextBox
     Friend WithEvents PublicSendButton As Button
     Friend WithEvents PrivateTabPage As TabPage
@@ -219,4 +230,5 @@ Partial Class Client
     Friend WithEvents PrivateTextBox As TextBox
     Friend WithEvents PublicChatTextBox As TextBox
     Friend WithEvents PrivateChatTextBox As TextBox
+    Friend WithEvents LeaveButton As Button
 End Class
