@@ -11,12 +11,13 @@ Public Class Client
     Private ComunicatieThread As Thread
     Dim islistening As Boolean
 
-
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Connected = False
         updateGUI()
     End Sub
-
+    Function LeftGame() Handles clientController.LeftGame
+        ClearTextBox(PrivateChatTextBox)
+    End Function
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicChatTextBox, message)
     End Function
@@ -126,27 +127,30 @@ Public Class Client
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
             ConnectButton.Enabled = False
-            PrivateMessageButton.Enabled = True
+            ChallengeButton.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
-            updatetextBox(IpAdressTextBox)
+
             updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
             ConnectButton.Text = "Connect"
-            PrivateMessageButton.Enabled = False
+            ChallengeButton.Enabled = False
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
-            IpAdressTextBox.Text = ""
 
         End If
     End Sub
-    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateMessageButton.Click
+    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
+    End Sub
+    Private Sub LeaveButton_Click(sender As Object, e As EventArgs) Handles LeaveButton.Click
+        clientController.Write("", clientController.COM_COMMAND.LEAVEGAME)
+        PrivateChatTextBox.Text = ""
     End Sub
 
     Public Sub ServerStopped() Handles clientController.ServerStopped
@@ -193,7 +197,14 @@ Public Class Client
             RTB.AppendText(txt & Environment.NewLine)
         End If
     End Sub
-
+    Private Delegate Sub ClearTextBoxDelegate(TB As TextBox)
+    Private Sub ClearTextBox(TB As TextBox)
+        If TB.InvokeRequired Then
+            TB.Invoke(New ClearTextBoxDelegate(AddressOf ClearTextBox), New Object() {TB})
+        Else
+            TB.Text = ""
+        End If
+    End Sub
     Private Delegate Sub UpdateClientDelegate(ByVal users As List(Of String))
     Private Sub UpdateClientList(users As List(Of String))
         If UsersListBox.InvokeRequired Then
@@ -224,5 +235,4 @@ Public Class Client
             tb.Text = ""
         End If
     End Sub
-
 End Class
