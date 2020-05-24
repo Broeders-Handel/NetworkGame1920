@@ -33,7 +33,17 @@ Public Class PrivateChatroom
         MessageBox.Show(rij & " " & kolom)
     End Sub
 
-    'Public Function ColorButton(sender As Object) As Color
-    '    Return sender.
-    'End Function
+    Public Sub SendCoordinaat(rij As Integer, kolom As Integer, Color As Color)
+
+    End Sub
+    Public Function SetColor(Rij As Integer, kolom As Integer) As Color
+        Dim Button As Button
+        Dim Colored As Boolean
+        If Colored = True Then
+            MessageBox.Show("Deze button is gebruikt!")
+        Else
+            Return Color.Blue
+        End If
+    End Function
+
 End Class
