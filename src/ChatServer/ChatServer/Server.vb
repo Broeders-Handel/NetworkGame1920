@@ -39,7 +39,6 @@ Public Class Server
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
                 userConnected(usr)
-                userConnected(usr)
                 'Voegt een User aan de lijst toe
                 UpdateClientList(username)
                 'luister naar inkomende berichten
