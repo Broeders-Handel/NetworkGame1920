@@ -219,7 +219,7 @@ Public Class TCPClientController
         ElseIf command = COM_COMMAND.LEAVEGAME Then
             RaiseEvent LeftGame()
         ElseIf command = COM_COMMAND.GAME Then
-
+            'RaiseEvent GamePlayRecieved(message)
         Else
             Throw New NotSupportedException
         End If
@@ -260,6 +260,7 @@ Public Class TCPClientController
         If Colored = True Then
             MessageBox.Show("Deze button is gebruikt!")
         Else
+            Colored = True
             Return Color.Blue
         End If
     End Function

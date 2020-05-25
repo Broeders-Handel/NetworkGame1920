@@ -15,7 +15,7 @@ Public Class Client
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For i As Integer = 0 To 36 - 1
-            addButton("Button")
+            addButton("KLIK HIER!")
         Next
         Connected = False
         updateGUI()
@@ -175,6 +175,7 @@ Public Class Client
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As String = Rij & "," & Kolom
         clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
+        clientController.SetColor()
     End Sub
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click

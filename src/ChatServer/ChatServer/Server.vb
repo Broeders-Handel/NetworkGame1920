@@ -144,12 +144,10 @@ Public Class Server
         TCPListener.Stop()
         ThreadConnectClient.Abort()
 
-
         For Each usr In UsersController.Users.Values
             UsersController.RemoveUser(usr)
 
         Next
-
 
         MessageTextBox.ReadOnly = True
         SendButton.Enabled = False
