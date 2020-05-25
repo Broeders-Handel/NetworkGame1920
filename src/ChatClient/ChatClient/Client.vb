@@ -170,9 +170,9 @@ Public Class Client
         Dim Index As Integer = _ButtonList.IndexOf(ButtonClick)
         Dim Kolom As Integer = Index \ 6
         Dim Rij As Integer = Index Mod 6
-        Dim KolRij As Integer = Rij & "," & Kolom
+        Dim KolRij As String = Rij & "," & Kolom
         'MessageBox.Show("rij: " & Rij & " - kol: " & Kolom)
-        clientController.Write(CStr(KolRij), clientController.COM_COMMAND.GAME)
+        clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
     End Sub
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click

@@ -254,11 +254,7 @@ Public Class Server
     Private Sub HandleIncomingGameMessage(username As String, message As String)
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
-        Dim Rij As Integer
-        Dim kolom As Integer
-        Rij = message.Substring(0, 1)
-        kolom = message.Substring(2, 1)
-        chatroom.RecieveCoordinaat(Rij, kolom)
+        chatroom.RecieveCoordinaat(message)
     End Sub
 
 
@@ -300,7 +296,6 @@ Public Class Server
         PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
         LEAVEGAME
-
         GAME
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
@@ -363,7 +358,7 @@ Public Class Server
         ElseIf commStr = "//LEAVEGAME//" Then
             Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
-            Return commStr = COM_COMMAND.GAME
+            Return COM_COMMAND.GAME
         Else
             Throw New NotSupportedException
         End If

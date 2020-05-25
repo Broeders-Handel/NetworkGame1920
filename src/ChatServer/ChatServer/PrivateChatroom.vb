@@ -29,8 +29,8 @@ Public Class PrivateChatroom
         Next
     End Sub
 
-    Public Sub RecieveCoordinaat(rij As Integer, kolom As Integer)
-        MessageBox.Show(rij & " " & kolom)
+    Public Sub RecieveCoordinaat(Rijkol As String)
+        MessageBox.Show(Rijkol)
     End Sub
 
     Public Sub SendCoordinaat(rij As Integer, kolom As Integer, Color As Color)
