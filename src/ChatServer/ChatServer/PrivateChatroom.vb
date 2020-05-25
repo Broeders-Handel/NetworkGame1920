@@ -30,14 +30,15 @@ Public Class PrivateChatroom
     End Sub
 
     Public Sub RecieveCoordinaat(Rijkol As String)
-        MessageBox.Show(Rijkol)
+        Dim rij As String = Rijkol.Substring(0, 1)
+        Dim Kolom As String = Rijkol.Substring(1, 1)
+        SetColor()
     End Sub
 
-    Public Sub SendCoordinaat(rij As Integer, kolom As Integer, Color As Color)
-
+    Public Sub SendCoordinaat(Rijkol As String)
+        Chat(Rijkol, Server.COM_COMMAND.GAME)
     End Sub
-    Public Function SetColor(Rij As Integer, kolom As Integer) As Color
-        Dim Button As Button
+    Public Function SetColor() As Color
         Dim Colored As Boolean
         If Colored = True Then
             MessageBox.Show("Deze button is gebruikt!")

@@ -13,6 +13,7 @@ Public Class TCPClientController
     Event ConnectedUsers(users As List(Of String))
     Event ServerStopped()
     Event LeftGame()
+    Event GamePlayRecieved(But As Button)
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -253,4 +254,13 @@ Public Class TCPClientController
         Write("", COM_COMMAND.DISCONNECTED)
         TCPClient = Nothing
     End Sub
+
+    Public Function SetColor() As Color
+        Dim Colored As Boolean
+        If Colored = True Then
+            MessageBox.Show("Deze button is gebruikt!")
+        Else
+            Return Color.Blue
+        End If
+    End Function
 End Class

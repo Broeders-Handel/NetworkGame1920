@@ -33,6 +33,10 @@ Public Class Client
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
         UpdateClientList(users)
     End Function
+
+    Function GamePlayRecieved(But As Button) Handles clientController.GamePlayRecieved
+        UpdateGamePlay(But)
+    End Function
     Public Property Username As String
         Get
             Return _Username
@@ -136,7 +140,6 @@ Public Class Client
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
-
             updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
@@ -171,7 +174,6 @@ Public Class Client
         Dim Kolom As Integer = Index \ 6
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As String = Rij & "," & Kolom
-        'MessageBox.Show("rij: " & Rij & " - kol: " & Kolom)
         clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
     End Sub
 
