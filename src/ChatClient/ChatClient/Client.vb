@@ -261,15 +261,7 @@ Public Class Client
     End Sub
 
     Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
-        Try
-            If Connected = True Then
-                clientController.Write(PrivateTextBox.Text, clientController.COM_COMMAND.PRIVATEMESSAGES)
-                PrivateTextBox.Clear()
-            Else
-                MessageBox.Show("Je bent niet verbonden met de server")
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
     End Sub
 End Class
