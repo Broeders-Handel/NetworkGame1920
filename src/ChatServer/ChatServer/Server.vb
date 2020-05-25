@@ -255,6 +255,7 @@ Public Class Server
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.RecieveCoordinaat(message)
+        chatroom.SendCoordinaat(message, username)
     End Sub
 
 

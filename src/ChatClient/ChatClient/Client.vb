@@ -35,7 +35,7 @@ Public Class Client
     End Function
 
     Function GamePlayRecieved(But As Button) Handles clientController.GamePlayRecieved
-        UpdateGamePlay(But)
+        UpdateButGamePlay(But)
     End Function
     Public Property Username As String
         Get
@@ -259,6 +259,15 @@ Public Class Client
         ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
+        End If
+    End Sub
+
+    Private Delegate Sub UpdateGamePlay(But As Button)
+    Private Sub UpdateButGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
+        Else
+            clientController.SetColor()
         End If
     End Sub
 

@@ -35,8 +35,10 @@ Public Class PrivateChatroom
         SetColor()
     End Sub
 
-    Public Sub SendCoordinaat(Rijkol As String)
-        Chat(Rijkol, Server.COM_COMMAND.GAME)
+    Public Sub SendCoordinaat(Rijkol As String, sender As String)
+        For Each usr In users
+            usr.write(Rijkol, Server.COM_COMMAND.GAME)
+        Next
     End Sub
     Public Function SetColor() As Color
         Dim Colored As Boolean
