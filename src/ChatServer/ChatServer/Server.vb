@@ -112,6 +112,7 @@ Public Class Server
     End Sub
     Private Sub userConnected(user As User)
         sendMessageAsServer(user.Username & " JOINED")
+        Sleep(100)
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
     End Sub
