@@ -171,7 +171,7 @@ Public Class Client
         Dim Kolom As Integer = Index \ 6
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As Integer = Rij & "," & Kolom
-        MessageBox.Show("rij: " & Rij & " - kol: " & Kolom)
+        'MessageBox.Show("rij: " & Rij & " - kol: " & Kolom)
         clientController.Write(CStr(KolRij), clientController.COM_COMMAND.GAME)
     End Sub
 
@@ -258,5 +258,18 @@ Public Class Client
             tb.ReadOnly = True
             tb.Text = ""
         End If
+    End Sub
+
+    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+        Try
+            If Connected = True Then
+                clientController.Write(PrivateTextBox.Text, clientController.COM_COMMAND.PRIVATEMESSAGES)
+                PrivateTextBox.Clear()
+            Else
+                MessageBox.Show("Je bent niet verbonden met de server")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class
