@@ -13,7 +13,7 @@ Public Class TCPClientController
     Event ConnectedUsers(users As List(Of String))
     Event ServerStopped()
     Event LeftGame()
-    Event GamePlayRecieved(But As Button)
+    Event GamePlayRecieved(message As String)
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -219,7 +219,7 @@ Public Class TCPClientController
         ElseIf command = COM_COMMAND.LEAVEGAME Then
             RaiseEvent LeftGame()
         ElseIf command = COM_COMMAND.GAME Then
-            'RaiseEvent GamePlayRecieved(message)
+            RaiseEvent GamePlayRecieved(message)
         Else
             Throw New NotSupportedException
         End If
@@ -255,13 +255,7 @@ Public Class TCPClientController
         TCPClient = Nothing
     End Sub
 
-    Public Function SetColor() As Color
-        Dim Colored As Boolean
-        If Colored = True Then
-            MessageBox.Show("Deze button is gebruikt!")
-        Else
-            Colored = True
-            Return Color.Blue
-        End If
+    Public Function GetColor() As Color
+        Return Color.Blue
     End Function
 End Class

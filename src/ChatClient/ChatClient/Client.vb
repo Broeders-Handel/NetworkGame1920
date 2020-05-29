@@ -33,10 +33,10 @@ Public Class Client
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
         UpdateClientList(users)
     End Function
-
-    Function GamePlayRecieved(But As Button) Handles clientController.GamePlayRecieved
-        UpdateButGamePlay(But)
+    Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
+        UpdateGamePlay(RetrieveClickedButton(Message))
     End Function
+
     Public Property Username As String
         Get
             Return _Username
@@ -175,8 +175,17 @@ Public Class Client
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As String = Rij & "," & Kolom
         clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
-        clientController.SetColor()
+        'clientController.GetColor()
     End Sub
+
+    Private Function RetrieveClickedButton(Message As String) As Button
+        Dim btn As Button
+        Dim rij As String = Message.Substring(0, 1)
+        Dim kolom As String = Message.Substring(2, 1)
+        Dim index As Integer = kolom * 6 + rij
+        btn = _ButtonList(index)
+        Return btn
+    End Function
 
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
@@ -262,16 +271,15 @@ Public Class Client
             tb.Text = ""
         End If
     End Sub
-
-    Private Delegate Sub UpdateGamePlay(But As Button)
-    Private Sub UpdateButGamePlay(but As Button)
+    Private Delegate Sub UpdateGamePlayDelegate(but As Button)
+    Private Sub UpdateGamePlay(but As Button)
         If but.InvokeRequired Then
-            but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
-        Else
-            clientController.SetColor()
+            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
+        ElseIf but.Enabled = True Then
+            but.Enabled = False
+            but.BackColor = clientController.GetColor
         End If
     End Sub
-
     Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
