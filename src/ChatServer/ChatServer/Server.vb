@@ -220,9 +220,23 @@ Public Class Server
             Return True
         End If
     End Function
+    Private Sub DecideTurn(user1 As String, user2 As String)
+        If UsersController.Users(user1).Turn = True Then
+            UsersController.Users(user1).write("True", COM_COMMAND.TURN)
+            UsersController.Users(user1).Turn = False
+            UsersController.Users(user2).write("False", COM_COMMAND.TURN)
+            UsersController.Users(user2).Turn = True
+        ElseIf UsersController.Users(user2).Turn = True Then
+            UsersController.Users(user1).write("False", COM_COMMAND.TURN)
+            UsersController.Users(user1).Turn = True
+            UsersController.Users(user2).write("True", COM_COMMAND.TURN)
+            UsersController.Users(user2).Turn = False
+        End If
+    End Sub
     Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
         If CheckPrivateChatroomPossible(user1, user2) = True Then
             UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+            DecideTurn(user1, user2)
         Else
             UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
         End If
@@ -250,10 +264,12 @@ Public Class Server
     End Sub
 
     Private Sub HandleIncomingGameMessage(username As String, message As String)
+
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
+        DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
     End Sub
 
 
@@ -296,6 +312,7 @@ Public Class Server
         PRIVATEMESSAGES
         LEAVEGAME
         GAME
+        TURN
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -333,6 +350,8 @@ Public Class Server
             Return "//LEAVEGAME//"
         ElseIf commEnum = COM_COMMAND.GAME Then
             Return "//GAME//"
+        ElseIf commEnum = COM_COMMAND.TURN Then
+            Return "//TURN//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else

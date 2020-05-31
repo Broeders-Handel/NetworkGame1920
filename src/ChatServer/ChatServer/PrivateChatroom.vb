@@ -10,6 +10,8 @@ Public Class PrivateChatroom
         ID = latestID
         user1.PrivateChatroomId = ID
         user2.PrivateChatroomId = ID
+        'user1 is de user die de andere challenged dus die mag beginnen
+        user1.Turn = True
     End Sub
     Property users As List(Of User)
     Private _id As Integer
