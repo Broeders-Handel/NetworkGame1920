@@ -9,9 +9,14 @@ Public Class Client
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
     Private ComunicatieThread As Thread
+    Private _ButtonList As New List(Of Button)
+    Private Index As Integer = 0
     Dim islistening As Boolean
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        For i As Integer = 0 To 36 - 1
+            addButton("KLIK HIER!")
+        Next
         Connected = False
         updateGUI()
     End Sub
@@ -28,6 +33,10 @@ Public Class Client
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
         UpdateClientList(users)
     End Function
+    Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
+        UpdateGamePlay(RetrieveClickedButton(Message))
+    End Function
+
     Public Property Username As String
         Get
             Return _Username
@@ -131,7 +140,6 @@ Public Class Client
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
-
             updatetextBox(PublicChatTextBox)
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
@@ -144,7 +152,42 @@ Public Class Client
 
         End If
     End Sub
-    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+
+    Private Sub addButton(text As String)
+        Dim Button As New Button()
+        Button.Text = text
+
+        Dim rij As Integer = Index Mod 6
+        Dim kol As Integer = Index \ 6
+
+        Button.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
+        Button.Size = New Size(60, 60)
+        Index += 1
+        Me.Controls.Add(Button)
+        _ButtonList.Add(Button)
+        AddHandler Button.Click, AddressOf Button_Click
+    End Sub
+
+    Private Sub Button_Click(sender As Object, e As EventArgs)
+        Dim ButtonClick As Button = CType(sender, Button)
+        Dim Index As Integer = _ButtonList.IndexOf(ButtonClick)
+        Dim Kolom As Integer = Index \ 6
+        Dim Rij As Integer = Index Mod 6
+        Dim KolRij As String = Rij & "," & Kolom
+        clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
+        'clientController.GetColor()
+    End Sub
+
+    Private Function RetrieveClickedButton(Message As String) As Button
+        Dim btn As Button
+        Dim rij As String = Message.Substring(0, 1)
+        Dim kolom As String = Message.Substring(2, 1)
+        Dim index As Integer = kolom * 6 + rij
+        btn = _ButtonList(index)
+        Return btn
+    End Function
+
+    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
     End Sub
@@ -170,29 +213,22 @@ Public Class Client
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
-        ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
         UsersListBox.DataSource = Nothing
+        Connected = False
         updateGUI()
     End Sub
     Public Sub stopServer()
-
         clientController.DisconnectUser()
         Connected = False
         updateGUI()
     End Sub
-    Private Sub ChallengeGame(txt As String)
-        If PublicTextBox.Text = "!Challenge @" Then
-            Me.Hide()
-            Readyform.Show()
-        End If
 
-    End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As TextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+            RTB.BeginInvoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
             RTB.AppendText(txt & Environment.NewLine)
         End If
@@ -234,5 +270,18 @@ Public Class Client
             tb.ReadOnly = True
             tb.Text = ""
         End If
+    End Sub
+    Private Delegate Sub UpdateGamePlayDelegate(but As Button)
+    Private Sub UpdateGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
+        ElseIf but.Enabled = True Then
+            but.Enabled = False
+            but.BackColor = clientController.GetColor
+        End If
+    End Sub
+    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
     End Sub
 End Class
