@@ -402,8 +402,7 @@ Public Class Server
             HandleLeaveGame(username)
         ElseIf command = COM_COMMAND.GAME Then
             HandleIncomingGameMessage(username, message)
-        Else
-            ElseIf command = COM_COMMAND.GAMEWON Then
+        ElseIf command = COM_COMMAND.GAMEWON Then
             HandleGameWonOrLost(username)
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
