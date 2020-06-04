@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CompilerServices
 
 Public Class PrivateChatroom
-
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
         users.Add(user1)
