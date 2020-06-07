@@ -155,8 +155,8 @@ Public Class Server
 
 
             For i As Integer = UsersController.Users.Keys.Count - 1 To 0 Step -1
-                    UsersController.RemoveUser(i)
-                Next
+                UsersController.RemoveUser(i)
+            Next
 
         Catch ex As Exception
 

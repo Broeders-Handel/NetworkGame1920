@@ -46,9 +46,9 @@ Public Class Client
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
         UpdateClientList(users)
     End Function
-    Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
-        UpdateGamePlay(RetrieveClickedButton(Message))
-    End Function
+    'Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
+    '    UpdateGamePlay(RetrieveClickedButton(Message))
+    'End Function
 
     Public Property Username As String
         Get
