@@ -10,12 +10,29 @@ Public Class Client
     WithEvents clientController As New TCPClientController
     Dim tcpclient As TcpClient
     Private ComunicatieThread As Thread
+    Private _ButtonList As New List(Of Button)
+    Private Index As Integer = 0
     Dim islistening As Boolean
+    Dim AandeBeurt As Boolean = False
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        For i As Integer = 0 To 36 - 1
+            addButton("KLIK HIER!")
+        Next
         Connected = False
         updateGUI()
     End Sub
+    Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
+        If Truefalse Like "False" Then
+            For Each button In _ButtonList
+                updateButClickable(button)
+            Next
+        ElseIf Truefalse Like "True" Then
+            For Each button In _ButtonList
+                updateButNotClickable(button)
+            Next
+        End If
+    End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
     End Function
@@ -29,6 +46,10 @@ Public Class Client
     Function UserlistRecieved(users As List(Of String)) Handles clientController.ConnectedUsers
         UpdateClientList(users)
     End Function
+    Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
+        UpdateGamePlay(RetrieveClickedButton(Message))
+    End Function
+
     Public Property Username As String
         Get
             Return _Username
@@ -93,6 +114,10 @@ Public Class Client
         End Try
     End Sub
 #End Region
+    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
+    End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
 
         If IpAdressTextBox.Text Like "*.*.*.*" Then
@@ -165,7 +190,42 @@ Public Class Client
 
         End If
     End Sub
-    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+
+    Private Sub addButton(text As String)
+        Dim Button As New Button()
+        Button.Text = text
+
+        Dim rij As Integer = Index Mod 6
+        Dim kol As Integer = Index \ 6
+
+        Button.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
+        Button.Size = New Size(60, 60)
+        Index += 1
+        Me.Controls.Add(Button)
+        _ButtonList.Add(Button)
+        AddHandler Button.Click, AddressOf Button_Click
+    End Sub
+
+    Private Sub Button_Click(sender As Object, e As EventArgs)
+        Dim ButtonClick As Button = CType(sender, Button)
+        Dim Index As Integer = _ButtonList.IndexOf(ButtonClick)
+        Dim Kolom As Integer = Index \ 6
+        Dim Rij As Integer = Index Mod 6
+        Dim KolRij As String = Rij & "," & Kolom
+        clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
+        'clientController.GetColor()
+    End Sub
+
+    Private Function RetrieveClickedButton(Message As String) As Button
+        Dim btn As Button
+        Dim rij As String = Message.Substring(0, 1)
+        Dim kolom As String = Message.Substring(2, 1)
+        Dim index As Integer = kolom * 6 + rij
+        btn = _ButtonList(index)
+        Return btn
+    End Function
+
+    Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
     End Sub
@@ -190,9 +250,9 @@ Public Class Client
     'End Sub
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
-        ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
-
+        UsersListBox.DataSource = Nothing
+        Connected = False
         updateGUI()
     End Sub
     Public Sub stopServer()
@@ -202,18 +262,12 @@ Public Class Client
         Connected = False
         updateGUI()
     End Sub
-    Private Sub ChallengeGame(txt As String)
-        If PublicTextBox.Text = "!Challenge @" Then
-            Me.Hide()
-            Readyform.Show()
-        End If
 
-    End Sub
     Private Delegate Sub UpdateTextDelegate(RTB As TextBox, txt As String)
     'Update textbox
     Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+            RTB.BeginInvoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
             RTB.AppendText(txt & Environment.NewLine)
         End If
@@ -234,6 +288,22 @@ Public Class Client
             UsersListBox.DataSource = Nothing
             UsersListBox.DataSource = users
 
+        End If
+    End Sub
+    Private Delegate Sub UpdateButClickableDelegate(but As Button)
+    Private Sub updateButClickable(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
+        ElseIf but.Enabled = True Then
+            but.Enabled = False
+        End If
+    End Sub
+    Private Delegate Sub UpdateButNotClickableDelegate(but As Button)
+    Private Sub updateButNotClickable(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButClickableDelegate(AddressOf updateButNotClickable), but)
+        ElseIf but.Enabled = False Then
+            but.Enabled = True
         End If
     End Sub
     Private Delegate Sub UpdateButDelegate(But As Button)

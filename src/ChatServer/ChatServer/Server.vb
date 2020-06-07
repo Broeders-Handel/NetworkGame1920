@@ -19,7 +19,6 @@ Public Class Server
     Dim cc As New TcpControllerServer
 
 
-
     Private Sub ClientConnected(clientObject As Object)
         Dim client As TcpClient = CType(clientObject(0), TcpClient)
         Dim streamRdr As StreamReader
@@ -38,7 +37,6 @@ Public Class Server
                 SendToOneClient("", usr, COM_COMMAND.CORRECT_USERNAME)
                 UpdateText(ChatRichTextBox, username)
                 'meld alle gebruikers van nieuwe client
-                userConnected(usr)
                 userConnected(usr)
                 'Voegt een User aan de lijst toe
                 UpdateClientList(username)
@@ -113,6 +111,7 @@ Public Class Server
     End Sub
     Private Sub userConnected(user As User)
         sendMessageAsServer(user.Username & " JOINED")
+        Sleep(100)
         Dim allUsers As String = UsersController.getUsers()
         SendToClients(allUsers, COM_COMMAND.CONNECTEDUSERS)
     End Sub
@@ -156,13 +155,17 @@ Public Class Server
 
 
             For i As Integer = UsersController.Users.Keys.Count - 1 To 0 Step -1
-                UsersController.RemoveUser(i)
-            Next
+                    UsersController.RemoveUser(i)
+                Next
 
         Catch ex As Exception
 
         End Try
 
+        MessageTextBox.ReadOnly = True
+        SendButton.Enabled = False
+        StartButton.Enabled = True
+        ClientsListBox.Items.Clear()
     End Sub
 #End Region
 #Region "Textbox"
@@ -230,9 +233,23 @@ Public Class Server
             Return True
         End If
     End Function
+    Private Sub DecideTurn(user1 As String, user2 As String)
+        If UsersController.Users(user1).Turn = True Then
+            UsersController.Users(user1).write("True", COM_COMMAND.TURN)
+            UsersController.Users(user1).Turn = False
+            UsersController.Users(user2).write("False", COM_COMMAND.TURN)
+            UsersController.Users(user2).Turn = True
+        ElseIf UsersController.Users(user2).Turn = True Then
+            UsersController.Users(user1).write("False", COM_COMMAND.TURN)
+            UsersController.Users(user1).Turn = True
+            UsersController.Users(user2).write("True", COM_COMMAND.TURN)
+            UsersController.Users(user2).Turn = False
+        End If
+    End Sub
     Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
         If CheckPrivateChatroomPossible(user1, user2) = True Then
             UsersController.createPrivateChatroom(UsersController.Users(user1), UsersController.Users(user2))
+            DecideTurn(user1, user2)
         Else
             UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
         End If
@@ -256,7 +273,19 @@ Public Class Server
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.Chat(message, username)
+
     End Sub
+
+    Private Sub HandleIncomingGameMessage(username As String, message As String)
+
+        Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
+        chatroom.RecieveCoordinaat(message)
+        chatroom.SendCoordinaat(message, username)
+        DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
+    End Sub
+
+
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -295,7 +324,8 @@ Public Class Server
         PRIVATECHATROOMFAILED
         PRIVATEMESSAGES
         LEAVEGAME
-
+        GAME
+        TURN
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -331,7 +361,10 @@ Public Class Server
             Return "//PCHATF//"
         ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
             Return "//LEAVEGAME//"
-
+        ElseIf commEnum = COM_COMMAND.GAME Then
+            Return "//GAME//"
+        ElseIf commEnum = COM_COMMAND.TURN Then
+            Return "//TURN//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
@@ -355,6 +388,8 @@ Public Class Server
             Return COM_COMMAND.PRIVATEMESSAGES
         ElseIf commStr = "//LEAVEGAME//" Then
             Return COM_COMMAND.LEAVEGAME
+        ElseIf commStr = "//GAME//" Then
+            Return COM_COMMAND.GAME
         Else
             Throw New NotSupportedException
         End If
@@ -374,8 +409,13 @@ Public Class Server
             HandleIncommingPrivateMessage(username, message)
         ElseIf command = COM_COMMAND.STOPSERVER Then
             HandleStopServer()
+        ElseIf command = COM_COMMAND.GAME Then
+            HandleIncomingGameMessage(username, message)
         ElseIf command = COM_COMMAND.LEAVEGAME Then
             HandleLeaveGame(username)
+        ElseIf command = COM_COMMAND.GAME Then
+            HandleIncomingGameMessage(username, message)
+        Else
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"

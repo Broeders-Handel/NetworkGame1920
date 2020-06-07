@@ -1,4 +1,6 @@
-﻿Public Class PrivateChatroom
+﻿Imports Microsoft.VisualBasic.CompilerServices
+
+Public Class PrivateChatroom
 
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
@@ -8,6 +10,8 @@
         ID = latestID
         user1.PrivateChatroomId = ID
         user2.PrivateChatroomId = ID
+        'user1 is de user die de andere challenged dus die mag beginnen
+        user1.Turn = True
     End Sub
     Property users As List(Of User)
     Private _id As Integer
@@ -26,4 +30,25 @@
             usr.write(message, Server.COM_COMMAND.PRIVATEMESSAGES)
         Next
     End Sub
+
+    Public Sub RecieveCoordinaat(Rijkol As String)
+        Dim rij As String = Rijkol.Substring(0, 1)
+        Dim Kolom As String = Rijkol.Substring(1, 1)
+        SetColor()
+    End Sub
+
+    Public Sub SendCoordinaat(Rijkol As String, sender As String)
+        For Each usr In users
+            usr.write(Rijkol, Server.COM_COMMAND.GAME)
+        Next
+    End Sub
+    Public Function SetColor() As Color
+        Dim Colored As Boolean
+        If Colored = True Then
+            MessageBox.Show("Deze button is gebruikt!")
+        Else
+            Return Color.Blue
+        End If
+    End Function
+
 End Class

@@ -7,12 +7,13 @@ Imports System.Threading
 Public Class TCPClientController
     Private _TCPClient As TcpClient
     Private _username As String
-
+    Event WhosTurn(TrueFalse As Boolean)
     Event MessageReceived(message As String)
     Event PrivateMessageRecieved(message As String)
     Event ConnectedUsers(users As List(Of String))
     Event ServerStopped()
     Event LeftGame()
+    Event GamePlayRecieved(message As String)
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -98,6 +99,8 @@ Public Class TCPClientController
         PRIVATEUSERNAMES
         PRIVATECHATROOMFAILED
         LEAVEGAME
+        GAME
+        TURN
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -133,6 +136,8 @@ Public Class TCPClientController
             Return "//NONUS//"
         ElseIf commEnum = COM_COMMAND.LEAVEGAME Then
             Return "//LEAVEGAME//"
+        ElseIf commEnum = COM_COMMAND.GAME Then
+            Return "//GAME//"
         Else
 
             Throw New NotSupportedException()
@@ -167,6 +172,10 @@ Public Class TCPClientController
             Return COM_COMMAND.PRIVATECHATROOMFAILED
         ElseIf commStr = "//LEAVEGAME//" Then
             Return COM_COMMAND.LEAVEGAME
+        ElseIf commStr = "//GAME//" Then
+            Return COM_COMMAND.GAME
+        ElseIf commStr = "//TURN//" Then
+            Return COM_COMMAND.TURN
         Else
 
             Throw New NotSupportedException()
@@ -187,6 +196,7 @@ Public Class TCPClientController
     End Sub
 #End Region
     Public Sub HandleMessageWithCommand(message As String)
+        RaiseEvent MessageReceived(message)
         Dim command As COM_COMMAND = getCommand(message)
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then
@@ -212,6 +222,10 @@ Public Class TCPClientController
             MessageBox.Show("Je private chatroom request is niet aanvaard. probeer opnieuw")
         ElseIf command = COM_COMMAND.LEAVEGAME Then
             RaiseEvent LeftGame()
+        ElseIf command = COM_COMMAND.GAME Then
+            RaiseEvent GamePlayRecieved(message)
+        ElseIf command = COM_COMMAND.TURN Then
+            RaiseEvent WhosTurn(message)
         Else
             Throw New NotSupportedException
         End If
@@ -246,4 +260,8 @@ Public Class TCPClientController
         Write("", COM_COMMAND.DISCONNECTED)
         TCPClient = Nothing
     End Sub
+
+    Public Function GetColor() As Color
+        Return Color.Blue
+    End Function
 End Class
