@@ -274,46 +274,28 @@ Public Class Server
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.Chat(message, username)
 
+
     End Sub
 
     Private Sub HandleIncomingGameMessage(username As String, message As String)
+        Dim gewonnen As Boolean
 
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
-        chatroom.checkHorizontal(message)
+        Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
+        gewonnen = chatroom.checkHorizontal(message)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
-    End Sub
-    Public Sub HandleGameWonOrLost(username As String, message As String)
-        Dim roomID As Integer = getRoomID(username)
-        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
-        Dim Gewonnen As Boolean = chatroom.checkHorizontal(message)
-        If Gewonnen = True Then
-            MessageBox.Show("gewonnen")
+        If gewonnen = True Then
+            users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+            users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            HandleLeaveGame(users(0).Username)
+            HandleLeaveGame(users(1).Username)
         End If
-
-        Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
-
-        'If users(0).gewonnen = True And users(1).verloren = True Then
-        '    users(0).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
-        '    users(1).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
-
-        'ElseIf users(0).gewonnen = False And users(1).verloren = False Then
-        '    users(0).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
-        '    users(1).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
-        'End If
-        'For Each usr In users
-        '    usr.write("", COM_COMMAND.LEAVEGAME)
-        'Next
-
-
-
-
-
-
-
     End Sub
+
+
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
     '        If data Like "//DISC//*" Then
@@ -354,7 +336,6 @@ Public Class Server
         LEAVEGAME
         GAME
         TURN
-        GAMEWON
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -392,8 +373,6 @@ Public Class Server
             Return "//LEAVEGAME//"
         ElseIf commEnum = COM_COMMAND.GAME Then
             Return "//GAME//"
-        ElseIf commEnum = COM_COMMAND.GAMEWON Then
-            Return "//WIN//"
         ElseIf commEnum = COM_COMMAND.TURN Then
             Return "//TURN//"
             'ElseIf commEnum = "//CONNECTED//" Then
@@ -421,8 +400,6 @@ Public Class Server
             Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
             Return COM_COMMAND.GAME
-        ElseIf commStr = "//WIN//" Then
-            Return COM_COMMAND.GAMEWON
         Else
             Throw New NotSupportedException
         End If
@@ -448,8 +425,7 @@ Public Class Server
             HandleLeaveGame(username)
         ElseIf command = COM_COMMAND.GAME Then
             HandleIncomingGameMessage(username, message)
-        ElseIf command = COM_COMMAND.GAMEWON Then
-            HandleGameWonOrLost(username, message)
+        Else
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
