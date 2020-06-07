@@ -12,6 +12,7 @@ Public Class Client
     Private _ButtonList As New List(Of Button)
     Private Index As Integer = 0
     Dim islistening As Boolean
+    Dim AandeBeurt As Boolean = False
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For i As Integer = 0 To 36 - 1
@@ -20,6 +21,17 @@ Public Class Client
         Connected = False
         updateGUI()
     End Sub
+    Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
+        If Truefalse Like "False" Then
+            For Each button In _ButtonList
+                updateButClickable(button)
+            Next
+        ElseIf Truefalse Like "True" Then
+            For Each button In _ButtonList
+                updateButNotClickable(button)
+            Next
+        End If
+    End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
     End Function
@@ -101,6 +113,10 @@ Public Class Client
         End Try
     End Sub
 #End Region
+    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
+        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
+        TabControl1.SelectTab(1)
+    End Sub
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
         Dim connectionSucces As Boolean = True
         If IpAdressTextBox.Text Like "*.*.*.*" Then
@@ -250,6 +266,22 @@ Public Class Client
             UsersListBox.DataSource = users
         End If
     End Sub
+    Private Delegate Sub UpdateButClickableDelegate(but As Button)
+    Private Sub updateButClickable(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
+        ElseIf but.Enabled = True Then
+            but.Enabled = False
+        End If
+    End Sub
+    Private Delegate Sub UpdateButNotClickableDelegate(but As Button)
+    Private Sub updateButNotClickable(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButClickableDelegate(AddressOf updateButNotClickable), but)
+        ElseIf but.Enabled = False Then
+            but.Enabled = True
+        End If
+    End Sub
     Private Delegate Sub UpdateButDelegate(But As Button)
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
@@ -275,13 +307,9 @@ Public Class Client
     Private Sub UpdateGamePlay(but As Button)
         If but.InvokeRequired Then
             but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
-        ElseIf but.Enabled = True Then
-            but.Enabled = False
+        ElseIf but.Text = "KLIK HIER!" Then
+            but.Text = "Clicked"
             but.BackColor = clientController.GetColor
         End If
-    End Sub
-    Private Sub ChallengeButton_Click(sender As Object, e As EventArgs) Handles ChallengeButton.Click
-        clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
-        TabControl1.SelectTab(1)
     End Sub
 End Class

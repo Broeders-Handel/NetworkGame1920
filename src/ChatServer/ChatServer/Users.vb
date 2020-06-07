@@ -5,6 +5,8 @@ Imports System.Threading
 Public Class User
     Private Shared instance As User
     Dim usercontroller As New UsersController
+    Private _Turn As Boolean
+    Private _NietAanDeBeurt As Boolean
     Private _username As String
     Private _client As TcpClient
     Private _PrivateChatbox As Integer
@@ -14,8 +16,17 @@ Public Class User
     Public verloren As Boolean = False
     Public Sub New(username As String, client As TcpClient)
         Me.Username = username
+        Me.Turn = False
         Me.Client = client
     End Sub
+    Public Property Turn As Boolean
+        Get
+            Return _Turn
+        End Get
+        Set(value As Boolean)
+            _Turn = value
+        End Set
+    End Property
     Public Property IsBusy As Boolean
         Get
             Return _IsBusy
@@ -24,6 +35,7 @@ Public Class User
             _IsBusy = value
         End Set
     End Property
+
     Public Property PrivateChatroomId As Integer
         Get
             Return _PrivateChatbox

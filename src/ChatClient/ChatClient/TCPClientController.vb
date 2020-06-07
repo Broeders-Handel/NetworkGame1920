@@ -7,7 +7,7 @@ Imports System.Threading
 Public Class TCPClientController
     Private _TCPClient As TcpClient
     Private _username As String
-
+    Event WhosTurn(TrueFalse As Boolean)
     Event MessageReceived(message As String)
     Event PrivateMessageRecieved(message As String)
     Event ConnectedUsers(users As List(Of String))
@@ -100,6 +100,7 @@ Public Class TCPClientController
         PRIVATECHATROOMFAILED
         LEAVEGAME
         GAME
+        TURN
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -173,6 +174,8 @@ Public Class TCPClientController
             Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
             Return COM_COMMAND.GAME
+        ElseIf commStr = "//TURN//" Then
+            Return COM_COMMAND.TURN
         Else
 
             Throw New NotSupportedException()
@@ -221,6 +224,8 @@ Public Class TCPClientController
             RaiseEvent LeftGame()
         ElseIf command = COM_COMMAND.GAME Then
             RaiseEvent GamePlayRecieved(message)
+        ElseIf command = COM_COMMAND.TURN Then
+            RaiseEvent WhosTurn(message)
         Else
             Throw New NotSupportedException
         End If
