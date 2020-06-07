@@ -267,25 +267,39 @@ Public Class Server
 
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
-        chatroom.RecieveCoordinaat(message)
+        chatroom.checkHorizontal(message)
+        'chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
     End Sub
-    Public Sub HandleGameWonOrLost(username As String)
+    Public Sub HandleGameWonOrLost(username As String, message As String)
         Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
+        Dim Gewonnen As Boolean = chatroom.checkHorizontal(message)
+        If Gewonnen = True Then
+            MessageBox.Show("gewonnen")
+        End If
+
         Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
 
-        If users(0).gewonnen = True And users(1).verloren = True Then
-            users(0).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
-            users(1).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
+        'If users(0).gewonnen = True And users(1).verloren = True Then
+        '    users(0).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
+        '    users(1).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
 
-        ElseIf users(0).gewonnen = False And users(1).verloren = False Then
-            users(0).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
-            users(1).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
-        End If
-        For Each usr In users
-            usr.write("", COM_COMMAND.LEAVEGAME)
-        Next
+        'ElseIf users(0).gewonnen = False And users(1).verloren = False Then
+        '    users(0).write(MessageBox.Show("Helaas, u heeft verloren."), COM_COMMAND.MESSAGE)
+        '    users(1).write(MessageBox.Show("Proficiat, u heeft gewonnen."), COM_COMMAND.MESSAGE)
+        'End If
+        'For Each usr In users
+        '    usr.write("", COM_COMMAND.LEAVEGAME)
+        'Next
+
+
+
+
+
+
+
     End Sub
     'Public Sub IncomingMessage(username As String, data As String)
     '    Try
@@ -422,7 +436,7 @@ Public Class Server
         ElseIf command = COM_COMMAND.GAME Then
             HandleIncomingGameMessage(username, message)
         ElseIf command = COM_COMMAND.GAMEWON Then
-            HandleGameWonOrLost(username)
+            HandleGameWonOrLost(username, message)
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
