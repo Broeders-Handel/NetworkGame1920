@@ -33,8 +33,8 @@ Class UsersController
             _Users = value
         End Set
     End Property
-    Public Sub RemoveUser(username As String)
-        Dim usr As User = Users.Item(username)
+    Public Sub RemoveUser(userindex As Integer)
+        Dim usr As User = Users.Values(userindex)
         RemoveUser(usr)
     End Sub
     Public Sub RemoveUser(usr As User)
