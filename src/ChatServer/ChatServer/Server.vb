@@ -281,7 +281,7 @@ Public Class Server
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.checkHorizontal(message)
-        'chatroom.RecieveCoordinaat(message)
+        chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
     End Sub
