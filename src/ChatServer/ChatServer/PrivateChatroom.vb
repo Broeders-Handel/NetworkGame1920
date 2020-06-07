@@ -30,11 +30,11 @@ Public Class PrivateChatroom
         Next
     End Sub
 
-    'Public Function RecieveCoordinaat(Rijkol As String) As String
-    '    Dim rij As String = Rijkol.Substring(0, 1)
-    '    Dim Kolom As String = Rijkol.Substring(1, 1)
-    '    Return Rijkol
-    'End Function
+    Public Function RecieveCoordinaat(Rijkol As String) As String
+        Dim rij As String = Rijkol.Substring(0, 1)
+        Dim Kolom As String = Rijkol.Substring(1, 1)
+        Return Rijkol
+    End Function
     Public Function checkHorizontal(rijkol As String) As Boolean
         Dim rij As String = rijkol.Substring(0, 1)
         Dim kol As String = rijkol.Substring(1, 1)
