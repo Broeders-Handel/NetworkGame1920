@@ -307,8 +307,8 @@ Public Class Client
     Private Sub UpdateGamePlay(but As Button)
         If but.InvokeRequired Then
             but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
-        ElseIf but.Enabled = True Then
-            but.Enabled = False
+        ElseIf but.Text = "KLIK HIER!" Then
+            but.Text = "Clicked"
             but.BackColor = clientController.GetColor
         End If
     End Sub
