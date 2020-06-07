@@ -196,6 +196,7 @@ Public Class TCPClientController
     End Sub
 #End Region
     Public Sub HandleMessageWithCommand(message As String)
+        RaiseEvent MessageReceived(message)
         Dim command As COM_COMMAND = getCommand(message)
         message = getMessage(message)
         If command = COM_COMMAND.DISCONNECTED Then

@@ -229,9 +229,9 @@ Public Class Client
 
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
-        ComunicatieThread.Abort()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
         UsersListBox.DataSource = Nothing
+        Connected = False
         updateGUI()
     End Sub
     Public Sub stopServer()
@@ -244,7 +244,7 @@ Public Class Client
     'Update textbox
     Private Sub UpdateText(RTB As TextBox, txt As String)
         If RTB.InvokeRequired Then
-            RTB.Invoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
+            RTB.BeginInvoke(New UpdateTextDelegate(AddressOf UpdateText), New Object() {RTB, txt})
         ElseIf txt IsNot Nothing Then
             RTB.AppendText(txt & Environment.NewLine)
         End If
