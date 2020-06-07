@@ -8,6 +8,7 @@ Public Class Client
     Private _Username As String
     Dim Connected As Boolean
     WithEvents clientController As New TCPClientController
+    Dim tcpclient As TcpClient
     Private ComunicatieThread As Thread
     Private _ButtonList As New List(Of Button)
     Private Index As Integer = 0
@@ -137,7 +138,6 @@ Public Class Client
                 Connected = False
             End If
 
-
             Me.Text = Username
             updateGUI()
         Else
@@ -151,12 +151,30 @@ Public Class Client
             IpAdressTextBox.ReadOnly = True
             DisconnectButton.Enabled = True
             ConnectButton.Text = "Connected"
+            PrivateSendButton.Enabled = True
+            PublicSendButton.Enabled = True
             ConnectButton.Enabled = False
             ChallengeButton.Enabled = True
+            'PrivateMessageButton.Enabled = True
+            PrivateTextBox.ReadOnly = False
+            PublicTextBox.ReadOnly = False
+            TabControl1.Enabled = True
         Else
             updateBut(ConnectButton)
             updateBut(DisconnectButton)
+
+            updateBut(PublicSendButton)
+            updateBut(PrivateSendButton)
+            'updateBut(PrivateMessageButton)
+            updatetextBox(IpAdressTextBox)
+            updatetextBox(PublicTextBox)
+            updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
+            updateTabcontrol(TabControl1)
+            updateListBox(UsersListBox)
+
+            PublicTextBox.ReadOnly = True
+            PrivateTextBox.ReadOnly = True
             ConnectButton.Enabled = True
             DisconnectButton.Enabled = False
             IpAdressTextBox.ReadOnly = False
@@ -165,6 +183,12 @@ Public Class Client
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
+            IpAdressTextBox.Text = ""
+            PublicSendButton.Enabled = False
+            PrivateSendButton.Enabled = False
+            TabControl1.Enabled = False
+            UsersListBox.Items.Clear()
+
 
         End If
     End Sub
@@ -226,7 +250,6 @@ Public Class Client
     '        End If
     '    End If
     'End Sub
-
     Private Sub DisconnectButton_Click(sender As Object, e As EventArgs) Handles DisconnectButton.Click
         clientController.DisconnectUser()
         ComunicatieThread = New Thread(New ThreadStart(AddressOf clientController.Listening))
@@ -235,6 +258,8 @@ Public Class Client
         updateGUI()
     End Sub
     Public Sub stopServer()
+
+        tcpclient = New TcpClient
         clientController.DisconnectUser()
         Connected = False
         updateGUI()
@@ -264,6 +289,7 @@ Public Class Client
         Else
             UsersListBox.DataSource = Nothing
             UsersListBox.DataSource = users
+
         End If
     End Sub
     Private Delegate Sub UpdateButClickableDelegate(but As Button)
@@ -287,8 +313,15 @@ Public Class Client
         If but.InvokeRequired Then
             but.Invoke(New UpdateButDelegate(AddressOf updateBut), but)
         ElseIf but.Enabled = False Then
-            but.Text = "Connect"
             but.Enabled = True
+            If but.Text = "Connected" Then
+                but.Text = "Connect"
+            End If
+        Else
+            but.Enabled = False
+            If but.Text = "Connect" Then
+                but.Text = "Connected"
+            End If
         End If
     End Sub
     Private Delegate Sub updateTextBoxDelegate(tb As TextBox)
@@ -301,6 +334,27 @@ Public Class Client
         ElseIf tb.ReadOnly = False Then
             tb.ReadOnly = True
             tb.Text = ""
+        End If
+    End Sub
+    Private Delegate Sub updateTabControlDelegate(tc As TabControl)
+    Private Sub updateTabcontrol(tc As TabControl)
+        If tc.InvokeRequired Then
+            tc.Invoke(New updateTabControlDelegate(AddressOf updateTabcontrol), tc)
+        Else
+            If tc.Enabled = True Then
+                tc.Enabled = False
+            Else
+                tc.Enabled = True
+            End If
+        End If
+    End Sub
+
+    Private Delegate Sub updateListBoxDelegate(lb As ListBox)
+    Private Sub updateListBox(lb As ListBox)
+        If lb.InvokeRequired Then
+            lb.Invoke(New updateListBoxDelegate(AddressOf updateListBox), lb)
+        Else
+            lb.DataSource = Nothing
         End If
     End Sub
     Private Delegate Sub UpdateGamePlayDelegate(but As Button)
