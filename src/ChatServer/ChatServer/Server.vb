@@ -260,9 +260,16 @@ Public Class Server
         users(0).IsBusy = False
         users(1).IsBusy = False
         UsersController.PrivateChatrooms.Remove(roomID)
-        For Each usr In users
-            usr.write("", COM_COMMAND.LEAVEGAME)
+
+
+        For i As Integer = users.Count - 1 To 0 Step -1
+            users(i).write("", COM_COMMAND.LEAVEGAME)
         Next
+
+
+        'For Each usr In users
+        '    usr.write("", COM_COMMAND.LEAVEGAME)
+        'Next
     End Sub
     Private Function getRoomID(username As String) As Integer
         Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
@@ -278,21 +285,47 @@ Public Class Server
     End Sub
 
     Private Sub HandleIncomingGameMessage(username As String, message As String)
-        Dim gewonnen As Boolean
+
 
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
-        gewonnen = chatroom.checkHorizontal(message)
-        DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
-        If gewonnen = True Then
-            users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-            users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+
+        If chatroom.checkHorizontal(message) = True Then
+            If UsersController.Users.Values(0).Turn = True Then
+                users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            ElseIf UsersController.Users.Values(1).Turn = True Then
+                users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            End If
+            HandleLeaveGame(users(0).Username)
+
+        ElseIf chatroom.checkVertical(message) = True Then
+            If UsersController.Users.Values(0).Turn = True Then
+                users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            ElseIf UsersController.Users.Values(1).Turn = True Then
+                users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            End If
+            HandleLeaveGame(users(0).Username)
+            HandleLeaveGame(users(1).Username)
+        ElseIf chatroom.checkDiagonal(message) = True Then
+            If UsersController.Users.Values(0).Turn = True Then
+                users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            ElseIf UsersController.Users.Values(1).Turn = True Then
+                users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
+                users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+            End If
             HandleLeaveGame(users(0).Username)
             HandleLeaveGame(users(1).Username)
         End If
+        DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
+
     End Sub
 
 
