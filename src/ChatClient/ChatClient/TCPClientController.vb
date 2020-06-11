@@ -14,6 +14,7 @@ Public Class TCPClientController
     Event ServerStopped()
     Event LeftGame()
     Event GamePlayRecieved(message As String)
+    Event ColorRecieved(clr As String)
     Private connectResp As ConnectResponse = ConnectResponse.None
 
     Private ComunicatieThread As Thread
@@ -178,6 +179,7 @@ Public Class TCPClientController
             Return COM_COMMAND.TURN
         Else
 
+
             Throw New NotSupportedException()
         End If
     End Function
@@ -226,6 +228,7 @@ Public Class TCPClientController
             RaiseEvent GamePlayRecieved(message)
         ElseIf command = COM_COMMAND.TURN Then
             RaiseEvent WhosTurn(message)
+
         Else
             Throw New NotSupportedException
         End If
@@ -260,8 +263,8 @@ Public Class TCPClientController
         Write("", COM_COMMAND.DISCONNECTED)
         TCPClient = Nothing
     End Sub
-
-    Public Function GetColor() As Color
+    Public Function SetColor() As Color
         Return Color.Blue
+
     End Function
 End Class

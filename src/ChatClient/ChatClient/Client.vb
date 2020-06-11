@@ -25,12 +25,16 @@ Public Class Client
     Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
         If Truefalse Like "False" Then
             For Each button In _ButtonList
-                updateButClickable(button)
-            Next
-        ElseIf Truefalse Like "True" Then
-            For Each button In _ButtonList
                 updateButNotClickable(button)
             Next
+
+        ElseIf Truefalse Like "True" Then
+            For Each button In _ButtonList
+                If button.Text <> "clicked" Then
+                    updateButClickable(button)
+                End If
+            Next
+
         End If
     End Function
     Function LeftGame() Handles clientController.LeftGame
@@ -217,8 +221,10 @@ Public Class Client
         Dim Kolom As Integer = Index \ 6
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As String = Rij & "," & Kolom
-        clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
-        'clientController.GetColor()
+        Dim btntext As String = "clicked"
+        Dim message As String = KolRij + ";" + btntext
+        clientController.Write(message, clientController.COM_COMMAND.GAME)
+
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button
@@ -227,6 +233,7 @@ Public Class Client
         Dim kolom As String = Message.Substring(2, 1)
         Dim index As Integer = kolom * 6 + rij
         btn = _ButtonList(index)
+        btn.Text = "clicked"
         Return btn
     End Function
 
@@ -299,18 +306,31 @@ Public Class Client
     Private Sub updateButClickable(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
-        ElseIf but.Enabled = True Then
-            but.Enabled = False
+        Else
+            but.Enabled = True
+
         End If
     End Sub
     Private Delegate Sub UpdateButNotClickableDelegate(but As Button)
     Private Sub updateButNotClickable(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButNotClickable), but)
-        ElseIf but.Enabled = False Then
-            but.Enabled = True
+        Else
+            but.Enabled = False
+
+        End If
+
+    End Sub
+    Private Delegate Sub UpdateGamePlayDelegate(but As Button)
+    Private Sub UpdateGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
+        Else
+            but.Text = "clicked"
+            but.BackColor = clientController.SetColor
         End If
     End Sub
+
     Private Delegate Sub UpdateButDelegate(But As Button)
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
@@ -360,15 +380,8 @@ Public Class Client
             lb.DataSource = Nothing
         End If
     End Sub
-    Private Delegate Sub UpdateGamePlayDelegate(but As Button)
-    Private Sub UpdateGamePlay(but As Button)
-        If but.InvokeRequired Then
-            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
-        ElseIf but.Text = "KLIK HIER!" Then
-            but.Text = "Clicked"
-            but.BackColor = clientController.GetColor
-        End If
-    End Sub
+
+
     Private Delegate Sub ClearGameDelegate(but As Button)
     Private Sub Cleargame(but As Button)
         If but.InvokeRequired Then

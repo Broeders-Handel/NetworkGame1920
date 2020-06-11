@@ -277,10 +277,8 @@ Public Class Server
     End Sub
 
     Private Sub HandleIncomingGameMessage(username As String, message As String)
-
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
-        chatroom.SetZwaartekracht(message)
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
@@ -366,6 +364,7 @@ Public Class Server
             Return "//GAME//"
         ElseIf commEnum = COM_COMMAND.TURN Then
             Return "//TURN//"
+
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
