@@ -260,8 +260,8 @@ Public Class Server
         users(0).IsBusy = False
         users(1).IsBusy = False
         UsersController.PrivateChatrooms.Remove(roomID)
-        For Each usr In users
-            usr.write("", COM_COMMAND.LEAVEGAME)
+        For i As Integer = users.Count - 1 To 0 Step -1
+            users(i).write("", COM_COMMAND.LEAVEGAME)
         Next
     End Sub
     Private Function getRoomID(username As String) As Integer
@@ -280,6 +280,7 @@ Public Class Server
 
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
+        chatroom.SetZwaartekracht(message)
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)

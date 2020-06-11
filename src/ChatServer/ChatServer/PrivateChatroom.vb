@@ -1,7 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.CompilerServices
 
 Public Class PrivateChatroom
-
+    Dim RijClicked As New Dictionary(Of String, Boolean)
+    Dim KolomClicked As New Dictionary(Of String, Boolean)
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
         users.Add(user1)
@@ -51,4 +52,16 @@ Public Class PrivateChatroom
         End If
     End Function
 
+    Public Sub SetZwaartekracht(rijkol As String)
+        Dim rij As String = rijkol.Substring(0, 1)
+        Dim Kolom As String = rijkol.Substring(2, 1)
+        RijClicked.Add(rij, True)
+        KolomClicked.Add(Kolom, True)
+
+        Dim sb As New System.Text.StringBuilder
+        For Each item As KeyValuePair(Of String, Boolean) In RijClicked
+            sb.AppendLine(item.Key & ") " & item.Value.ToString)
+        Next
+        MessageBox.Show(sb.ToString())
+    End Sub
 End Class

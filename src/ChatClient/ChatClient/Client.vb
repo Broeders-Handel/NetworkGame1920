@@ -35,6 +35,9 @@ Public Class Client
     End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
+        For Each button In _ButtonList
+            Cleargame(button)
+        Next
     End Function
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicChatTextBox, message)
@@ -364,6 +367,16 @@ Public Class Client
         ElseIf but.Text = "KLIK HIER!" Then
             but.Text = "Clicked"
             but.BackColor = clientController.GetColor
+        End If
+    End Sub
+    Private Delegate Sub ClearGameDelegate(but As Button)
+    Private Sub Cleargame(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New ClearGameDelegate(AddressOf Cleargame), but)
+        Else
+            but.BackColor = Color.White
+            but.Enabled = True
+            but.Text = "KLIK HIER!"
         End If
     End Sub
 End Class
