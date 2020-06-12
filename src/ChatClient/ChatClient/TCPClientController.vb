@@ -271,5 +271,5 @@ Public Class TCPClientController
         TCPClient = Nothing
     End Sub
 
-    End Function
+
 End Class

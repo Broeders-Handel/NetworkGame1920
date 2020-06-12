@@ -358,7 +358,7 @@ Public Class PrivateChatroom
     End Function
     Public Sub SendCoordinaat(Rijkol As String, sender As String)
         For Each usr In users
-            usr.write(Message, Server.COM_COMMAND.GAME)
+            usr.write(Rijkol, Server.COM_COMMAND.GAME)
         Next
     End Sub
 

@@ -53,7 +53,7 @@ Public Class Client
         UpdateClientList(users)
     End Function
     Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
-        RetrieveClickedButton(Message)
+        updategameplay(RetrieveClickedButton(Message))
     End Function
 
     Public Property Username As String
@@ -327,10 +327,8 @@ Public Class Client
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
         ElseIf but.Text <> "clicked" Then
             but.Enabled = True
-
         ElseIf but.Text <> "KLIK HIER!" Then
             but.Enabled = False
-            but.BackColor = Color.Blue
         Else
             but.Enabled = False
         End If
@@ -339,15 +337,29 @@ Public Class Client
     Private Sub updateButNotClickable(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButNotClickable), but)
-            but.BackColor = Color.Red
         Else
             but.Enabled = False
-
         End If
 
     End Sub
 
+    Private Delegate Sub UpdateGAmeplayDelegate(but As Button)
+    Private Sub updategameplay(but As Button)
+        If but.InvokeRequired Then
+            but.Invoke(New UpdateButClickableDelegate(AddressOf updategameplay), but)
+        Else
+            If AandeBeurt = False Then
+                but.Text = "clicked"
+                but.BackColor = Color.Red
+            ElseIf AandeBeurt = True Then
+                but.Text = "clicked"
+                but.BackColor = Color.Blue
+            Else
+                but.Text = "clicked"
+            End If
 
+        End If
+    End Sub
     Private Delegate Sub UpdateButDelegate(But As Button)
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
