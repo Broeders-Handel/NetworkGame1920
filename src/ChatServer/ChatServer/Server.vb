@@ -260,14 +260,17 @@ Public Class Server
         If UsersController.Users.Values(0).Turn = True Then
 
             If chatroom.checkHorizontalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkVerticalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
@@ -276,14 +279,17 @@ Public Class Server
         ElseIf UsersController.Users.Values(1).Turn = True Then
 
             If chatroom.checkHorizontalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkVerticalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
@@ -300,15 +306,16 @@ Public Class Server
         For i As Integer = users.Count - 1 To 0 Step -1
             users(i).write("", COM_COMMAND.LEAVEGAME)
         Next
+        If users(0).Username = username Then
+            Sleep(100)
+            users(username).write("U heeft verloren", COM_COMMAND.WIN)
+            users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+        Else
+            Sleep(100)
+            users(username).write("U heeft verloren", COM_COMMAND.WIN)
+            users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
+        End If
 
-        For i As Integer = users.Count - 1 To 0 Step -1
-            users(i).write("", COM_COMMAND.LEAVEGAME)
-        Next
-
-
-        'For Each usr In users
-        '    usr.write("", COM_COMMAND.LEAVEGAME)
-        'Next
     End Sub
     Private Function getRoomID(username As String) As Integer
         Dim roomID As Integer = UsersController.Users(username).PrivateChatroomId
@@ -334,14 +341,17 @@ Public Class Server
         If UsersController.Users.Values(0).Turn = True Then
 
             If chatroom.checkHorizontalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkVerticalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser1(message) = True Then
+                Sleep(100)
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
@@ -350,14 +360,17 @@ Public Class Server
         ElseIf UsersController.Users.Values(1).Turn = True Then
 
             If chatroom.checkHorizontalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkVerticalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser2(message) = True Then
+                Sleep(100)
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)

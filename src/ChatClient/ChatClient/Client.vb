@@ -245,16 +245,20 @@ Public Class Client
         TabControl1.SelectTab(1)
     End Sub
     Private Sub LeaveButton_Click(sender As Object, e As EventArgs) Handles LeaveButton.Click
-        clientController.Write("", clientController.COM_COMMAND.LEAVEGAME)
-        PrivateChatTextBox.Text = ""
 
+        clientController.Write("", clientController.COM_COMMAND.LEAVEGAME)
+        For Each but In _ButtonList
+            ResetGamePlay(but)
+        Next
     End Sub
 
     Public Sub ServerStopped() Handles clientController.ServerStopped
         stopServer()
     End Sub
     Public Sub win(message As String) Handles clientController.Win
+        Thread.Sleep(100)
         UpdateText(PrivateChatTextBox, message)
+        Thread.Sleep(100)
         UpdateText(PrivateChatTextBox, "Challenge opnieuw om te herstarten")
         For Each but In _ButtonList
             RestartGamePlay(but)
