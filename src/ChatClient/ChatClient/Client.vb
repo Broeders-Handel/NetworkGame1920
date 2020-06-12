@@ -17,7 +17,7 @@ Public Class Client
     Dim AandeBeurt As Boolean = False
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        For i As Integer = 0 To 36 - 1
+        For i As Integer = 0 To 9 - 1
             addButton("KLIK HIER!")
         Next
         Connected = False
@@ -206,11 +206,11 @@ Public Class Client
         Dim Button As New Button()
         Button.Text = text
 
-        Dim rij As Integer = Index Mod 6
-        Dim kol As Integer = Index \ 6
+        Dim rij As Integer = Index Mod 3
+        Dim kol As Integer = Index \ 3
 
-        Button.Location = New Point(10 + 70 * kol, 7.5 + 60 * rij)
-        Button.Size = New Size(60, 60)
+        Button.Location = New Point(10 + 130 * kol, 7.5 + 120 * rij)
+        Button.Size = New Size(120, 120)
         Index += 1
         Me.Controls.Add(Button)
         _ButtonList.Add(Button)
@@ -220,8 +220,8 @@ Public Class Client
     Private Sub Button_Click(sender As Object, e As EventArgs)
         Dim ButtonClick As Button = CType(sender, Button)
         Dim Index As Integer = _ButtonList.IndexOf(ButtonClick)
-        Dim Kolom As Integer = Index \ 6
-        Dim Rij As Integer = Index Mod 6
+        Dim Kolom As Integer = Index \ 3
+        Dim Rij As Integer = Index Mod 3
         Dim KolRij As String = Rij & "," & Kolom
         Dim btntext As String = "clicked"
         Dim message As String = KolRij + ";" + btntext
@@ -233,7 +233,7 @@ Public Class Client
         Dim rij As String = Message.Substring(0, 1)
         Dim kolom As String = Message.Substring(2, 1)
         Dim Text As String = Message.Substring(4)
-        Dim index As Integer = kolom * 6 + rij
+        Dim index As Integer = kolom * 3 + rij
         btn = _ButtonList(index)
         Return btn
     End Function
