@@ -26,17 +26,21 @@ Public Class Client
 
         If Truefalse Like "False" Then
             For Each button In _ButtonList
-                updateButClickable(button)
+                updateButNotClickable(button)
             Next
 
         ElseIf Truefalse Like "True" Then
             For Each button In _ButtonList
-                updateButNotClickable(button)
+                updateButClickable(button)
             Next
+
         End If
     End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
+        For Each button In _ButtonList
+            Cleargame(button)
+        Next
     End Function
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicChatTextBox, message)
@@ -49,7 +53,7 @@ Public Class Client
         UpdateClientList(users)
     End Function
     Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
-        UpdateGamePlay(RetrieveClickedButton(Message))
+        RetrieveClickedButton(Message)
     End Function
 
     Public Property Username As String
@@ -216,19 +220,39 @@ Public Class Client
         Dim Kolom As Integer = Index \ 6
         Dim Rij As Integer = Index Mod 6
         Dim KolRij As String = Rij & "," & Kolom
-        clientController.Write(KolRij, clientController.COM_COMMAND.GAME)
-        'clientController.GetColor()
+        Dim btntext As String = "clicked"
+        Dim message As String = KolRij + ";" + btntext
+        clientController.Write(message, clientController.COM_COMMAND.GAME)
+
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button
         Dim btn As Button
         Dim rij As String = Message.Substring(0, 1)
         Dim kolom As String = Message.Substring(2, 1)
+        Dim Text As String = Message.Substring(4)
         Dim index As Integer = kolom * 6 + rij
         btn = _ButtonList(index)
+        btn.Text = Text
         Return btn
-    End Function
 
+    End Function
+    'Public Function GetZwaartekracht(Message As String) As Button
+    '    Dim btn As Button
+    '    Dim rij As String = Message.Substring(0, 1)
+    '    Dim kolom As String = Message.Substring(2, 1)
+    '    Dim Text As String = Message.Substring(4)
+    '    Dim index As Integer = kolom * 6 + rij
+
+    '    If rij = 5 Then
+    '        btn = _ButtonList(index)
+    '    End If
+
+
+
+
+    '    Return btn
+    'End Function
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
@@ -301,7 +325,13 @@ Public Class Client
     Private Sub updateButClickable(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
-        ElseIf but.Enabled = True Then
+        ElseIf but.Text <> "clicked" Then
+            but.Enabled = True
+
+        ElseIf but.Text <> "KLIK HIER!" Then
+            but.Enabled = False
+            but.BackColor = Color.Blue
+        Else
             but.Enabled = False
         End If
     End Sub
@@ -309,10 +339,15 @@ Public Class Client
     Private Sub updateButNotClickable(but As Button)
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButNotClickable), but)
-        ElseIf but.Enabled = False Then
-            but.Enabled = True
+            but.BackColor = Color.Red
+        Else
+            but.Enabled = False
+
         End If
+
     End Sub
+
+
     Private Delegate Sub UpdateButDelegate(But As Button)
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then
@@ -362,13 +397,16 @@ Public Class Client
             lb.DataSource = Nothing
         End If
     End Sub
-    Private Delegate Sub UpdateGamePlayDelegate(but As Button)
-    Private Sub UpdateGamePlay(but As Button)
+
+
+    Private Delegate Sub ClearGameDelegate(but As Button)
+    Private Sub Cleargame(but As Button)
         If but.InvokeRequired Then
-            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf UpdateGamePlay), but)
-        ElseIf but.Text = "KLIK HIER!" Then
-            but.Text = "Clicked"
-            but.BackColor = clientController.GetColor
+            but.BeginInvoke(New ClearGameDelegate(AddressOf Cleargame), but)
+        Else
+            but.BackColor = Color.White
+            but.Enabled = True
+            but.Text = "KLIK HIER!"
         End If
     End Sub
 End Class

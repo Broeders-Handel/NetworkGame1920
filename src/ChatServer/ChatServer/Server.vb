@@ -297,9 +297,8 @@ Public Class Server
         users(0).IsBusy = False
         users(1).IsBusy = False
         UsersController.PrivateChatrooms.Remove(roomID)
-
-        For Each usr In users
-
+        For i As Integer = users.Count - 1 To 0 Step -1
+            users(i).write("", COM_COMMAND.LEAVEGAME)
         Next
 
         For i As Integer = users.Count - 1 To 0 Step -1

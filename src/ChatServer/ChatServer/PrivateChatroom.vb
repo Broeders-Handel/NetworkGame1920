@@ -3,6 +3,7 @@
 Public Class PrivateChatroom
     Dim clickedButtons As New List(Of String)
 
+    Dim UsersController As New UsersController
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
         users.Add(user1)
@@ -357,17 +358,16 @@ Public Class PrivateChatroom
     End Function
     Public Sub SendCoordinaat(Rijkol As String, sender As String)
         For Each usr In users
-            usr.write(Rijkol, Server.COM_COMMAND.GAME)
+            usr.write(Message, Server.COM_COMMAND.GAME)
         Next
     End Sub
-    Public Function SetColor(color As Color) As Color
-        Dim Colored As Boolean
-        If Colored = True Then
-            MessageBox.Show("Deze button is gebruikt!")
-        Else
-            color = Color.Blue
-            Return color
-        End If
-    End Function
 
+
+
+    Public Sub SetZwaartekracht(Message As String)
+        Dim Rij As String = Message.Substring(0, 1)
+        Dim kolom As String = Message.Substring(2, 1)
+
+
+    End Sub
 End Class

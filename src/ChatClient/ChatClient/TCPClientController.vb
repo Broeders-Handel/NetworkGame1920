@@ -180,7 +180,7 @@ Public Class TCPClientController
             Return COM_COMMAND.GAME
         ElseIf commStr = "//TURN//" Then
             Return COM_COMMAND.TURN
-        ElseIf commstr = "//WIN//" Then
+        ElseIf commStr = "//WIN//" Then
             Return COM_COMMAND.WIN
         Else
 
@@ -271,7 +271,5 @@ Public Class TCPClientController
         TCPClient = Nothing
     End Sub
 
-    Public Function GetColor() As Color
-        Return Color.Blue
     End Function
 End Class
