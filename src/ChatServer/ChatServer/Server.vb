@@ -496,7 +496,7 @@ Public Class Server
             Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
             Return COM_COMMAND.GAME
-        ElseIf commstr = "//WIN//" Then
+        ElseIf commStr = "//WIN//" Then
             Return COM_COMMAND.WIN
         Else
 

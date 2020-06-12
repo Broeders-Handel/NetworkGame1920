@@ -46,7 +46,7 @@ Partial Class Client
         '
         'ConnectButton
         '
-        Me.ConnectButton.Location = New System.Drawing.Point(670, 12)
+        Me.ConnectButton.Location = New System.Drawing.Point(444, 12)
         Me.ConnectButton.Name = "ConnectButton"
         Me.ConnectButton.Size = New System.Drawing.Size(112, 28)
         Me.ConnectButton.TabIndex = 0
@@ -55,7 +55,7 @@ Partial Class Client
         '
         'DisconnectButton
         '
-        Me.DisconnectButton.Location = New System.Drawing.Point(788, 12)
+        Me.DisconnectButton.Location = New System.Drawing.Point(562, 12)
         Me.DisconnectButton.Name = "DisconnectButton"
         Me.DisconnectButton.Size = New System.Drawing.Size(112, 28)
         Me.DisconnectButton.TabIndex = 3
@@ -64,7 +64,7 @@ Partial Class Client
         '
         'IpAdressTextBox
         '
-        Me.IpAdressTextBox.Location = New System.Drawing.Point(670, 331)
+        Me.IpAdressTextBox.Location = New System.Drawing.Point(445, 342)
         Me.IpAdressTextBox.Name = "IpAdressTextBox"
         Me.IpAdressTextBox.Size = New System.Drawing.Size(316, 20)
         Me.IpAdressTextBox.TabIndex = 5
@@ -74,7 +74,7 @@ Partial Class Client
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(989, 332)
+        Me.Label1.Location = New System.Drawing.Point(763, 343)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(28, 15)
         Me.Label1.TabIndex = 6
@@ -83,16 +83,16 @@ Partial Class Client
         'UsersListBox
         '
         Me.UsersListBox.FormattingEnabled = True
-        Me.UsersListBox.Location = New System.Drawing.Point(1027, 47)
+        Me.UsersListBox.Location = New System.Drawing.Point(801, 13)
         Me.UsersListBox.Name = "UsersListBox"
-        Me.UsersListBox.Size = New System.Drawing.Size(139, 251)
+        Me.UsersListBox.Size = New System.Drawing.Size(139, 290)
         Me.UsersListBox.TabIndex = 8
         '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.PublicTabPage)
         Me.TabControl1.Controls.Add(Me.PrivateTabPage)
-        Me.TabControl1.Location = New System.Drawing.Point(670, 45)
+        Me.TabControl1.Location = New System.Drawing.Point(444, 50)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(351, 253)
@@ -175,7 +175,7 @@ Partial Class Client
         'ChallengeButton
         '
         Me.ChallengeButton.Enabled = False
-        Me.ChallengeButton.Location = New System.Drawing.Point(670, 302)
+        Me.ChallengeButton.Location = New System.Drawing.Point(445, 310)
         Me.ChallengeButton.Name = "ChallengeButton"
         Me.ChallengeButton.Size = New System.Drawing.Size(91, 23)
         Me.ChallengeButton.TabIndex = 0
@@ -184,7 +184,7 @@ Partial Class Client
         '
         'LeaveButton
         '
-        Me.LeaveButton.Location = New System.Drawing.Point(767, 302)
+        Me.LeaveButton.Location = New System.Drawing.Point(542, 310)
         Me.LeaveButton.Name = "LeaveButton"
         Me.LeaveButton.Size = New System.Drawing.Size(91, 23)
         Me.LeaveButton.TabIndex = 10
@@ -194,7 +194,7 @@ Partial Class Client
         'GewonnenLabel
         '
         Me.GewonnenLabel.AutoSize = True
-        Me.GewonnenLabel.Location = New System.Drawing.Point(1027, 305)
+        Me.GewonnenLabel.Location = New System.Drawing.Point(801, 310)
         Me.GewonnenLabel.Name = "GewonnenLabel"
         Me.GewonnenLabel.Size = New System.Drawing.Size(0, 13)
         Me.GewonnenLabel.TabIndex = 11
@@ -203,7 +203,7 @@ Partial Class Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1182, 375)
+        Me.ClientSize = New System.Drawing.Size(956, 375)
         Me.Controls.Add(Me.GewonnenLabel)
         Me.Controls.Add(Me.LeaveButton)
         Me.Controls.Add(Me.ChallengeButton)
