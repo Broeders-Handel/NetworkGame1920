@@ -343,7 +343,7 @@ Public Class Server
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
-                    users(1).write("U heeft verloren", COM_COMMAND.WIN)
+                users(1).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             End If
 
@@ -359,7 +359,7 @@ Public Class Server
                 HandleLeaveGame(users(0).Username)
             ElseIf chatroom.checkDiagonalUser2(message) = True Then
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                    users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
                 HandleLeaveGame(users(0).Username)
             End If
         End If

@@ -49,42 +49,30 @@ Public Class PrivateChatroom
             clickedButtonsUser1.Add(clickedButton)
         End If
 
-        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("03") Then
+        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("02") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("03") And clickedButtonsUser1.Contains("04") Then
+        ElseIf clickedButtonsUser1.contains("10") And clickedButtonsuser1.contains("11") And clickedButtonsUser1.contains("12") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("03") And clickedButtonsUser1.Contains("04") And clickedButtonsUser1.Contains("05") Then
+        ElseIf clickedButtonsUser1.contains("20") And clickedButtonsUser1.contains("21") And clickedButtonsUser1.contains("22") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("10") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("13") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("14") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("14") And clickedButtonsUser1.Contains("15") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("20") And clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("23") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("24") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("25") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("30") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("40") And clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("44") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("44") And clickedButtonsUser1.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("50") And clickedButtonsUser1.Contains("51") And clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("51") And clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") And clickedButtonsUser1.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") And clickedButtonsUser1.Contains("54") And clickedButtonsUser1.Contains("55") Then
-            gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("30") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("34") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("35") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("40") And clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("44") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("44") And clickedButtonsUser1.Contains("45") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("50") And clickedButtonsUser1.Contains("51") And clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("51") And clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") And clickedButtonsUser1.Contains("54") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser1.Contains("52") And clickedButtonsUser1.Contains("53") And clickedButtonsUser1.Contains("54") And clickedButtonsUser1.Contains("55") Then
+            '    gewonnen = True
         Else
             gewonnen = False
         End If
@@ -100,42 +88,48 @@ Public Class PrivateChatroom
             clickedButtonsUser2.Add(clickedButton)
         End If
 
-        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("01") And clickedButtonsUser2.Contains("02") And clickedButtonsUser2.Contains("03") Then
+        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("01") And clickedButtonsUser2.Contains("02") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("01") And clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("03") And clickedbuttonsUser2.Contains("04") Then
+        ElseIf clickedButtonsUser2.Contains("10") And clickedButtonsUser2.Contains("11") And clickedButtonsUser2.Contains("12") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("03") And clickedbuttonsUser2.Contains("04") And clickedbuttonsUser2.Contains("05") Then
+        ElseIf clickedButtonsUser2.Contains("20") And clickedButtonsUser2.Contains("21") And clickedButtonsUser2.Contains("22") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("10") And clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("13") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("14") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("14") And clickedbuttonsUser2.Contains("15") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("20") And clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("23") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("24") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("25") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("30") And clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("33") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("34") And clickedbuttonsUser2.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("40") And clickedbuttonsUser2.Contains("41") And clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("41") And clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("43") And clickedbuttonsUser2.Contains("44") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("43") And clickedbuttonsUser2.Contains("44") And clickedbuttonsUser2.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("50") And clickedbuttonsUser2.Contains("51") And clickedbuttonsUser2.Contains("52") And clickedbuttonsUser2.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("51") And clickedbuttonsUser2.Contains("52") And clickedbuttonsUser2.Contains("53") And clickedbuttonsUser2.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("52") And clickedbuttonsUser2.Contains("53") And clickedbuttonsUser2.Contains("54") And clickedbuttonsUser2.Contains("55") Then
-            gewonnen = True
+            'If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("01") And clickedButtonsUser2.Contains("02") And clickedButtonsUser2.Contains("03") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("01") And clickedButtonsUser2.Contains("02") And clickedButtonsUser2.Contains("03") And clickedButtonsUser2.Contains("04") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("02") And clickedButtonsUser2.Contains("03") And clickedButtonsUser2.Contains("04") And clickedButtonsUser2.Contains("05") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("10") And clickedButtonsUser2.Contains("11") And clickedButtonsUser2.Contains("12") And clickedButtonsUser2.Contains("13") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("11") And clickedButtonsUser2.Contains("12") And clickedButtonsUser2.Contains("13") And clickedButtonsUser2.Contains("14") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("12") And clickedButtonsUser2.Contains("13") And clickedButtonsUser2.Contains("14") And clickedButtonsUser2.Contains("15") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("20") And clickedButtonsUser2.Contains("21") And clickedButtonsUser2.Contains("22") And clickedButtonsUser2.Contains("23") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("21") And clickedButtonsUser2.Contains("22") And clickedButtonsUser2.Contains("23") And clickedButtonsUser2.Contains("24") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("22") And clickedButtonsUser2.Contains("23") And clickedButtonsUser2.Contains("24") And clickedButtonsUser2.Contains("25") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("30") And clickedButtonsUser2.Contains("31") And clickedButtonsUser2.Contains("32") And clickedButtonsUser2.Contains("33") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("31") And clickedButtonsUser2.Contains("32") And clickedButtonsUser2.Contains("33") And clickedButtonsUser2.Contains("34") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("32") And clickedButtonsUser2.Contains("33") And clickedButtonsUser2.Contains("34") And clickedButtonsUser2.Contains("35") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("40") And clickedButtonsUser2.Contains("41") And clickedButtonsUser2.Contains("42") And clickedButtonsUser2.Contains("43") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("41") And clickedButtonsUser2.Contains("42") And clickedButtonsUser2.Contains("43") And clickedButtonsUser2.Contains("44") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("42") And clickedButtonsUser2.Contains("43") And clickedButtonsUser2.Contains("44") And clickedButtonsUser2.Contains("45") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("50") And clickedButtonsUser2.Contains("51") And clickedButtonsUser2.Contains("52") And clickedButtonsUser2.Contains("53") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("51") And clickedButtonsUser2.Contains("52") And clickedButtonsUser2.Contains("53") And clickedButtonsUser2.Contains("54") Then
+            '    gewonnen = True
+            'ElseIf clickedButtonsUser2.Contains("52") And clickedButtonsUser2.Contains("53") And clickedButtonsUser2.Contains("54") And clickedButtonsUser2.Contains("55") Then
+            '    gewonnen = True
         Else
             gewonnen = False
         End If
@@ -152,43 +146,11 @@ Public Class PrivateChatroom
         End If
 
 
-
-
-        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("10") And clickedButtonsUser1.Contains("20") And clickedButtonsUser1.Contains("30") Then
+        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("10") And clickedButtonsUser1.Contains("20") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("10") And clickedButtonsUser1.Contains("20") And clickedButtonsUser1.Contains("30") And clickedButtonsUser1.Contains("40") Then
+        ElseIf clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("21") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("20") And clickedButtonsUser1.Contains("30") And clickedButtonsUser1.Contains("40") And clickedButtonsUser1.Contains("50") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("31") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("41") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("51") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("32") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("42") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("52") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("03") And clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("33") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("04") And clickedButtonsUser1.Contains("14") And clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("14") And clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("44") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("44") And clickedButtonsUser1.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("05") And clickedButtonsUser1.Contains("15") And clickedButtonsUser1.Contains("25") And clickedButtonsUser1.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("15") And clickedButtonsUser1.Contains("25") And clickedButtonsUser1.Contains("35") And clickedButtonsUser1.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("25") And clickedButtonsUser1.Contains("35") And clickedButtonsUser1.Contains("45") And clickedButtonsUser1.Contains("55") Then
+        ElseIf clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("22") Then
             gewonnen = True
         Else
             gewonnen = False
@@ -210,47 +172,16 @@ Public Class PrivateChatroom
 
 
 
-        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("10") And clickedButtonsUser2.Contains("20") And clickedButtonsUser2.Contains("30") Then
+        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("10") And clickedButtonsUser2.Contains("20") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("10") And clickedbuttonsUser2.Contains("20") And clickedbuttonsUser2.Contains("30") And clickedbuttonsUser2.Contains("40") Then
+        ElseIf clickedbuttonsUser2.Contains("01") And clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("21") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("20") And clickedbuttonsUser2.Contains("30") And clickedbuttonsUser2.Contains("40") And clickedbuttonsUser2.Contains("50") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("01") And clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("31") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("41") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("41") And clickedbuttonsUser2.Contains("51") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("32") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("42") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("52") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("03") And clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("33") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("43") And clickedbuttonsUser2.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("04") And clickedbuttonsUser2.Contains("14") And clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("14") And clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("34") And clickedbuttonsUser2.Contains("44") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("34") And clickedbuttonsUser2.Contains("44") And clickedbuttonsUser2.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("05") And clickedbuttonsUser2.Contains("15") And clickedbuttonsUser2.Contains("25") And clickedbuttonsUser2.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("15") And clickedbuttonsUser2.Contains("25") And clickedbuttonsUser2.Contains("35") And clickedbuttonsUser2.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("25") And clickedbuttonsUser2.Contains("35") And clickedbuttonsUser2.Contains("45") And clickedbuttonsUser2.Contains("55") Then
+        ElseIf clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("22") Then
             gewonnen = True
         Else
             gewonnen = False
         End If
         Return gewonnen
-
 
     End Function
     Public Function checkDiagonalUser1(rijkol As String) As Boolean
@@ -263,44 +194,10 @@ Public Class PrivateChatroom
             clickedButtonsUser1.Add(clickedButton)
         End If
 
-
-        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("33") Then
+        If clickedButtonsUser1.Contains("00") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("22") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("44") Then
+        ElseIf clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("11") And clickedButtonsUser1.Contains("20") Then
             gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("44") And clickedButtonsUser1.Contains("55") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("10") And clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("20") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("01") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("02") And clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("05") And clickedButtonsUser1.Contains("14") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("32") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("14") And clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("41") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("23") And clickedButtonsUser1.Contains("32") And clickedButtonsUser1.Contains("41") And clickedButtonsUser1.Contains("50") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("15") And clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("42") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("24") And clickedButtonsUser1.Contains("33") And clickedButtonsUser1.Contains("42") And clickedButtonsUser1.Contains("51") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("25") And clickedButtonsUser1.Contains("34") And clickedButtonsUser1.Contains("43") And clickedButtonsUser1.Contains("52") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("04") And clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("31") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("13") And clickedButtonsUser1.Contains("22") And clickedButtonsUser1.Contains("31") And clickedButtonsUser1.Contains("40") Then
-            gewonnen = True
-        ElseIf clickedButtonsUser1.Contains("03") And clickedButtonsUser1.Contains("12") And clickedButtonsUser1.Contains("21") And clickedButtonsUser1.Contains("30") Then
-            gewonnen = True
-
         Else
             gewonnen = False
         End If
@@ -319,43 +216,10 @@ Public Class PrivateChatroom
         End If
 
 
-        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("11") And clickedButtonsUser2.Contains("22") And clickedButtonsUser2.Contains("33") Then
+        If clickedButtonsUser2.Contains("00") And clickedButtonsUser2.Contains("11") And clickedButtonsUser2.Contains("22") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("44") Then
+        ElseIf clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("11") And clickedbuttonsUser2.Contains("20") Then
             gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("44") And clickedbuttonsUser2.Contains("55") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("10") And clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("43") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("43") And clickedbuttonsUser2.Contains("54") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("20") And clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("53") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("01") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("34") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("34") And clickedbuttonsUser2.Contains("45") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("02") And clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("35") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("05") And clickedbuttonsUser2.Contains("14") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("32") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("14") And clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("41") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("23") And clickedbuttonsUser2.Contains("32") And clickedbuttonsUser2.Contains("41") And clickedbuttonsUser2.Contains("50") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("15") And clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("42") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("24") And clickedbuttonsUser2.Contains("33") And clickedbuttonsUser2.Contains("42") And clickedbuttonsUser2.Contains("51") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("25") And clickedbuttonsUser2.Contains("34") And clickedbuttonsUser2.Contains("43") And clickedbuttonsUser2.Contains("52") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("04") And clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("31") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("13") And clickedbuttonsUser2.Contains("22") And clickedbuttonsUser2.Contains("31") And clickedbuttonsUser2.Contains("40") Then
-            gewonnen = True
-        ElseIf clickedbuttonsUser2.Contains("03") And clickedbuttonsUser2.Contains("12") And clickedbuttonsUser2.Contains("21") And clickedbuttonsUser2.Contains("30") Then
-            gewonnen = True
-
         Else
             gewonnen = False
         End If
