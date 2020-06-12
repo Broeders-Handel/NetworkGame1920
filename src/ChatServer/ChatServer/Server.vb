@@ -245,6 +245,7 @@ Public Class Server
             UsersController.Users(user2).write("True", COM_COMMAND.TURN)
             UsersController.Users(user2).Turn = False
         End If
+
     End Sub
     Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
         If CheckPrivateChatroomPossible(user1, user2) = True Then
@@ -382,8 +383,7 @@ Public Class Server
             '    HandleLeaveGame(users(1).Username)
         End If
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
-
-
+        Thread.Sleep(100)
     End Sub
 
 

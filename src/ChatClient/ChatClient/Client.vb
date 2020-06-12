@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.IO
 Imports System.Net.Sockets
 Imports System.Threading
 
@@ -28,12 +29,13 @@ Public Class Client
             For Each button In _ButtonList
                 updateButNotClickable(button)
             Next
+            AandeBeurt = False
 
         ElseIf Truefalse Like "True" Then
             For Each button In _ButtonList
                 updateButClickable(button)
             Next
-
+            AandeBeurt = True
         End If
     End Function
     Function LeftGame() Handles clientController.LeftGame
@@ -55,6 +57,10 @@ Public Class Client
     Function UpdateGame(Message As String) Handles clientController.GamePlayRecieved
         updategameplay(RetrieveClickedButton(Message))
     End Function
+
+    'Function UpdateColor(message As String) Handles clientController.ColorRecieved
+
+    'End Function
 
     Public Property Username As String
         Get
@@ -223,7 +229,6 @@ Public Class Client
         Dim btntext As String = "clicked"
         Dim message As String = KolRij + ";" + btntext
         clientController.Write(message, clientController.COM_COMMAND.GAME)
-
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button
@@ -233,26 +238,8 @@ Public Class Client
         Dim Text As String = Message.Substring(4)
         Dim index As Integer = kolom * 6 + rij
         btn = _ButtonList(index)
-        btn.Text = Text
         Return btn
-
     End Function
-    'Public Function GetZwaartekracht(Message As String) As Button
-    '    Dim btn As Button
-    '    Dim rij As String = Message.Substring(0, 1)
-    '    Dim kolom As String = Message.Substring(2, 1)
-    '    Dim Text As String = Message.Substring(4)
-    '    Dim index As Integer = kolom * 6 + rij
-
-    '    If rij = 5 Then
-    '        btn = _ButtonList(index)
-    '    End If
-
-
-
-
-    '    Return btn
-    'End Function
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
         TabControl1.SelectTab(1)
@@ -340,7 +327,6 @@ Public Class Client
         Else
             but.Enabled = False
         End If
-
     End Sub
 
     Private Delegate Sub UpdateGAmeplayDelegate(but As Button)
@@ -360,6 +346,7 @@ Public Class Client
 
         End If
     End Sub
+
     Private Delegate Sub UpdateButDelegate(But As Button)
     Private Sub updateBut(but As Button)
         If but.InvokeRequired Then

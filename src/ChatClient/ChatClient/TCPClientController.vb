@@ -16,7 +16,6 @@ Public Class TCPClientController
     Event GamePlayRecieved(message As String)
     Event Win(message As String)
     Private connectResp As ConnectResponse = ConnectResponse.None
-
     Private ComunicatieThread As Thread
 
     Public Property Username As String
@@ -143,7 +142,6 @@ Public Class TCPClientController
         ElseIf commEnum = COM_COMMAND.WIN Then
             Return "//WIN//"
         Else
-
             Throw New NotSupportedException()
         End If
     End Function
@@ -183,8 +181,6 @@ Public Class TCPClientController
         ElseIf commStr = "//WIN//" Then
             Return COM_COMMAND.WIN
         Else
-
-
             Throw New NotSupportedException()
         End If
     End Function
