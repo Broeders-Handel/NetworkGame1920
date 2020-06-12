@@ -42,14 +42,17 @@ Public Class PrivateChatroom
         Next
     End Sub
 
-    Public Function SetColor(usr As String) As Color
-        If UsersController.Users(usr).Turn = True Then
-            Return Color.Blue
+    Public Sub SendColor(User As String)
+        Dim Color As String
+        If UsersController.Users(User).Turn = True Then
+            Color = "BLUE"
         Else
-            Return Color.Red
+            Color = "RED"
         End If
-
-    End Function
+        For Each usr In users
+            usr.write(Color, Server.COM_COMMAND.COLOR)
+        Next
+    End Sub
 
 
     Public Sub SetZwaartekracht(Message As String)
