@@ -23,10 +23,12 @@ Public Class Client
         updateGUI()
     End Sub
     Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
+
         If Truefalse Like "False" Then
             For Each button In _ButtonList
                 updateButClickable(button)
             Next
+
         ElseIf Truefalse Like "True" Then
             For Each button In _ButtonList
                 updateButNotClickable(button)
