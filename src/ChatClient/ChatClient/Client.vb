@@ -23,10 +23,12 @@ Public Class Client
         updateGUI()
     End Sub
     Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
+
         If Truefalse Like "False" Then
             For Each button In _ButtonList
                 updateButClickable(button)
             Next
+
         ElseIf Truefalse Like "True" Then
             For Each button In _ButtonList
                 updateButNotClickable(button)
@@ -238,6 +240,9 @@ Public Class Client
 
     Public Sub ServerStopped() Handles clientController.ServerStopped
         stopServer()
+    End Sub
+    Public Sub win(message As String) Handles clientController.Win
+        GewonnenLabel.Text = message
     End Sub
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     ''Update textbox
