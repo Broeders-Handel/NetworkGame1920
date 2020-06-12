@@ -38,6 +38,7 @@ Partial Class Client
         Me.PrivateTextBox = New System.Windows.Forms.TextBox()
         Me.ChallengeButton = New System.Windows.Forms.Button()
         Me.LeaveButton = New System.Windows.Forms.Button()
+        Me.GewonnenLabel = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.PublicTabPage.SuspendLayout()
         Me.PrivateTabPage.SuspendLayout()
@@ -190,11 +191,20 @@ Partial Class Client
         Me.LeaveButton.Text = "Leave"
         Me.LeaveButton.UseVisualStyleBackColor = True
         '
+        'GewonnenLabel
+        '
+        Me.GewonnenLabel.AutoSize = True
+        Me.GewonnenLabel.Location = New System.Drawing.Point(1027, 305)
+        Me.GewonnenLabel.Name = "GewonnenLabel"
+        Me.GewonnenLabel.Size = New System.Drawing.Size(0, 13)
+        Me.GewonnenLabel.TabIndex = 11
+        '
         'Client
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1182, 375)
+        Me.Controls.Add(Me.GewonnenLabel)
         Me.Controls.Add(Me.LeaveButton)
         Me.Controls.Add(Me.ChallengeButton)
         Me.Controls.Add(Me.TabControl1)
@@ -231,4 +241,5 @@ Partial Class Client
     Friend WithEvents PublicChatTextBox As TextBox
     Friend WithEvents PrivateChatTextBox As TextBox
     Friend WithEvents LeaveButton As Button
+    Friend WithEvents GewonnenLabel As Label
 End Class

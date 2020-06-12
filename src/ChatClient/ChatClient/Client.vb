@@ -241,6 +241,9 @@ Public Class Client
     Public Sub ServerStopped() Handles clientController.ServerStopped
         stopServer()
     End Sub
+    Public Sub win(message As String) Handles clientController.Win
+        GewonnenLabel.Text = message
+    End Sub
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     ''Update textbox
     'Private Sub UpdateText(RTB As RichTextBox, txt As String)

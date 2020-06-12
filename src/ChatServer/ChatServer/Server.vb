@@ -254,6 +254,25 @@ Public Class Server
             UsersController.Users(user1).write("", COM_COMMAND.PRIVATECHATROOMFAILED)
         End If
     End Sub
+    Public Sub handleWin(username As String, message As String)
+        Dim roomID As Integer = getRoomID(username)
+        Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
+        Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
+        chatroom.RecieveCoordinaat(message)
+        chatroom.SendCoordinaat(message, username)
+
+        If chatroom.checkHorizontal(message) = True Then
+            If UsersController.Users.Values(0).Turn = True Then
+                users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(1).write("U heeft verloren", COM_COMMAND.WIN)
+            ElseIf UsersController.Users.Values(1).Turn = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+            End If
+            HandleLeaveGame(users(0).Username)
+        End If
+
+    End Sub
     Private Sub HandleLeaveGame(username As String)
         Dim roomID As Integer = getRoomID(username)
         Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
@@ -298,11 +317,11 @@ Public Class Server
 
         If chatroom.checkHorizontal(message) = True Then
             If UsersController.Users.Values(0).Turn = True Then
-                users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-                users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+                users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(1).write("U heeft verloren", COM_COMMAND.WIN)
             ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-                users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
             End If
             HandleLeaveGame(users(0).Username)
 
@@ -372,6 +391,7 @@ Public Class Server
         LEAVEGAME
         GAME
         TURN
+        WIN
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -411,6 +431,9 @@ Public Class Server
             Return "//GAME//"
         ElseIf commEnum = COM_COMMAND.TURN Then
             Return "//TURN//"
+        ElseIf commEnum = COM_COMMAND.WIN Then
+            Return "//WIN//"
+
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else
@@ -436,7 +459,10 @@ Public Class Server
             Return COM_COMMAND.LEAVEGAME
         ElseIf commStr = "//GAME//" Then
             Return COM_COMMAND.GAME
+        ElseIf commstr = "//WIN//" Then
+            Return COM_COMMAND.WIN
         Else
+
             Throw New NotSupportedException
         End If
     End Function
@@ -461,7 +487,8 @@ Public Class Server
             HandleLeaveGame(username)
         ElseIf command = COM_COMMAND.GAME Then
             HandleIncomingGameMessage(username, message)
-        Else
+        ElseIf command = COM_COMMAND.WIN Then
+            handleWin(username, message)
             'ElseIf command = COM_COMMAND.USERNAME Then
             'ElseIf command = COM_COMMAND.CONNECTED Then
             '    Return username & " JOINED"
