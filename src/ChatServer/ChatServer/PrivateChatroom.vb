@@ -2,6 +2,7 @@
 
 Public Class PrivateChatroom
     Dim clickedButtons As New List(Of String)
+
     Public Sub New(user1 As User, user2 As User)
         users = New List(Of User)
         users.Add(user1)
@@ -42,44 +43,47 @@ Public Class PrivateChatroom
 
         Dim gewonnen As Boolean
         Dim clickedButton As String = RecieveCoordinaat(rijkol)
-        clickedButtons.Add(clickedButton)
+        If Not clickedButtons.Contains(clickedButton) Then
+            clickedButtons.Add(clickedButton)
+        End If
+
 
 
         If clickedButtons.Contains("00") And clickedButtons.Contains("01") And clickedButtons.Contains("02") And clickedButtons.Contains("03") Then
             gewonnen = True
         ElseIf clickedButtons.Contains("01") And clickedButtons.Contains("02") And clickedButtons.Contains("03") And clickedButtons.Contains("04") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("02") And clickedButtons.contains("03") And clickedButtons.contains("04") And clickedButtons.contains("05") Then
+        ElseIf clickedButtons.Contains("02") And clickedButtons.Contains("03") And clickedButtons.Contains("04") And clickedButtons.Contains("05") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("10") And clickedButtons.contains("11") And clickedButtons.contains("12") And clickedButtons.contains("13") Then
+        ElseIf clickedButtons.Contains("10") And clickedButtons.Contains("11") And clickedButtons.Contains("12") And clickedButtons.Contains("13") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("11") And clickedButtons.contains("12") And clickedButtons.contains("13") And clickedButtons.contains("14") Then
+        ElseIf clickedButtons.Contains("11") And clickedButtons.Contains("12") And clickedButtons.Contains("13") And clickedButtons.Contains("14") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("12") And clickedButtons.contains("13") And clickedButtons.contains("14") And clickedButtons.contains("15") Then
+        ElseIf clickedButtons.Contains("12") And clickedButtons.Contains("13") And clickedButtons.Contains("14") And clickedButtons.Contains("15") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("20") And clickedButtons.contains("21") And clickedButtons.contains("22") And clickedButtons.contains("23") Then
+        ElseIf clickedButtons.Contains("20") And clickedButtons.Contains("21") And clickedButtons.Contains("22") And clickedButtons.Contains("23") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("21") And clickedButtons.contains("22") And clickedButtons.contains("23") And clickedButtons.contains("24") Then
+        ElseIf clickedButtons.Contains("21") And clickedButtons.Contains("22") And clickedButtons.Contains("23") And clickedButtons.Contains("24") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("22") And clickedButtons.contains("23") And clickedButtons.contains("24") And clickedButtons.contains("25") Then
+        ElseIf clickedButtons.Contains("22") And clickedButtons.Contains("23") And clickedButtons.Contains("24") And clickedButtons.Contains("25") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("30") And clickedButtons.contains("31") And clickedButtons.contains("32") And clickedButtons.contains("33") Then
+        ElseIf clickedButtons.Contains("30") And clickedButtons.Contains("31") And clickedButtons.Contains("32") And clickedButtons.Contains("33") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("31") And clickedButtons.contains("32") And clickedButtons.contains("33") And clickedButtons.contains("34") Then
+        ElseIf clickedButtons.Contains("31") And clickedButtons.Contains("32") And clickedButtons.Contains("33") And clickedButtons.Contains("34") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("32") And clickedButtons.contains("33") And clickedButtons.contains("34") And clickedButtons.contains("35") Then
+        ElseIf clickedButtons.Contains("32") And clickedButtons.Contains("33") And clickedButtons.Contains("34") And clickedButtons.Contains("35") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("40") And clickedButtons.contains("41") And clickedButtons.contains("42") And clickedButtons.contains("43") Then
+        ElseIf clickedButtons.Contains("40") And clickedButtons.Contains("41") And clickedButtons.Contains("42") And clickedButtons.Contains("43") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("41") And clickedButtons.contains("42") And clickedButtons.contains("43") And clickedButtons.contains("44") Then
+        ElseIf clickedButtons.Contains("41") And clickedButtons.Contains("42") And clickedButtons.Contains("43") And clickedButtons.Contains("44") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("42") And clickedButtons.contains("43") And clickedButtons.contains("44") And clickedButtons.contains("45") Then
+        ElseIf clickedButtons.Contains("42") And clickedButtons.Contains("43") And clickedButtons.Contains("44") And clickedButtons.Contains("45") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("50") And clickedButtons.contains("51") And clickedButtons.contains("52") And clickedButtons.contains("53") Then
+        ElseIf clickedButtons.Contains("50") And clickedButtons.Contains("51") And clickedButtons.Contains("52") And clickedButtons.Contains("53") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("51") And clickedButtons.contains("52") And clickedButtons.contains("53") And clickedButtons.contains("54") Then
+        ElseIf clickedButtons.Contains("51") And clickedButtons.Contains("52") And clickedButtons.Contains("53") And clickedButtons.Contains("54") Then
             gewonnen = True
-        ElseIf clickedButtons.contains("52") And clickedButtons.contains("53") And clickedButtons.contains("54") And clickedButtons.contains("55") Then
+        ElseIf clickedButtons.Contains("52") And clickedButtons.Contains("53") And clickedButtons.Contains("54") And clickedButtons.Contains("55") Then
             gewonnen = True
         Else
             gewonnen = False
@@ -172,123 +176,185 @@ Public Class PrivateChatroom
         'Return gewonnen
 
     End Function
-    'Public Function checkVertical(rijkol As String) As Boolean
-    '    Dim rij As String = rijkol.Substring(0, 1)
-    '    Dim kol As String = rijkol.Substring(2, 1)
-    '    Dim gewonnen As Boolean
-    '    rijLijst.Add(rij)
-    '    If kol = 0 Then
-    '        If rijKolList.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf kol = 1 Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf kol = 2 Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf kol = 3 Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf kol = 4 Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf kol = 5 Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    End If
-    '    If gewonnen = True Then
-    '        rijLijst.RemoveRange(0, rijLijst.Count - 1)
-    '    End If
-    '    Return gewonnen
-    'End Function
-    'Public Function checkDiagonal(rijkol As String) As Boolean
+    Public Function checkVertical(rijkol As String) As Boolean
+        Dim rij As String = rijkol.Substring(0, 1)
+        Dim kol As String = rijkol.Substring(2, 1)
 
-    '    Dim rij As String = rijkol.Substring(0, 1)
-    '    Dim kol As String = rijkol.Substring(2, 1)
-    '    Dim gewonnen As Boolean
+        Dim gewonnen As Boolean
+        Dim clickedButton As String = RecieveCoordinaat(rijkol)
+        If Not clickedButtons.Contains(clickedButton) Then
+            clickedButtons.Add(clickedButton)
+        End If
 
-    '    rijLijst.Add(rij)
-    '    rijKolList.Add(kol)
 
-    '    If rijKolList.Contains(0) And rijKolList.Contains(1) And rijKolList.Contains(2) And rijKolList.Contains(3) Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf rijKolList.Contains(1) And rijKolList.Contains(2) And rijKolList.Contains(3) And rijKolList.Contains(4) Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    ElseIf rijKolList.Contains(2) And rijKolList.Contains(3) And rijKolList.Contains(4) And rijKolList.Contains(5) Then
-    '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
-    '            gewonnen = True
-    '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
-    '            gewonnen = True
-    '        Else
-    '            gewonnen = False
-    '        End If
-    '    End If
-    '    If gewonnen = True Then
-    '        rijLijst.RemoveRange(0, rijLijst.Count - 1)
-    '        rijKolList.RemoveRange(0, rijKolList.Count - 1)
-    '    End If
-    '    Return gewonnen
-    'End Function
+
+
+        If clickedButtons.Contains("00") And clickedButtons.Contains("10") And clickedButtons.Contains("20") And clickedButtons.Contains("30") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("10") And clickedButtons.Contains("20") And clickedButtons.Contains("30") And clickedButtons.Contains("40") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("20") And clickedButtons.Contains("30") And clickedButtons.Contains("40") And clickedButtons.Contains("50") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("01") And clickedButtons.Contains("11") And clickedButtons.Contains("21") And clickedButtons.Contains("31") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("11") And clickedButtons.Contains("21") And clickedButtons.Contains("31") And clickedButtons.Contains("41") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("21") And clickedButtons.Contains("31") And clickedButtons.Contains("41") And clickedButtons.Contains("51") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("02") And clickedButtons.Contains("12") And clickedButtons.Contains("22") And clickedButtons.Contains("32") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("12") And clickedButtons.Contains("22") And clickedButtons.Contains("32") And clickedButtons.Contains("42") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("22") And clickedButtons.Contains("32") And clickedButtons.Contains("42") And clickedButtons.Contains("52") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("03") And clickedButtons.Contains("13") And clickedButtons.Contains("23") And clickedButtons.Contains("33") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("13") And clickedButtons.Contains("23") And clickedButtons.Contains("33") And clickedButtons.Contains("43") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("23") And clickedButtons.Contains("33") And clickedButtons.Contains("43") And clickedButtons.Contains("53") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("04") And clickedButtons.Contains("14") And clickedButtons.Contains("24") And clickedButtons.Contains("34") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("14") And clickedButtons.Contains("24") And clickedButtons.Contains("34") And clickedButtons.Contains("44") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("24") And clickedButtons.Contains("34") And clickedButtons.Contains("44") And clickedButtons.Contains("54") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("05") And clickedButtons.Contains("15") And clickedButtons.Contains("25") And clickedButtons.Contains("35") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("15") And clickedButtons.Contains("25") And clickedButtons.Contains("35") And clickedButtons.Contains("45") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("25") And clickedButtons.Contains("35") And clickedButtons.Contains("45") And clickedButtons.Contains("55") Then
+            gewonnen = True
+        Else
+            gewonnen = False
+        End If
+        Return gewonnen
+
+        '    Dim rij As String = rijkol.Substring(0, 1)
+        '    Dim kol As String = rijkol.Substring(2, 1)
+        '    Dim gewonnen As Boolean
+        '    rijLijst.Add(rij)
+        '    If kol = 0 Then
+        '        If rijKolList.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    ElseIf kol = 1 Then
+        '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    ElseIf kol = 2 Then
+        '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    ElseIf kol = 3 Then
+        '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    ElseIf kol = 4 Then
+        '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    ElseIf kol = 5 Then
+        '        If rijLijst.Contains(0) And rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(1) And rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) Then
+        '            gewonnen = True
+        '        ElseIf rijLijst.Contains(2) And rijLijst.Contains(3) And rijLijst.Contains(4) And rijLijst.Contains(5) Then
+        '            gewonnen = True
+        '        Else
+        '            gewonnen = False
+        '        End If
+        '    End If
+        '    If gewonnen = True Then
+        '        rijLijst.RemoveRange(0, rijLijst.Count - 1)
+        '    End If
+        '    Return gewonnen
+    End Function
+    Public Function checkDiagonal(rijkol As String) As Boolean
+        Dim rij As String = rijkol.Substring(0, 1)
+        Dim kol As String = rijkol.Substring(2, 1)
+
+        Dim gewonnen As Boolean
+        Dim clickedButton As String = RecieveCoordinaat(rijkol)
+        If Not clickedButtons.Contains(clickedButton) Then
+            clickedButtons.Add(clickedButton)
+        End If
+
+
+        If clickedButtons.Contains("00") And clickedButtons.Contains("11") And clickedButtons.Contains("22") And clickedButtons.Contains("33") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("11") And clickedButtons.Contains("22") And clickedButtons.Contains("33") And clickedButtons.Contains("44") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("22") And clickedButtons.Contains("33") And clickedButtons.Contains("44") And clickedButtons.Contains("55") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("10") And clickedButtons.Contains("21") And clickedButtons.Contains("32") And clickedButtons.Contains("43") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("21") And clickedButtons.Contains("32") And clickedButtons.Contains("43") And clickedButtons.Contains("54") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("20") And clickedButtons.Contains("31") And clickedButtons.Contains("42") And clickedButtons.Contains("53") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("01") And clickedButtons.Contains("12") And clickedButtons.Contains("23") And clickedButtons.Contains("34") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("12") And clickedButtons.Contains("23") And clickedButtons.Contains("34") And clickedButtons.Contains("45") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("02") And clickedButtons.Contains("13") And clickedButtons.Contains("24") And clickedButtons.Contains("35") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("05") And clickedButtons.Contains("14") And clickedButtons.Contains("23") And clickedButtons.Contains("32") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("14") And clickedButtons.Contains("23") And clickedButtons.Contains("32") And clickedButtons.Contains("41") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("23") And clickedButtons.Contains("32") And clickedButtons.Contains("41") And clickedButtons.Contains("50") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("15") And clickedButtons.Contains("24") And clickedButtons.Contains("33") And clickedButtons.Contains("42") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("24") And clickedButtons.Contains("33") And clickedButtons.Contains("42") And clickedButtons.Contains("51") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("25") And clickedButtons.Contains("34") And clickedButtons.Contains("43") And clickedButtons.Contains("52") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("04") And clickedButtons.Contains("13") And clickedButtons.Contains("22") And clickedButtons.Contains("31") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("13") And clickedButtons.Contains("22") And clickedButtons.Contains("31") And clickedButtons.Contains("40") Then
+            gewonnen = True
+        ElseIf clickedButtons.Contains("03") And clickedButtons.Contains("12") And clickedButtons.Contains("21") And clickedButtons.Contains("30") Then
+            gewonnen = True
+
+        Else
+            gewonnen = False
+        End If
+
+
+        Return gewonnen
+    End Function
     Public Sub SendCoordinaat(Rijkol As String, sender As String)
         For Each usr In users
             usr.write(Rijkol, Server.COM_COMMAND.GAME)
