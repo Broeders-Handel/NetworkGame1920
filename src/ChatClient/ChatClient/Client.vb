@@ -249,6 +249,12 @@ Public Class Client
     Private Sub LeaveButton_Click(sender As Object, e As EventArgs) Handles LeaveButton.Click
         clientController.Write("", clientController.COM_COMMAND.LEAVEGAME)
         PrivateChatTextBox.Text = ""
+        For Each but In _ButtonList
+            but.BackColor = Color.Transparent
+            but.Enabled = True
+            but.Text = "KLIK HIER!"
+        Next
+
     End Sub
 
     Public Sub ServerStopped() Handles clientController.ServerStopped
