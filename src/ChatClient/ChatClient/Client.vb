@@ -228,7 +228,9 @@ Public Class Client
         Dim KolRij As String = Rij & "," & Kolom
         Dim btntext As String = "clicked"
         Dim message As String = KolRij + ";" + btntext
+
         clientController.Write(message, clientController.COM_COMMAND.GAME)
+
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button

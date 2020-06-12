@@ -262,33 +262,37 @@ Public Class Server
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
 
-        If chatroom.checkHorizontal(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+        If UsersController.Users.Values(0).Turn = True Then
+
+            If chatroom.checkHorizontalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(0).write("U heeft verloren", COM_COMMAND.WIN)
-            End If
-            HandleLeaveGame(users(0).Username)
-        ElseIf chatroom.checkVertical(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkVerticalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(0).write("U heeft verloren", COM_COMMAND.WIN)
-            End If
-            HandleLeaveGame(users(0).Username)
-        ElseIf chatroom.checkDiagonal(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkDiagonalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
+                HandleLeaveGame(users(0).Username)
+            End If
+
+        ElseIf UsersController.Users.Values(1).Turn = True Then
+
+            If chatroom.checkHorizontalUser2(message) = True Then
                 users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkVerticalUser2(message) = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkDiagonalUser2(message) = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
             End If
-            HandleLeaveGame(users(0).Username)
         End If
 
     End Sub
@@ -332,55 +336,37 @@ Public Class Server
         Dim users As List(Of User) = UsersController.PrivateChatrooms(roomID).users
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
+        If UsersController.Users.Values(0).Turn = True Then
 
-        If chatroom.checkHorizontal(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+            If chatroom.checkHorizontalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(0).write("U heeft verloren", COM_COMMAND.WIN)
-            End If
-            HandleLeaveGame(users(0).Username)
-        ElseIf chatroom.checkVertical(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkVerticalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
                 users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(0).write("U heeft verloren", COM_COMMAND.WIN)
-            End If
-            HandleLeaveGame(users(0).Username)
-        ElseIf chatroom.checkDiagonal(message) = True Then
-            If UsersController.Users.Values(0).Turn = True Then
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkDiagonalUser1(message) = True Then
                 users(0).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(1).write("U heeft verloren", COM_COMMAND.WIN)
-            ElseIf UsersController.Users.Values(1).Turn = True Then
-                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
-                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                    users(1).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
             End If
 
-            HandleLeaveGame(users(0).Username)
-            'ElseIf chatroom.checkVertical(message) = True Then
-            '    If UsersController.Users.Values(0).Turn = True Then
-            '        users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-            '        users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
-            '    ElseIf UsersController.Users.Values(1).Turn = True Then
-            '        users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-            '        users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
-            '    End If
-            '    HandleLeaveGame(users(0).Username)
-            '    HandleLeaveGame(users(1).Username)
-            'ElseIf chatroom.checkDiagonal(message) = True Then
-            '    If UsersController.Users.Values(0).Turn = True Then
-            '        users(0).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-            '        users(1).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
-            '    ElseIf UsersController.Users.Values(1).Turn = True Then
-            '        users(1).write(MessageBox.Show("U heeft gewonnen"), COM_COMMAND.MESSAGE)
-            '        users(0).write(MessageBox.Show("U heeft verloren"), COM_COMMAND.MESSAGE)
-            '    End If
-            '    HandleLeaveGame(users(0).Username)
-            '    HandleLeaveGame(users(1).Username)
+        ElseIf UsersController.Users.Values(1).Turn = True Then
+
+            If chatroom.checkHorizontalUser2(message) = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkVerticalUser2(message) = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
+            ElseIf chatroom.checkDiagonalUser2(message) = True Then
+                users(1).write("U heeft gewonnen", COM_COMMAND.WIN)
+                    users(0).write("U heeft verloren", COM_COMMAND.WIN)
+                HandleLeaveGame(users(0).Username)
+            End If
         End If
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
         Thread.Sleep(100)
