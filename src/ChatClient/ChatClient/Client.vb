@@ -205,7 +205,7 @@ Public Class Client
         Dim rij As Integer = Index Mod 6
         Dim kol As Integer = Index \ 6
 
-        Button.Location = New Point(50 + 70 * kol, 10 + 60 * rij)
+        Button.Location = New Point(10 + 70 * kol, 7.5 + 60 * rij)
         Button.Size = New Size(60, 60)
         Index += 1
         Me.Controls.Add(Button)
