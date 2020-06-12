@@ -240,6 +240,7 @@ Public Class Server
             UsersController.Users(user2).write("True", COM_COMMAND.TURN)
             UsersController.Users(user2).Turn = False
         End If
+
     End Sub
     Private Sub CreatPrivateChatRoom(user1 As String, user2 As String)
         If CheckPrivateChatroomPossible(user1, user2) = True Then
@@ -255,8 +256,8 @@ Public Class Server
         users(0).IsBusy = False
         users(1).IsBusy = False
         UsersController.PrivateChatrooms.Remove(roomID)
-        For Each usr In users
-            usr.write("", COM_COMMAND.LEAVEGAME)
+        For i As Integer = users.Count - 1 To 0 Step -1
+            users(i).write("", COM_COMMAND.LEAVEGAME)
         Next
     End Sub
     Private Function getRoomID(username As String) As Integer
@@ -272,12 +273,13 @@ Public Class Server
     End Sub
 
     Private Sub HandleIncomingGameMessage(username As String, message As String)
-
         Dim roomID As Integer = getRoomID(username)
         Dim chatroom As PrivateChatroom = UsersController.PrivateChatrooms(roomID)
         chatroom.RecieveCoordinaat(message)
         chatroom.SendCoordinaat(message, username)
+        'chatroom.SendColor(username)
         DecideTurn(chatroom.users(0).Username, chatroom.users(1).Username)
+        Thread.Sleep(100)
     End Sub
 
 
@@ -321,6 +323,7 @@ Public Class Server
         LEAVEGAME
         GAME
         TURN
+        COLOR
     End Enum
     Public Shared Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -360,6 +363,8 @@ Public Class Server
             Return "//GAME//"
         ElseIf commEnum = COM_COMMAND.TURN Then
             Return "//TURN//"
+        ElseIf commEnum = COM_COMMAND.COLOR Then
+            Return "//COLOR//"
             'ElseIf commEnum = "//CONNECTED//" Then
             '    Return COM_COMMAND.CONNECTED
         Else

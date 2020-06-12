@@ -14,8 +14,8 @@ Public Class TCPClientController
     Event ServerStopped()
     Event LeftGame()
     Event GamePlayRecieved(message As String)
+    Event ColorRecieved(clr As String)
     Private connectResp As ConnectResponse = ConnectResponse.None
-
     Private ComunicatieThread As Thread
 
     Public Property Username As String
@@ -110,6 +110,7 @@ Public Class TCPClientController
         LEAVEGAME
         GAME
         TURN
+        COLOR
     End Enum
     Private Function getCommand(message As String) As COM_COMMAND
         Dim IndexSlash As Integer = message.IndexOf("//", 2)
@@ -147,8 +148,9 @@ Public Class TCPClientController
             Return "//LEAVEGAME//"
         ElseIf commEnum = COM_COMMAND.GAME Then
             Return "//GAME//"
+        ElseIf commEnum = COM_COMMAND.COLOR Then
+            Return "//COLOR//"
         Else
-
             Throw New NotSupportedException()
         End If
     End Function
@@ -185,8 +187,9 @@ Public Class TCPClientController
             Return COM_COMMAND.GAME
         ElseIf commStr = "//TURN//" Then
             Return COM_COMMAND.TURN
+        ElseIf commStr = "//COLOR//" Then
+            Return COM_COMMAND.COLOR
         Else
-
             Throw New NotSupportedException()
         End If
     End Function
@@ -235,6 +238,8 @@ Public Class TCPClientController
             RaiseEvent GamePlayRecieved(message)
         ElseIf command = COM_COMMAND.TURN Then
             RaiseEvent WhosTurn(message)
+        ElseIf command = COM_COMMAND.COLOR Then
+            RaiseEvent ColorRecieved(message)
         Else
             Throw New NotSupportedException
         End If
@@ -269,8 +274,8 @@ Public Class TCPClientController
         Write("", COM_COMMAND.DISCONNECTED)
         TCPClient = Nothing
     End Sub
-
-    Public Function GetColor() As Color
+    Public Function SetColor() As Color
         Return Color.Blue
+
     End Function
 End Class
