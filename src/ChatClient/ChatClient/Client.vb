@@ -24,7 +24,6 @@ Public Class Client
         updateGUI()
     End Sub
     Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
-
         If Truefalse Like "False" Then
             For Each button In _ButtonList
                 updateButNotClickable(button)
@@ -40,8 +39,8 @@ Public Class Client
     End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
-        For Each button In _ButtonList
-            Cleargame(button)
+        For Each but In _ButtonList
+            ResetGamePlay(but)
         Next
     End Function
     Function MessageReceived(message As String) Handles clientController.MessageReceived
@@ -178,7 +177,6 @@ Public Class Client
             updateBut(PublicSendButton)
             updateBut(PrivateSendButton)
             'updateBut(PrivateMessageButton)
-            updatetextBox(IpAdressTextBox)
             updatetextBox(PublicTextBox)
             updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
@@ -195,7 +193,6 @@ Public Class Client
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
-            IpAdressTextBox.Text = ""
             PublicSendButton.Enabled = False
             PrivateSendButton.Enabled = False
             TabControl1.Enabled = False
@@ -228,9 +225,7 @@ Public Class Client
         Dim KolRij As String = Rij & "," & Kolom
         Dim btntext As String = "clicked"
         Dim message As String = KolRij + ";" + btntext
-
         clientController.Write(message, clientController.COM_COMMAND.GAME)
-
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button
@@ -415,5 +410,21 @@ Public Class Client
             but.Enabled = True
             but.Text = "KLIK HIER!"
         End If
+    End Sub
+    Private Delegate Sub ResetGamePlayDelegate(but As Button)
+    Private Sub ResetGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New UpdateGAmeplayDelegate(AddressOf ResetGamePlay), but)
+        Else
+            but.Text = "KLIK HIER!"
+            but.BackColor = Color.Transparent
+            but.Enabled = True
+        End If
+    End Sub
+    Private Sub Client_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        clientController.DisconnectUser()
+        UsersListBox.DataSource = Nothing
+        Connected = False
+        updateGUI()
     End Sub
 End Class

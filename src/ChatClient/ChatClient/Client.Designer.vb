@@ -116,6 +116,7 @@ Partial Class Client
         Me.PublicChatTextBox.Location = New System.Drawing.Point(6, 6)
         Me.PublicChatTextBox.Multiline = True
         Me.PublicChatTextBox.Name = "PublicChatTextBox"
+        Me.PublicChatTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.PublicChatTextBox.Size = New System.Drawing.Size(331, 186)
         Me.PublicChatTextBox.TabIndex = 3
         '
@@ -153,6 +154,7 @@ Partial Class Client
         Me.PrivateChatTextBox.Location = New System.Drawing.Point(6, 6)
         Me.PrivateChatTextBox.Multiline = True
         Me.PrivateChatTextBox.Name = "PrivateChatTextBox"
+        Me.PrivateChatTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.PrivateChatTextBox.Size = New System.Drawing.Size(330, 183)
         Me.PrivateChatTextBox.TabIndex = 5
         '
