@@ -17,11 +17,14 @@ Public Class Client
     Dim AandeBeurt As Boolean = False
 
     Private Sub Client_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MakeButtons()
+        Connected = False
+        updateGUI()
+    End Sub
+    Private Sub MakeButtons()
         For i As Integer = 0 To 9 - 1
             addButton("KLIK HIER!")
         Next
-        Connected = False
-        updateGUI()
     End Sub
     Function WhosTurn(Truefalse As String) Handles clientController.WhosTurn
         If Truefalse Like "False" Then
@@ -251,7 +254,11 @@ Public Class Client
         stopServer()
     End Sub
     Public Sub win(message As String) Handles clientController.Win
-        GewonnenLabel.Text = message
+        UpdateText(PrivateChatTextBox, message)
+        UpdateText(PrivateChatTextBox, "Challenge opnieuw om te herstarten")
+        For Each but In _ButtonList
+            RestartGamePlay(but)
+        Next
     End Sub
     'Private Delegate Sub UpdateTextDelegate(RTB As RichTextBox, txt As String)
     ''Update textbox
@@ -414,6 +421,16 @@ Public Class Client
             but.Text = "KLIK HIER!"
             but.BackColor = Color.Transparent
             but.Enabled = True
+        End If
+    End Sub
+    Private Delegate Sub RestartGamePlayDelegate(but As Button)
+    Private Sub RestartGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New RestartGamePlayDelegate(AddressOf RestartGamePlay), but)
+        Else
+            but.Text = "KLIK HIER!"
+            but.BackColor = Color.Transparent
+            but.Enabled = False
         End If
     End Sub
     Private Sub Client_Closed(sender As Object, e As EventArgs) Handles Me.Closed
