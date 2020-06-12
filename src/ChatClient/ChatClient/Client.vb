@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.IO
 Imports System.Net.Sockets
 Imports System.Threading
 
@@ -27,12 +28,13 @@ Public Class Client
             For Each button In _ButtonList
                 updateButNotClickable(button)
             Next
+            AandeBeurt = False
 
         ElseIf Truefalse Like "True" Then
             For Each button In _ButtonList
                 updateButClickable(button)
             Next
-
+            AandeBeurt = True
         End If
     End Function
     Function LeftGame() Handles clientController.LeftGame
@@ -226,7 +228,6 @@ Public Class Client
         Dim btntext As String = "clicked"
         Dim message As String = KolRij + ";" + btntext
         clientController.Write(message, clientController.COM_COMMAND.GAME)
-
     End Sub
 
     Private Function RetrieveClickedButton(Message As String) As Button
@@ -237,7 +238,6 @@ Public Class Client
         Dim index As Integer = kolom * 6 + rij
         btn = _ButtonList(index)
         Return btn
-
     End Function
     Private Sub PrivateMessageButton_Click(sender As Object, e As EventArgs) Handles PrivateSendButton.Click
         clientController.Write(UsersListBox.SelectedItem, clientController.COM_COMMAND.PRIVATEUSERNAMES)
@@ -310,10 +310,8 @@ Public Class Client
             but.Invoke(New UpdateButClickableDelegate(AddressOf updateButClickable), but)
         ElseIf but.Text <> "clicked" Then
             but.Enabled = True
-
         ElseIf but.Text <> "KLIK HIER!" Then
             but.Enabled = False
-
         Else
             but.Enabled = False
         End If
@@ -332,8 +330,16 @@ Public Class Client
         If but.InvokeRequired Then
             but.Invoke(New UpdateButClickableDelegate(AddressOf updategameplay), but)
         Else
-            but.Text = "clicked"
-            but.BackColor = Color.Red
+            If AandeBeurt = False Then
+                but.Text = "clicked"
+                but.BackColor = Color.Red
+            ElseIf AandeBeurt = True Then
+                but.Text = "clicked"
+                but.BackColor = Color.Blue
+            Else
+                but.Text = "clicked"
+            End If
+
         End If
     End Sub
 
