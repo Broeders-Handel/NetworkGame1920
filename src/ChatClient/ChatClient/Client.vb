@@ -35,6 +35,9 @@ Public Class Client
     End Function
     Function LeftGame() Handles clientController.LeftGame
         ClearTextBox(PrivateChatTextBox)
+        For Each but In _ButtonList
+            ResetGamePlay(but)
+        Next
     End Function
     Function MessageReceived(message As String) Handles clientController.MessageReceived
         UpdateText(PublicChatTextBox, message)
@@ -166,7 +169,6 @@ Public Class Client
             updateBut(PublicSendButton)
             updateBut(PrivateSendButton)
             'updateBut(PrivateMessageButton)
-            updatetextBox(IpAdressTextBox)
             updatetextBox(PublicTextBox)
             updatetextBox(PrivateTextBox)
             updatetextBox(PublicChatTextBox)
@@ -183,7 +185,6 @@ Public Class Client
             ConnectButton.Enabled = True
             PrivateChatTextBox.Text = ""
             PublicChatTextBox.Text = ""
-            IpAdressTextBox.Text = ""
             PublicSendButton.Enabled = False
             PrivateSendButton.Enabled = False
             TabControl1.Enabled = False
@@ -234,6 +235,11 @@ Public Class Client
     Private Sub LeaveButton_Click(sender As Object, e As EventArgs) Handles LeaveButton.Click
         clientController.Write("", clientController.COM_COMMAND.LEAVEGAME)
         PrivateChatTextBox.Text = ""
+        For Each but In _ButtonList
+            but.BackColor = Color.Transparent
+            but.Enabled = True
+            but.Text = "KLIK HIER!"
+        Next
     End Sub
 
     Public Sub ServerStopped() Handles clientController.ServerStopped
@@ -365,5 +371,21 @@ Public Class Client
             but.Text = "Clicked"
             but.BackColor = clientController.GetColor
         End If
+    End Sub
+    Private Delegate Sub ResetGamePlayDelegate(but As Button)
+    Private Sub ResetGamePlay(but As Button)
+        If but.InvokeRequired Then
+            but.BeginInvoke(New UpdateGamePlayDelegate(AddressOf ResetGamePlay), but)
+        Else
+            but.Text = "KLIK HIER!"
+            but.BackColor = Color.Transparent
+            but.Enabled = True
+        End If
+    End Sub
+    Private Sub Client_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        clientController.DisconnectUser()
+        UsersListBox.DataSource = Nothing
+        Connected = False
+        updateGUI()
     End Sub
 End Class

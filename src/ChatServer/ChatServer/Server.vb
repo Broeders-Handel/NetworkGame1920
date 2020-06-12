@@ -136,10 +136,11 @@ Public Class Server
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
-
         Try
-
-
+            For Each usr In UsersController.Users.Values
+                usr.write("", COM_COMMAND.DISCONNECTED)
+            Next
+            Thread.Sleep(1000)
             StopServer = True
             ChatRichTextBox.Text &= "<< SERVER CLOSED >>" & Environment.NewLine
             StartButton.Enabled = True
@@ -151,17 +152,11 @@ Public Class Server
             SendButton.Enabled = False
             StartButton.Enabled = True
             ClientsListBox.Items.Clear()
-
-
-
             For i As Integer = UsersController.Users.Keys.Count - 1 To 0 Step -1
                 UsersController.RemoveUser(i)
             Next
-
         Catch ex As Exception
-
         End Try
-
         MessageTextBox.ReadOnly = True
         SendButton.Enabled = False
         StartButton.Enabled = True

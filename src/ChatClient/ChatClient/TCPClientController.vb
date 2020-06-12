@@ -39,7 +39,16 @@ Public Class TCPClientController
     End Property
     Public ReadOnly Property TCPClientStream() As NetworkStream
         Get
-            Return TCPClient.GetStream()
+            If TCPClient Is Nothing Then
+                Try
+
+                Catch ex As Exception
+                    Throw New Exception("Je bent niet met een server verbonden")
+                End Try
+            Else
+                Return TCPClient.GetStream()
+            End If
+
         End Get
     End Property
 

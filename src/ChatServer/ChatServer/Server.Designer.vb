@@ -79,6 +79,7 @@ Partial Class Server
         Me.ChatRichTextBox.Location = New System.Drawing.Point(12, 42)
         Me.ChatRichTextBox.Name = "ChatRichTextBox"
         Me.ChatRichTextBox.ReadOnly = True
+        Me.ChatRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth
         Me.ChatRichTextBox.Size = New System.Drawing.Size(233, 192)
         Me.ChatRichTextBox.TabIndex = 5
         Me.ChatRichTextBox.Text = ""
